@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nom:</strong>
+  <%= @document_modele.nom %>
+</p>
+
+<p>
+  <strong>Coordonnees societe:</strong>
+  <%= @document_modele.coordonnees_societe %>
+</p>
+
+<p>
+  <strong>Logo:</strong>
+  <%= @document_modele.logo %>
+</p>
+
+<p>
+  <strong>Mention1 texte:</strong>
+  <%= @document_modele.mention1_texte %>
+</p>
+
+<p>
+  <strong>Mention1 active:</strong>
+  <%= @document_modele.mention1_active %>
+</p>
+
+<p>
+  <strong>Mention2 texte:</strong>
+  <%= @document_modele.mention2_texte %>
+</p>
+
+<p>
+  <strong>Mention2 active:</strong>
+  <%= @document_modele.mention2_active %>
+</p>
+
+<p>
+  <strong>Mention3 texte:</strong>
+  <%= @document_modele.mention3_texte %>
+</p>
+
+<p>
+  <strong>Mention3 active:</strong>
+  <%= @document_modele.mention3_active %>
+</p>
+
+<p>
+  <strong>Mention legale:</strong>
+  <%= @document_modele.mention_legale %>
+</p>
+
+<p>
+  <strong>Modele:</strong>
+  <%= @document_modele.modele %>
+</p>
+
+<%= link_to 'Edit', edit_document_modele_path(@document_modele) %> |
+<%= link_to 'Back', document_modeles_path %>

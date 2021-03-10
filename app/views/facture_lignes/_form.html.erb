@@ -1,0 +1,32 @@
+<%= form_with(model: facture_ligne) do |form| %>
+  <% if facture_ligne.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(facture_ligne.errors.count, "error") %> prohibited this facture_ligne from being saved:</h2>
+
+      <ul>
+        <% facture_ligne.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :facture_id %>
+    <%= form.text_field :facture_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :designation %>
+    <%= form.text_area :designation %>
+  </div>
+
+  <div class="field">
+    <%= form.label :montant_ht %>
+    <%= form.text_field :montant_ht %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

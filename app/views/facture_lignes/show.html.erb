@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Facture:</strong>
+  <%= @facture_ligne.facture_id %>
+</p>
+
+<p>
+  <strong>Designation:</strong>
+  <%= @facture_ligne.designation %>
+</p>
+
+<p>
+  <strong>Montant ht:</strong>
+  <%= @facture_ligne.montant_ht %>
+</p>
+
+<%= link_to 'Edit', edit_facture_ligne_path(@facture_ligne) %> |
+<%= link_to 'Back', facture_lignes_path %>

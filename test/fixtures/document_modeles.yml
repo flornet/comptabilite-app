@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nom: MyString
+  coordonnees_societe: MyText
+  logo: MyString
+  mention1_texte: MyText
+  mention1_active: false
+  mention2_texte: MyText
+  mention2_active: false
+  mention3_texte: MyText
+  mention3_active: false
+  mention_legale: MyString
+  modele: MyString
+
+two:
+  nom: MyString
+  coordonnees_societe: MyText
+  logo: MyString
+  mention1_texte: MyText
+  mention1_active: false
+  mention2_texte: MyText
+  mention2_active: false
+  mention3_texte: MyText
+  mention3_active: false
+  mention_legale: MyString
+  modele: MyString

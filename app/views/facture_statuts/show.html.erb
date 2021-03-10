@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nom:</strong>
+  <%= @facture_statut.nom %>
+</p>
+
+<p>
+  <strong>Défaut:</strong>
+  <%= @facture_statut.defaut %>
+</p>
+
+<%= link_to 'Edit', edit_facture_statut_path(@facture_statut) %> |
+<%= link_to 'Back', facture_statuts_path %>

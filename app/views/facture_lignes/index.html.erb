@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Facture Lignes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Facture</th>
+      <th>Designation</th>
+      <th>Montant ht</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @facture_lignes.each do |facture_ligne| %>
+      <tr>
+        <td><%= facture_ligne.facture_id %></td>
+        <td><%= facture_ligne.designation %></td>
+        <td><%= facture_ligne.montant_ht %></td>
+        <td><%= link_to 'Show', facture_ligne %></td>
+        <td><%= link_to 'Edit', edit_facture_ligne_path(facture_ligne) %></td>
+        <td><%= link_to 'Destroy', facture_ligne, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Facture Ligne', new_facture_ligne_path %>

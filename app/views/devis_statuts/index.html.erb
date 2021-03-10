@@ -1,0 +1,28 @@
+<h1 class="title is-4">Statuts pour les devis</h1>
+<div class="action-buttons">
+    <div class="control is-grouped">
+        <%= link_to 'Nouveau statut', new_devis_statut_path, class: "button is-primary" %>
+    </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Défaut</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @devis_statuts.each do |devis_statut| %>
+      <tr>
+        <td><%= devis_statut.nom %></td>
+        <td><%= devis_statut.defaut %></td>
+        <td><%= link_to 'Show', devis_statut %></td>
+        <td><%= link_to 'Edit', edit_devis_statut_path(devis_statut) %></td>
+        <td><%= link_to 'Destroy', devis_statut, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

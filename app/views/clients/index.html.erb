@@ -1,0 +1,42 @@
+<h1 class="title is-4">Clients</h1>
+<div class="action-buttons">
+    <div class="control is-grouped">
+        <%= link_to 'Nouveau client', new_client_path, class: "button is-primary" %>
+    </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Adresse</th>
+      <th>Code postal</th>
+      <th>Ville</th>
+      <th>Pays</th>
+      <th>Numero tva intracommunautaire</th>
+      <th>Email</th>
+      <th>Telephone</th>
+      <th>Taxe</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @clients.each do |client| %>
+      <tr>
+        <td><%= client.nom %></td>
+        <td><%= client.adresse %></td>
+        <td><%= client.code_postal %></td>
+        <td><%= client.ville %></td>
+        <td><%= client.pays %></td>
+        <td><%= client.numero_tva_intracommunautaire %></td>
+        <td><%= client.email %></td>
+        <td><%= client.telephone %></td>
+        <td><%= client.taxe_id %></td>
+        <td><%= link_to 'Show', client %></td>
+        <td><%= link_to 'Edit', edit_client_path(client) %></td>
+        <td><%= link_to 'Destroy', client, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

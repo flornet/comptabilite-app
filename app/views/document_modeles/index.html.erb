@@ -1,0 +1,30 @@
+<h1 class="title is-4">Modèles de documents</h1>
+<div class="action-buttons">
+    <div class="control is-grouped">
+        <%= link_to 'Nouveau modèle', new_document_modele_path, class: "button is-primary" %>
+    </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Logo</th>
+      <th>Fichier modèle</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @document_modeles.each do |document_modele| %>
+      <tr>
+        <td><%= document_modele.nom %></td>
+        <td><%= document_modele.logo %></td>
+        <td><%= document_modele.modele %></td>
+        <td><%= link_to 'Show', document_modele %></td>
+        <td><%= link_to 'Edit', edit_document_modele_path(document_modele) %></td>
+        <td><%= link_to 'Destroy', document_modele, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nom:</strong>
+  <%= @client.nom %>
+</p>
+
+<p>
+  <strong>Adresse:</strong>
+  <%= @client.adresse %>
+</p>
+
+<p>
+  <strong>Code postal:</strong>
+  <%= @client.code_postal %>
+</p>
+
+<p>
+  <strong>Ville:</strong>
+  <%= @client.ville %>
+</p>
+
+<p>
+  <strong>Pays:</strong>
+  <%= @client.pays %>
+</p>
+
+<p>
+  <strong>Numero tva intracommunautaire:</strong>
+  <%= @client.numero_tva_intracommunautaire %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @client.email %>
+</p>
+
+<p>
+  <strong>Telephone:</strong>
+  <%= @client.telephone %>
+</p>
+
+<p>
+  <strong>Taxe:</strong>
+  <%= @client.taxe_id %>
+</p>
+
+<%= link_to 'Edit', edit_client_path(@client) %> |
+<%= link_to 'Back', clients_path %>

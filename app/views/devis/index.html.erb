@@ -1,0 +1,46 @@
+<h1 class="title is-4">Devis</h1>
+<div class="action-buttons">
+    <div class="control is-grouped">
+        <%= link_to 'Nouveau devis', new_devi_path, class: "button is-primary" %>
+    </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Date</th>
+      <th>Numero</th>
+      <th>Designation</th>
+      <th>Montant ht</th>
+      <th>Montant ttc</th>
+      <th>Document modele</th>
+      <th>Pdf</th>
+      <th>Taxe</th>
+      <th>Devis statut</th>
+      <th>Client</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @devis.each do |devi| %>
+      <tr>
+        <td><%= devi.type %></td>
+        <td><%= devi.date %></td>
+        <td><%= devi.numero %></td>
+        <td><%= devi.designation %></td>
+        <td><%= devi.montant_ht %></td>
+        <td><%= devi.montant_ttc %></td>
+        <td><%= devi.document_modele_id %></td>
+        <td><%= devi.pdf %></td>
+        <td><%= devi.taxe_id %></td>
+        <td><%= devi.devis_statut_id %></td>
+        <td><%= devi.client_id %></td>
+        <td><%= link_to 'Show', devi %></td>
+        <td><%= link_to 'Edit', edit_devi_path(devi) %></td>
+        <td><%= link_to 'Destroy', devi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  date: 2021-03-09
+  numero: MyString
+  designation: MyString
+  montant_ht: 9.99
+  montant_ttc: 9.99
+  document_modele: one
+  pdf: MyString
+  taxe: one
+  devis_statut: one
+  client: one
+
+two:
+  type: 
+  date: 2021-03-09
+  numero: MyString
+  designation: MyString
+  montant_ht: 9.99
+  montant_ttc: 9.99
+  document_modele: two
+  pdf: MyString
+  taxe: two
+  devis_statut: two
+  client: two

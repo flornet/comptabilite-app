@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @facture.type_document %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @facture.date %>
+</p>
+
+<p>
+  <strong>Numero:</strong>
+  <%= @facture.numero %>
+</p>
+
+<p>
+  <strong>Designation:</strong>
+  <%= @facture.designation %>
+</p>
+
+<p>
+  <strong>Montant ht:</strong>
+  <%= @facture.montant_ht %>
+</p>
+
+<p>
+  <strong>Montant ttc:</strong>
+  <%= @facture.montant_ttc %>
+</p>
+
+<p>
+  <strong>Document modele:</strong>
+  <%= @facture.document_modele.nom %>
+</p>
+
+<p>
+  <strong>Pdf:</strong>
+  <%= @facture.pdf %>
+</p>
+
+<p>
+  <strong>Taxe:</strong>
+  <%= @facture.taxe.nom %>
+</p>
+
+<p>
+  <strong>Facture statut:</strong>
+  <%= @facture.facture_statut.nom %>
+</p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @facture.client.nom %>
+</p>
+
+<%= link_to 'Edit', edit_facture_path(@facture) %> |
+<%= link_to 'Back', factures_path %>

@@ -1,0 +1,2 @@
+module FactureStatutsHelper
+end

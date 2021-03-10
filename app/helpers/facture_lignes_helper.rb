@@ -1,0 +1,2 @@
+module FactureLignesHelper
+end
