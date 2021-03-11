@@ -1,20 +1,71 @@
-@import "bulma/bulma";
-
-.client {
-  border: 2px #ccc solid;
-  padding: 3em;
-}
-.facture_lignes {
-  border: 2px blue solid;
-  padding: 3em;
-}
 .one-page-form {
   width: 400px;
 }
-.facture-form {
-  width: 800px;
+.card.facture-feuille {
+  width: 735px;
+  height: 1040px;
+  float:left;
+  position: relative;
 }
-
+.card.facture-feuille .fournisseur {
+  position: absolute;
+  width: 300px;
+  left: 30px;
+  top: 30px;
+}
+.card.facture-feuille .client {
+  position: absolute;
+  width: 300px;
+  right: 30px;
+  top: 30px;
+}
+.card.facture-feuille .contenu-principal {
+  position: absolute;
+  top: 230px;
+  left: 30px;
+  right:30px;
+}
+.card.facture-feuille .contenu-principal .facture-lignes {
+  border: 2px blue solid;
+  padding: 3em;
+}
+.card.facture-feuille .client .field:not(:last-child) {
+  margin-bottom: 0;
+}
+.card.facture-feuille .client .field-body > .field:not(:last-child) {
+  margin-right: 0;
+}
+.card.facture-feuille .client .code-postal {
+  width:2em;
+}
+.card.facture-feuille .client .code-postal .input {
+  border-right: 0;
+}
+.card.facture-feuille .client .field:not(:last-of-type) .input,
+.card.facture-feuille .client .field .textarea {
+  border-bottom: 0;
+}
+.card.facture-feuille .client .is-small.input,
+.card.facture-feuille .client .is-small.textarea {
+  box-shadow: none;
+  border-radius: 0;
+  border-style: dotted;
+}
+.card.facture-feuille .client .field:first-child .is-small.input {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+.card.facture-feuille .client .field:last-of-type .is-small.input {
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.panel.facture-actions {
+  float:left;
+  margin-left: 20px;
+}
+.panel.facture-actions .buttons {
+  width: 180px;
+}
 
 
 html,body {

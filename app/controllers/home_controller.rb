@@ -9,7 +9,6 @@ class HomeController < ApplicationController
     Taxe.create(nom: "2.1%", taux: "0.021", user: current_user)
     Taxe.create(nom: "0%", taux: "0", user: current_user)
 
-    FactureStatut.create(nom: "brouillon", user: current_user)
     FactureStatut.create(nom: "envoyée", user: current_user)
     FactureStatut.create(nom: "payée", user: current_user)
     FactureStatut.create(nom: "enregistrée", defaut: true, user: current_user)

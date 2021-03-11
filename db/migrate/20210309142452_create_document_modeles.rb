@@ -12,6 +12,7 @@ class CreateDocumentModeles < ActiveRecord::Migration[6.1]
       t.boolean :mention3_active, :default => false
       t.string :mention_legale
       t.string :modele
+      t.boolean :defaut, :default => false
       t.references :user, foreign_key: true
 
       t.timestamps

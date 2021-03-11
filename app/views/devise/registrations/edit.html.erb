@@ -1,8 +1,24 @@
 <div class=" one-page-form">
     <h1 class="title is-4">Mon profil</h1>
+    <%= link_to 'Charger les données par défaut', home_setup_data_path, :class => 'navbar-item' %>
+
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :dernier_numero_facture, class: "label" %>
+        <div class="control">
+          <%= f.text_field :dernier_numero_facture, autocomplete: "dernier_numero_facture", class: "input" %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= f.label :dernier_numero_devis, class: "label" %>
+        <div class="control">
+          <%= f.text_field :dernier_numero_devis, autocomplete: "dernier_numero_devis", class: "input" %>
+        </div>
+      </div>
 
       <div class="field">
         <%= f.label :email, class: "label" %>

@@ -15,6 +15,7 @@ class FacturesController < ApplicationController
     @facture = Facture.new
     1.times { @facture.facture_lignes.build }
     @facture.client = Client.new
+    @facture.coordonnees_societe = current_user.document_modeles.first.coordonnees_societe
   end
 
   # GET /factures/1/edit
@@ -25,7 +26,13 @@ class FacturesController < ApplicationController
   def create
     @facture = Facture.new(facture_params)
     @facture.user = current_user
-    @facture.client.taxe = @facture.taxe
+    if @facture.client
+      @facture.client.taxe = @facture.taxe
+      @facture.client.user = current_user
+    end
+    if !est_brouillon?
+      @facture.est_brouillon = false
+    end
 
     respond_to do |format|
       if @facture.save
@@ -40,6 +47,9 @@ class FacturesController < ApplicationController
 
   # PATCH/PUT /factures/1 or /factures/1.json
   def update
+    if !est_brouillon?
+      @facture.est_brouillon = false
+    end
     respond_to do |format|
       if @facture.update(facture_params)
         format.html { redirect_to @facture, notice: "Facture was successfully updated." }
@@ -68,6 +78,10 @@ class FacturesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def facture_params
-      params.require(:facture).permit(:type_document, :date, :numero, :designation, :montant_ht, :montant_ttc, :document_modele_id, :pdf, :taxe_id, :facture_statut_id, :client_id, facture_lignes_attributes: [:designation, :montant_ht, :_destroy], client_attributes: [:nom, :adresse, :code_postal, :ville, :pays, :numero_tva_intracommunautaire, :email, :telephone])
+      params.require(:facture).permit(:type_document, :date, :numero, :designation, :montant_ht, :montant_ttc, :est_brouillon, :pdf, :taxe_id, :facture_statut_id, :client_id, :coordonnees_societe, :coordonnees_societe, :logo, :mention1_texte, :mention1_active, :mention2_texte, :mention2_active, :mention3_texte, :mention3_active, :mention_legale, facture_lignes_attributes: [:id, :designation, :montant_ht, :_destroy], client_attributes: [:id, :nom, :adresse, :code_postal, :ville, :pays, :numero_tva_intracommunautaire, :email, :telephone])
+    end
+
+    def est_brouillon?
+      params[:commit] == "brouillon"
     end
 end

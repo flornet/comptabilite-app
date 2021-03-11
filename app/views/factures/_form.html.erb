@@ -1,151 +1,124 @@
+<hr />
+<div class="field">
+  Modèle
+  <div class="select">
+    <%= select_tag "modele", options_from_collection_for_select(current_user.document_modeles.order(:nom), :id, :nom) %>
+  </div>
+</div>
+<hr />
 <%= form_with(model: facture) do |form| %>
-  <% if facture.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(facture.errors.count, "error") %> prohibited this facture from being saved:</h2>
-
-      <ul>
-        <% facture.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+    <div class="card facture-feuille">
+        <% if facture.errors.any? %>
+          <div class="notification is-danger">
+            <h2 class="is-size-5"><%= pluralize(facture.errors.count, "error") %> prohibited this facture from being saved:</h2>
+            <div class="content">
+            <ul>
+              <% facture.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+            </div>
+          </div>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :type_document, class: "label" %>
-    <div class="select">
-      <%= form.select :type_document, ["Facture", "Avoir"] %>
-    </div>
+        <div class="fournisseur">
+          <div class="field">
+            <div class="control">
+              <%= form.text_area :coordonnees_societe, rows: 5, class: "textarea is-small" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="client">
+          <%= form.fields_for :client do |client_form| %>
+            <%= render "client_form", form: client_form %>
+          <% end %>
+        </div>
+
+        <div class="contenu-principal">
+          <div class="field">
+            <%= form.label :designation, class: "label" %>
+            <div class="control">
+              <%= form.text_field :designation, class: "input" %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= form.label :type_document, class: "label" %>
+            <div class="select">
+              <%= form.select :type_document, ["Facture", "Avoir"] %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= form.label :date, class: "label" %>
+            <div class="control">
+              <%= form.text_field :date, type: "date" %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= form.label :numero, class: "label" %>
+            <div class="control">
+              <%= @facture.numero %>
+            </div>
+          </div>
+
+
+
+          <div class="facture-lignes">
+            <table class="table" id="table_lignes_facture">
+              <tbody>
+              <%= form.fields_for :facture_lignes do |facture_lignes_form| %>
+                    <%= render "facture_ligne_fields_form", f: facture_lignes_form %>
+              <% end %>
+              </tbody>
+            </table>
+            <%= link_to_add_line "Ajouter une ligne", form, :facture_lignes %>
+          </div>
+
+          <div class="field">
+            <%= form.label :montant_ht, class: "label" %>
+            <div class="control">
+              <%= form.text_field :montant_ht, class: "input" %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= form.label :taxe_id, class: "label" %>
+            <div class="select">
+              <%= form.collection_select :taxe_id, Taxe.order(:nom), :id, :nom %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= form.label :montant_ttc, class: "label" %>
+            <div class="control">
+              <%= form.text_field :montant_ttc, class: "input" %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= form.label :facture_statut_id, class: "label" %>
+            <div class="select">
+              <%= form.collection_select :facture_statut_id, FactureStatut.order(:nom), :id, :nom%>
+            </div>
+          </div>
+        </div>
   </div>
-
-  <div class="field">
-    <%= form.label :date, class: "label" %>
-    <div class="control">
-      <%= form.date_select :date %>
-    </div>
-  </div>
-
-  <div class="field">
-    <%= form.label :numero, class: "label" %>
-    <div class="control">
-      <%= form.text_field :numero, class: "input" %>
-    </div>
-  </div>
-
-  <div class="client">
-  <%= form.fields_for :client do |client_form| %>
-    <div class="field">
-      <%= client_form.label :nom, class: "label" %>
-      <div class="control">
-        <%= client_form.text_field :nom, class: "input" %>
+  <div class="panel facture-actions">
+    <div class="panel-block">
+        <div class="buttons">
+          <% if current_page?(action: 'new') %>
+            <%= form.button "Sauvegarder en brouillon", name: 'commit', value: "brouillon", class: "button is-secondary is-fullwidth" %>
+            <%= form.button "Créer la facture", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
+          <% elsif @facture.est_brouillon %>
+            <%= form.button "Enregistrer", name: 'commit',value: "brouillon", class: "button is-secondary is-fullwidth" %>
+            <%= form.button "Créer la facture", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
+          <% else %>
+            <%= form.button "Enregistrer", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
+          <% end %>
       </div>
-    </div>
-
-    <div class="field">
-      <%= client_form.label :adresse, class: "label" %>
-      <div class="control">
-        <%= client_form.text_field :adresse, class: "input" %>
-      </div>
-    </div>
-
-    <div class="field">
-      <%= client_form.label :code_postal, class: "label" %>
-      <div class="control">
-        <%= client_form.text_field :code_postal, class: "input" %>
-      </div>
-    </div>
-
-    <div class="field">
-      <%= client_form.label :ville, class: "label" %>
-      <div class="control">
-        <%= client_form.text_field :ville, class: "input" %>
-      </div>
-    </div>
-
-    <div class="field">
-      <%= client_form.label :pays, class: "label" %>
-      <div class="control">
-        <%= client_form.text_field :pays, class: "input" %>
-      </div>
-    </div>
-
-    <div class="field">
-      <%= client_form.label :numero_tva_intracommunautaire, class: "label" %>
-      <div class="control">
-        <%= client_form.text_field :numero_tva_intracommunautaire, class: "input" %>
-      </div>
-    </div>
-
-    <div class="field">
-      <%= client_form.label :email, class: "label" %>
-      <div class="control">
-        <%= client_form.text_field :email, class: "input" %>
-      </div>
-    </div>
-
-    <div class="field">
-      <%= client_form.label :telephone, class: "label" %>
-      <div class="control">
-        <%= client_form.text_field :telephone, class: "input" %>
-      </div>
-    </div>
-  <% end %>
-  </div>
-
-  <div class="field">
-    <%= form.label :designation, class: "label" %>
-    <div class="control">
-      <%= form.text_field :designation, class: "input" %>
-    </div>
-  </div>
-
-  <div class="facture_lignes">
-    <table>
-      <%= form.fields_for :addresses do |facture_lignes_form| %>
-            <%= render "facture_ligne_fields_form", f: facture_lignes_form %>
-      <% end %>
-      <%= link_to_add_line "Ajouter une ligne", form, :facture_lignes %>
-    </table>
-  </div>
-
-  <div class="field">
-    <%= form.label :montant_ht, class: "label" %>
-    <div class="control">
-      <%= form.text_field :montant_ht, class: "input" %>
-    </div>
-  </div>
-
-  <div class="field">
-    <%= form.label :taxe_id, class: "label" %>
-    <div class="select">
-      <%= form.collection_select :taxe_id, Taxe.order(:nom), :id, :nom %>
-    </div>
-  </div>
-
-  <div class="field">
-    <%= form.label :montant_ttc, class: "label" %>
-    <div class="control">
-      <%= form.text_field :montant_ttc, class: "input" %>
-    </div>
-  </div>
-
-  <div class="field">
-    <%= form.label :document_modele_id, class: "label" %>
-    <div class="select">
-      <%= form.collection_select :document_modele_id, DocumentModele.order(:nom), :id, :nom %>
-    </div>
-  </div>
-
-  <div class="field">
-    <%= form.label :facture_statut_id, class: "label" %>
-    <div class="select">
-      <%= form.collection_select :facture_statut_id, FactureStatut.order(:nom), :id, :nom%>
-    </div>
-  </div>
-
-  <div class="field is-grouped is-grouped-right">
-    <div class="control">
-      <%= form.submit "Enregistrer", class: "button is-primary" %>
     </div>
   </div>
 <% end %>

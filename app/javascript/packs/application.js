@@ -8,8 +8,7 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
-require('./nested-forms/addFields')
-require('./nested-forms/removeFields')
+require('./app/core.js')
 
 Rails.start()
 Turbolinks.start()

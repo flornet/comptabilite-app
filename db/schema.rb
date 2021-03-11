@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_10_092327) do
+ActiveRecord::Schema.define(version: 2021_03_11_070146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,7 +39,15 @@ ActiveRecord::Schema.define(version: 2021_03_10_092327) do
     t.string "designation"
     t.decimal "montant_ht"
     t.decimal "montant_ttc"
-    t.bigint "document_modele_id", null: false
+    t.text "coordonnees_societe"
+    t.string "logo"
+    t.text "mention1_texte"
+    t.boolean "mention1_active", default: false
+    t.text "mention2_texte"
+    t.boolean "mention2_active", default: false
+    t.text "mention3_texte"
+    t.boolean "mention3_active", default: false
+    t.string "mention_legale"
     t.string "pdf"
     t.bigint "taxe_id", null: false
     t.bigint "devis_statut_id", null: false
@@ -49,7 +57,6 @@ ActiveRecord::Schema.define(version: 2021_03_10_092327) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["client_id"], name: "index_devis_on_client_id"
     t.index ["devis_statut_id"], name: "index_devis_on_devis_statut_id"
-    t.index ["document_modele_id"], name: "index_devis_on_document_modele_id"
     t.index ["taxe_id"], name: "index_devis_on_taxe_id"
     t.index ["user_id", "numero"], name: "index_devis_on_user_id_and_numero", unique: true
     t.index ["user_id"], name: "index_devis_on_user_id"
@@ -85,6 +92,7 @@ ActiveRecord::Schema.define(version: 2021_03_10_092327) do
     t.boolean "mention3_active", default: false
     t.string "mention_legale"
     t.string "modele"
+    t.boolean "defaut", default: false
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -116,7 +124,15 @@ ActiveRecord::Schema.define(version: 2021_03_10_092327) do
     t.string "designation"
     t.decimal "montant_ht"
     t.decimal "montant_ttc"
-    t.bigint "document_modele_id", null: false
+    t.text "coordonnees_societe"
+    t.string "logo"
+    t.text "mention1_texte"
+    t.boolean "mention1_active", default: false
+    t.text "mention2_texte"
+    t.boolean "mention2_active", default: false
+    t.text "mention3_texte"
+    t.boolean "mention3_active", default: false
+    t.string "mention_legale"
     t.string "pdf"
     t.bigint "taxe_id", null: false
     t.bigint "facture_statut_id", null: false
@@ -124,8 +140,8 @@ ActiveRecord::Schema.define(version: 2021_03_10_092327) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "est_brouillon", default: true, null: false
     t.index ["client_id"], name: "index_factures_on_client_id"
-    t.index ["document_modele_id"], name: "index_factures_on_document_modele_id"
     t.index ["facture_statut_id"], name: "index_factures_on_facture_statut_id"
     t.index ["taxe_id"], name: "index_factures_on_taxe_id"
     t.index ["user_id", "numero"], name: "index_factures_on_user_id_and_numero", unique: true
@@ -150,6 +166,8 @@ ActiveRecord::Schema.define(version: 2021_03_10_092327) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "dernier_numero_facture", default: 1, null: false
+    t.integer "dernier_numero_devis", default: 1, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -158,7 +176,6 @@ ActiveRecord::Schema.define(version: 2021_03_10_092327) do
   add_foreign_key "clients", "users"
   add_foreign_key "devis", "clients"
   add_foreign_key "devis", "devis_statuts"
-  add_foreign_key "devis", "document_modeles"
   add_foreign_key "devis", "taxes", column: "taxe_id"
   add_foreign_key "devis", "users"
   add_foreign_key "devis_lignes", "devis", column: "devis_id"
@@ -167,7 +184,6 @@ ActiveRecord::Schema.define(version: 2021_03_10_092327) do
   add_foreign_key "facture_lignes", "factures"
   add_foreign_key "facture_statuts", "users"
   add_foreign_key "factures", "clients"
-  add_foreign_key "factures", "document_modeles"
   add_foreign_key "factures", "facture_statuts"
   add_foreign_key "factures", "taxes", column: "taxe_id"
   add_foreign_key "factures", "users"

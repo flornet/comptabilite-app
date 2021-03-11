@@ -66,6 +66,12 @@
     <%= form.text_field :modele %>
   </div>
 
+  <div class="field">
+    <label class="checkbox">
+      <%= form.check_box :defaut, class: "checkbox" %> Par défaut
+    </label>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

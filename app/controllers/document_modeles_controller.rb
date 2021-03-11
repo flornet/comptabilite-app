@@ -65,6 +65,6 @@ class DocumentModelesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def document_modele_params
-      params.require(:document_modele).permit(:nom, :coordonnees_societe, :logo, :mention1_texte, :mention1_active, :mention2_texte, :mention2_active, :mention3_texte, :mention3_active, :mention_legale, :modele)
+      params.require(:document_modele).permit(:nom, :defaut, :coordonnees_societe, :logo, :mention1_texte, :mention1_active, :mention2_texte, :mention2_active, :mention3_texte, :mention3_active, :mention_legale, :modele)
     end
 end
