@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_11_070146) do
+ActiveRecord::Schema.define(version: 2021_03_10_191237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,8 +37,10 @@ ActiveRecord::Schema.define(version: 2021_03_11_070146) do
     t.date "date"
     t.string "numero"
     t.string "designation"
-    t.decimal "montant_ht"
-    t.decimal "montant_ttc"
+    t.decimal "montant_ht", default: "0.0"
+    t.decimal "montant_tva", default: "0.0"
+    t.decimal "montant_ttc", default: "0.0"
+    t.string "date_validite"
     t.text "coordonnees_societe"
     t.string "logo"
     t.text "mention1_texte"
@@ -94,6 +96,8 @@ ActiveRecord::Schema.define(version: 2021_03_11_070146) do
     t.string "modele"
     t.boolean "defaut", default: false
     t.bigint "user_id"
+    t.string "date_reglement"
+    t.string "date_validite"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_document_modeles_on_user_id"
@@ -122,8 +126,10 @@ ActiveRecord::Schema.define(version: 2021_03_11_070146) do
     t.date "date"
     t.string "numero"
     t.string "designation"
-    t.decimal "montant_ht"
-    t.decimal "montant_ttc"
+    t.decimal "montant_ht", default: "0.0"
+    t.decimal "montant_tva", default: "0.0"
+    t.decimal "montant_ttc", default: "0.0"
+    t.string "date_reglement"
     t.text "coordonnees_societe"
     t.string "logo"
     t.text "mention1_texte"
@@ -134,13 +140,13 @@ ActiveRecord::Schema.define(version: 2021_03_11_070146) do
     t.boolean "mention3_active", default: false
     t.string "mention_legale"
     t.string "pdf"
+    t.boolean "est_brouillon", default: true, null: false
     t.bigint "taxe_id", null: false
     t.bigint "facture_statut_id", null: false
     t.bigint "client_id", null: false
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "est_brouillon", default: true, null: false
     t.index ["client_id"], name: "index_factures_on_client_id"
     t.index ["facture_statut_id"], name: "index_factures_on_facture_statut_id"
     t.index ["taxe_id"], name: "index_factures_on_taxe_id"
@@ -150,7 +156,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_070146) do
 
   create_table "taxes", force: :cascade do |t|
     t.string "nom"
-    t.decimal "taux"
+    t.decimal "taux", default: "0.0"
     t.boolean "defaut", default: false
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false

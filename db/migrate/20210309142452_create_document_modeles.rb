@@ -14,6 +14,8 @@ class CreateDocumentModeles < ActiveRecord::Migration[6.1]
       t.string :modele
       t.boolean :defaut, :default => false
       t.references :user, foreign_key: true
+      t.string :date_reglement
+      t.string :date_validite
 
       t.timestamps
     end

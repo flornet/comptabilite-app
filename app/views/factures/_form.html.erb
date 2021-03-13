@@ -1,12 +1,21 @@
 <hr />
+<% if current_page?(action: 'new') %>
 <div class="field">
   Modèle
   <div class="select">
-    <%= select_tag "modele", options_from_collection_for_select(current_user.document_modeles.order(:nom), :id, :nom) %>
+    <%= select_tag "modele", options_from_collection_for_select(current_user.document_modeles.order(:nom), :id, :nom, @modele_par_defaut.id) %>
   </div>
 </div>
 <hr />
-<%= form_with(model: facture) do |form| %>
+<% end %>
+<%= form_with(model: facture, html: {autocomplete: "off"}) do |form| %>
+    <div class="field">
+      <%= form.label :facture_statut_id, class: "label" %>
+      <div class="select">
+        <%= form.collection_select :facture_statut_id, FactureStatut.order(:nom), :id, :nom%>
+      </div>
+    </div>
+    <hr />
     <div class="card facture-feuille">
         <% if facture.errors.any? %>
           <div class="notification is-danger">
@@ -37,73 +46,86 @@
 
         <div class="contenu-principal">
           <div class="field">
-            <%= form.label :designation, class: "label" %>
             <div class="control">
-              <%= form.text_field :designation, class: "input" %>
+              <%= form.text_field :designation, class: "input is-medium",  placeholder: :designation %>
             </div>
           </div>
 
-          <div class="field">
-            <%= form.label :type_document, class: "label" %>
-            <div class="select">
-              <%= form.select :type_document, ["Facture", "Avoir"] %>
-            </div>
+          <div class="field has-addons">
+            <p class="control">
+              <span class="select">
+                <%= form.select :type_document, ["Facture", "Avoir"] %>
+              </span>
+            </p>
+            <p class="control">
+              <span class="button is-static">
+                <%= numero_pour_facture(@facture) %>
+              </span>
+            </p>
           </div>
 
-          <div class="field">
-            <%= form.label :date, class: "label" %>
-            <div class="control">
-              <%= form.text_field :date, type: "date" %>
+          <div class="field has-addons">
+            <p class="control">
+              <span class="button is-static">
+                Date d'émission :
+              </span>
+            </p>
+            <div class="field-body">
+              <div class="field date-emission is-narrow">
+                <p class="control">
+                  <%= form.text_field :date, type: "date" %>
+                </p>
+              </div>
             </div>
           </div>
-
-          <div class="field">
-            <%= form.label :numero, class: "label" %>
-            <div class="control">
-              <%= @facture.numero %>
-            </div>
-          </div>
-
-
 
           <div class="facture-lignes">
-            <table class="table" id="table_lignes_facture">
+            <table class="table is-fullwidth is-narrow is-bordered" id="table_lignes_facture">
+              <thead>
+                <tr>
+                  <th class="has-text-left" colspan="2">Désignation</th>
+                  <th class="is-narrow">Montant HT</th>
+                </tr>
+              </thead>
               <tbody>
-              <%= form.fields_for :facture_lignes do |facture_lignes_form| %>
-                    <%= render "facture_ligne_fields_form", f: facture_lignes_form %>
+              <%= form.fields_for :facture_lignes do |facture_ligne| %>
+                  <%= render "facture_ligne_fields_form", f: facture_ligne %>
               <% end %>
               </tbody>
+              <tfoot>
+                <%= render "facture_pied_form", form: form %>
+              </tfoot>
             </table>
-            <%= link_to_add_line "Ajouter une ligne", form, :facture_lignes %>
+
           </div>
 
-          <div class="field">
-            <%= form.label :montant_ht, class: "label" %>
-            <div class="control">
-              <%= form.text_field :montant_ht, class: "input" %>
+
+          <div class="facture-mentions">
+            <div class="field">
+              <div class="control grow-wrap">
+                <%= form.text_area :mention1_texte, rows: 2, class: "textarea auto-grow" %>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control grow-wrap">
+                <%= form.text_area :mention2_texte, rows: 2, class: "textarea auto-grow" %>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control grow-wrap">
+                <%= form.text_area :mention3_texte, rows: 2, class: "textarea auto-grow" %>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control grow-wrap">
+                <%= form.text_area :mention_legale, rows: 2, class: "textarea auto-grow" %>
+              </div>
             </div>
           </div>
 
-          <div class="field">
-            <%= form.label :taxe_id, class: "label" %>
-            <div class="select">
-              <%= form.collection_select :taxe_id, Taxe.order(:nom), :id, :nom %>
-            </div>
-          </div>
-
-          <div class="field">
-            <%= form.label :montant_ttc, class: "label" %>
-            <div class="control">
-              <%= form.text_field :montant_ttc, class: "input" %>
-            </div>
-          </div>
-
-          <div class="field">
-            <%= form.label :facture_statut_id, class: "label" %>
-            <div class="select">
-              <%= form.collection_select :facture_statut_id, FactureStatut.order(:nom), :id, :nom%>
-            </div>
-          </div>
         </div>
   </div>
   <div class="panel facture-actions">

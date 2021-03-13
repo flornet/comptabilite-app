@@ -1,6 +1,5 @@
-<h1>Editing Tax</h1>
-
-<%= render 'form', tax: @tax %>
-
-<%= link_to 'Show', @tax %> |
-<%= link_to 'Back', taxes_path %>
+<div class=" one-page-form">
+    <h1 class="title is-4">Modifier la taxe</h1>
+    <%= link_to 'Revenir à la liste', taxes_path, class: "button" %>
+    <%= render 'form', tax: @tax %>
+</div>

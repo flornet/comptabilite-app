@@ -1,4 +1,5 @@
 import bulmaCalendar from 'bulma-calendar';
+import currency from "currency.js";
 
 class comptaApp {
   // This executes when the function is instantiated.
@@ -9,6 +10,7 @@ class comptaApp {
   }
 
   setupBulma() {
+    // Close button for notifications
     (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
       const $notification = $delete.parentNode;
 
@@ -18,13 +20,203 @@ class comptaApp {
     });
 
     // Initialize all input of type date
-    var calendars = bulmaCalendar.attach('[type="date"]');
+    var calendars = bulmaCalendar.attach('[type="date"]', {
+      weekStart: 1,
+      showFooter:false,
+      dateFormat: 'DD/MM/YYYY'
+    });
+
+    // Initialize clickable rows
+    (document.querySelectorAll('.clickable-row') || []).forEach(($row) => {
+      $row.addEventListener('click', () => {
+        if (typeof Turbolinks !== 'undefined') {
+          Turbolinks.visit($row.dataset.href);
+        } else {
+          window.location.assign($row.dataset.href);
+        }
+      });
+    });
   }
 
   setupFacture() {
     this.facture = {};
     this.facture.table_lignes_facture = document.getElementById('table_lignes_facture');
-    this._bindFieldsButtons();
+    if (this.facture.table_lignes_facture !== null) {
+      this.humanReadableCurrencyOptions = {
+                                            separator: ' ',
+                                            decimal: ',',
+                                            symbol: '€',
+                                            pattern: '# !',
+                                            negativePattern: "- # !"
+                                          };
+      this.machineReadableCurrencyOptions = {
+                                            separator: '',
+                                            decimal: ',',
+                                            symbol: '€',
+                                            pattern: '#',
+                                            negativePattern: "-#"
+                                          };
+      this.facture.total_ht_dummy     = document.getElementById('facture_montant_ht_dummy');
+      this.facture.total_ht           = document.getElementById('facture_montant_ht');
+      this.facture.montant_tva_dummy  = document.getElementById('facture_montant_tva_dummy');
+      this.facture.montant_tva        = document.getElementById('facture_montant_tva');
+      this.facture.total_ttc_dummy    = document.getElementById('facture_montant_ttc_dummy');
+      this.facture.total_ttc          = document.getElementById('facture_montant_ttc');
+      this.facture.taux_tva           = document.getElementById('facture_taxe_id');
+      this._bindFieldsButtons();
+      this._setupAutoGrow();
+      this._setupPriceFields();
+    }
+  }
+
+  _setupPriceFields() {
+    // var fields = document.querySelectorAll('.price-input');
+    // if (fields.length > 0) {
+    //   fields.forEach(field => {
+    //     field.value = field.value.replace('.', ',');
+    //     field.value = this._formatHumanCurrency(field.value);
+    //   })
+    // }
+    // this.facture.montant_tva_dummy.innerText  = this._formatHumanCurrency(currency(this.facture.montant_tva.value));
+    // this.facture.total_ht_dummy.innerText     = this._formatHumanCurrency(currency(this.facture.total_ht.value));
+    // this.facture.total_ttc_dummy.innerText    = this._formatHumanCurrency(currency(this.facture.total_ttc.value));
+
+    // Tracking changes in Taxe rate
+    this.facture.taux_tva.addEventListener("change", event => {
+      this._updateTVA();
+      this._updateTotalTTC();
+    })
+
+    // Use event delegation to ensure any fields added after the page loads are captured.
+    document.addEventListener('keydown', event => {
+      if (event.target && event.target.type === 'text' && event.target.classList.contains('price-input')) {
+        // console.log(event.keyCode);
+        var allowed_key_codes = [8, 9, 13, 16, 37, 39, 46, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 109, 110, 188, 189, 190];
+        var allowed_shift_key_codes = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57];
+        var allowed_meta_key_codes = [65, 86, 90];
+        var allowed_crtl_key_codes = [65, 86, 90];
+        if (allowed_key_codes.includes(event.keyCode)
+            || (event.metaKey && allowed_meta_key_codes.includes(event.keyCode))
+            || (event.shiftKey && allowed_shift_key_codes.includes(event.keyCode))
+            || (event.ctrlKey && allowed_crtl_key_codes.includes(event.keyCode))) {
+          if (event.keyCode === 110 || event.keyCode === 188 || event.keyCode === 190) { // . and ,
+            event.preventDefault();
+            if (!event.target.value.includes(',')) {
+              if(document.selection) {
+                  var range = document.selection.createRange();
+                  range.text = ',';
+              }else if(event.target.selectionStart || event.target.selectionStart == '0') {
+                  var start = event.target.selectionStart;
+                  var end = event.target.selectionEnd;
+                  event.target.value = event.target.value.substring(0, start) + ',' + event.target.value.substring(end, event.target.value.length)
+                  event.target.selectionStart = start + 1;
+                  event.target.selectionEnd = start +1;
+              } else {
+                event.target.value = event.target.value + ',';
+              }
+            }
+          }
+        } else {
+          event.preventDefault();
+        }
+      }
+    })
+
+    // Tracking changes in lines inputs
+    document.addEventListener('input', event => {
+      if (event.target && event.target.type === 'text' && event.target.classList.contains('price-input')) {
+        var realInput = event.target.previousElementSibling;
+        var values = event.target.value.split(',');
+        if (values.length === 2 && values[1].length > 2) {
+          event.target.value = event.target.value.slice(0, -1)
+        }
+        realInput.value = event.target.value.replace(',', '.');
+        this._updateTotalHT();
+        this._updateTVA();
+        this._updateTotalTTC();
+      }
+    })
+
+    // Updating dummy fields values on focusOut
+    document.addEventListener('focusout', event => {
+      if (event.target && event.target.type === 'text' && event.target.classList.contains('price-input')) {
+        event.target.value = this._formatHumanCurrency(event.target.value);
+      }
+    })
+
+    // Updating real fields values on focusIn
+    document.addEventListener('focusin', event => {
+      if (event.target && event.target.type === 'text' && event.target.classList.contains('price-input') && event.target.value !== '') {
+        event.target.value = this._formatMachineCurrency(event.target.value)
+      }
+    })
+  }
+
+  _formatHumanCurrency(value) {
+    var new_value = currency(value, this.humanReadableCurrencyOptions);
+    if (isNaN(new_value.value)) {
+      new_value.value = 0;
+      new_value.intValue = 0;
+    }
+    return(new_value.format());
+  }
+
+  _formatMachineCurrency(value) {
+    var new_value = currency(value, this.machineReadableCurrencyOptions);
+    return(new_value.format());
+  }
+
+  _updateTotalHT() {
+    var priceInputs = document.querySelectorAll('.nested-fields:not(.is-hidden) .price-input');
+    var total_ht = currency(0);
+    if (priceInputs.length > 0) {
+      priceInputs.forEach(priceInput => {
+        var montant_ht = currency(priceInput.value, this.humanReadableCurrencyOptions);
+        total_ht = currency(total_ht.value).add(montant_ht.value);
+      })
+    }
+    this.facture.total_ht_dummy.innerText = this._formatHumanCurrency(total_ht);
+    this.facture.total_ht.value = total_ht.value;
+  }
+
+  _updateTVA() {
+    var total_ht = currency(this.facture.total_ht.value);
+    var option_selectionnee = this.facture.taux_tva.selectedIndex ;
+    var taux_tva = this.facture.taux_tva.options[option_selectionnee].dataset.taux;
+    var montant_tva = total_ht.multiply(taux_tva);
+    this.facture.montant_tva_dummy.innerText = this._formatHumanCurrency(montant_tva);
+    this.facture.montant_tva.value = montant_tva.value;
+  }
+
+  _updateTotalTTC() {
+    var total_ht = currency(this.facture.total_ht.value);
+    var montant_tva = currency(this.facture.montant_tva.value) ;
+    var total_ttc = total_ht.add(montant_tva) ;
+
+    this.facture.total_ttc_dummy.innerText = this._formatHumanCurrency(total_ttc);
+    this.facture.total_ttc.value = total_ttc.value;
+  }
+
+  _setupAutoGrow() {
+    // Use event delegation to ensure any fields added after the page loads are captured.
+    document.addEventListener('input', e => {
+      if (e.target && e.target.classList.contains('auto-grow')) {
+        this._autoGrow(e.target)
+      }
+    })
+
+    // Set for current textarea loaded with page
+    var textareas = document.querySelectorAll('.auto-grow');
+    if (textareas.length > 0) {
+      textareas.forEach(textarea => {
+        this._autoGrow(textarea)
+      })
+    }
+  }
+
+  _autoGrow(textarea) {
+    let textareaWrapper = textarea.closest('.grow-wrap')
+    textareaWrapper.dataset.replicatedValue = textarea.value
   }
 
   _bindFieldsButtons() {
@@ -39,7 +231,7 @@ class comptaApp {
     }
     // Use event delegation to ensure any fields added after the page loads are captured.
     document.addEventListener('click', e => {
-      if (e.target && e.target.className == 'remove_fields') {
+      if (e.target && e.target.classList.contains('remove_fields')) {
         this._removeFields(e.target, e)
       }
     })
@@ -78,7 +270,10 @@ class comptaApp {
     // If there is a delete field, update the value to `1` and hide the corresponding nested fields.
     if (deleteField) {
       deleteField.value = 1
-      fieldParent.style.display = 'none'
+      fieldParent.classList.add('is-hidden')
+      this._updateTotalHT()
+      this._updateTVA()
+      this._updateTotalTTC()
     }
   }
 }

@@ -5,8 +5,10 @@ class CreateDevis < ActiveRecord::Migration[6.1]
       t.date :date
       t.string :numero
       t.string :designation
-      t.decimal :montant_ht
-      t.decimal :montant_ttc
+      t.decimal :montant_ht, :default => 0
+      t.decimal :montant_tva, :default => 0
+      t.decimal :montant_ttc, :default => 0
+      t.string :date_validite
 
       t.text :coordonnees_societe
       t.string :logo

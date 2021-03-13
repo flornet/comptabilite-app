@@ -1,15 +1,23 @@
 <tr class="nested-fields">
-  <td>
+  <td colspan="2">
+    <div class="field">
+      <div class="control grow-wrap">
+        <%= f.text_area :designation, rows: 1, class: "textarea auto-grow" %>
+      </div>
+    </div>
     <%= f.hidden_field :_destroy %>
-    <%= f.label :designation %>
-    <%= f.text_area :designation %>
   </td>
-
-  <td>
-    <%= f.label :montant_ht %>
-    <%= f.text_field :montant_ht %>
-  </td>
-  <td>
-    <%= link_to "Supprimer cette ligne", '#', class: "remove_fields" %>
+  <td class="is-relative">
+    <div class="field">
+      <div class="control price-input-wrap">
+        <%= f.hidden_field :montant_ht %>
+        <input type="text" class="input price-input" autocomplete="off" value="<%= montant_humanise(f.object.montant_ht) %>"></input>
+      </div>
+    </div>
+    <div class="row-action">
+      <span class="icon">
+        <i class="fas fa-times remove_fields is-clickable"></i>
+      </span>
+    </div>
   </td>
 </tr>

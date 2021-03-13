@@ -34,7 +34,7 @@ mention2_active: true,
 mention3_active: false,
 mention_legale: "EURL au capital de 5 000 euros
 Siret : 810 746 388 00018 - RCS : PARIS - NAF : 7022Z
-TVA Intracommunautaire : FR 66 810 746 388", modele: "weloveusers", user: current_user)
+TVA Intracommunautaire : FR 66 810 746 388", modele: "weloveusers", user: current_user, defaut: true, date_reglement: "A réception", date_validite: "30 jours")
     DocumentModele.create(nom: "Luminose", logo: "luminose-logo.png",
 coordonnees_societe: "EURL WE LOVE USERS
 95 AVENUE DE SAINT-OUEN
@@ -49,7 +49,7 @@ mention2_active: true,
 mention3_active: false,
 mention_legale: "EURL au capital de 5 000 euros
 Siret : 810 746 388 00018 - RCS : PARIS - NAF : 7022Z
-TVA Intracommunautaire : FR 66 810 746 388", modele: "luminose", user: current_user)
+TVA Intracommunautaire : FR 66 810 746 388", modele: "luminose", user: current_user, date_reglement: "A réception", date_validite: "30 jours")
     respond_to do |format|
       format.html { redirect_to root_url, notice: "Les données par défaut ont été chargées." }
       format.json { head :no_content }

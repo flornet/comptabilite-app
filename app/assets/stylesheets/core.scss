@@ -3,7 +3,7 @@
 }
 .card.facture-feuille {
   width: 735px;
-  height: 1040px;
+  min-height: 1040px;
   float:left;
   position: relative;
 }
@@ -21,13 +21,25 @@
 }
 .card.facture-feuille .contenu-principal {
   position: absolute;
-  top: 230px;
+  top: 250px;
   left: 30px;
   right:30px;
 }
-.card.facture-feuille .contenu-principal .facture-lignes {
-  border: 2px blue solid;
-  padding: 3em;
+.card.facture-feuille .facture-pied td.totaux-labels {
+  width:100px;
+}
+
+
+.card.facture-feuille .facture-mentions {
+  margin-top:30px;
+}
+.card.facture-feuille .contenu-principal .facture-lignes tbody tr .row-action {
+  position: absolute;
+  right:-1.5em;
+  top:0.8em;
+}
+.card.facture-feuille .contenu-principal .facture-lignes .table th.is-narrow {
+  width: 19%;
 }
 .card.facture-feuille .client .field:not(:last-child) {
   margin-bottom: 0;
@@ -59,12 +71,74 @@
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
 }
+.card.facture-feuille .contenu-principal .date-emission {
+  width:8em;
+}
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker {
+  width: 320px;
+}
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-clear-button {
+  display: none;
+}
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper {
+  flex: 0;
+  border-color: #dbdbdb;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper:hover {
+  border-color: #b5b5b5;
+}
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy::before,
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy:before {
+  display: none;
+}
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper .datetimepicker-dummy-input:first-child {
+  text-indent: 0;
+  text-align: center;
+}
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper .datetimepicker-dummy-input {
+  max-width: 100%;
+  cursor: pointer;
+}
 .panel.facture-actions {
   float:left;
   margin-left: 20px;
 }
 .panel.facture-actions .buttons {
   width: 180px;
+}
+
+.grow-wrap {
+  /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
+  display: grid;
+}
+.grow-wrap::after {
+  /* Note the weird space! Needed to preventy jumpy behavior */
+  content: attr(data-replicated-value) " ";
+
+  /* This is how textarea text behaves */
+  white-space: pre-wrap;
+
+  /* Hidden from view, clicks, and screen readers */
+  visibility: hidden;
+}
+.grow-wrap > textarea {
+  /* You could leave this, but after a user resizes, then it ruins the auto sizing */
+  resize: none;
+
+  /* Firefox shows scrollbar on growth, you can hide like this. */
+  overflow: hidden;
+}
+.grow-wrap > textarea,
+.grow-wrap::after {
+  /* Identical styling required!! */
+  border: 1px solid #dbdbdb;
+  padding: 0.5rem;
+  font: inherit;
+
+  /* Place on top of each other */
+  grid-area: 1 / 1 / 2 / 2;
 }
 
 

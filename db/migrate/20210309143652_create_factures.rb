@@ -5,8 +5,10 @@ class CreateFactures < ActiveRecord::Migration[6.1]
       t.date :date
       t.string :numero
       t.string :designation
-      t.decimal :montant_ht
-      t.decimal :montant_ttc
+      t.decimal :montant_ht, :default => 0
+      t.decimal :montant_tva, :default => 0
+      t.decimal :montant_ttc, :default => 0
+      t.string :date_reglement
 
       t.text :coordonnees_societe
       t.string :logo
@@ -19,6 +21,7 @@ class CreateFactures < ActiveRecord::Migration[6.1]
       t.string :mention_legale
 
       t.string :pdf
+      t.boolean :est_brouillon, null: false, default: 1
       t.references :taxe, null: false, foreign_key: true
       t.references :facture_statut, null: false, foreign_key: true
       t.references :client, null: false, foreign_key: true
