@@ -62,9 +62,19 @@ class comptaApp {
       this.facture.total_ttc_dummy    = document.getElementById('facture_montant_ttc_dummy');
       this.facture.total_ttc          = document.getElementById('facture_montant_ttc');
       this.facture.taux_tva           = document.getElementById('facture_taxe_id');
-      this.facture.client             = document.getElementById('facture_client_attributes_client');
-      this.facture.menu_clients       = this.facture.client.closest('.dropdown');
-      this.facture.liste_clients      = this.facture.menu_clients.querySelectorAll('.dropdown-content')[0];
+      this.facture.client             = {};
+      this.facture.client.id          = document.getElementById('facture_client_attributes_id');
+      this.facture.client.nom         = document.getElementById('facture_client_attributes_client');
+      this.facture.client.adresse     = document.getElementById('facture_client_attributes_adresse');
+      this.facture.client.code_postal = document.getElementById('facture_client_attributes_code_postal');
+      this.facture.client.ville       = document.getElementById('facture_client_attributes_ville');
+      this.facture.client.pays        = document.getElementById('facture_client_attributes_pays');
+      this.facture.client.numero_tva_intracommunautaire = document.getElementById('facture_client_attributes_numero_tva_intracommunautaire');
+      this.facture.client.email       = document.getElementById('facture_client_attributes_email');
+      this.facture.client.telephone   = document.getElementById('facture_client_attributes_telephone');
+      this.facture.client.seleteur    = this.facture.client.nom.closest('.dropdown');
+      this.facture.client.liste       = this.facture.client.seleteur.querySelectorAll('.dropdown-content')[0];
+      this.facture.client.indicateur  = document.getElementById('creating-client-indicator');
       this._bindFieldsButtons();
       this._setupAutoGrow();
       this._setupPriceFields();
@@ -72,28 +82,51 @@ class comptaApp {
     }
   }
   _setupAutoCompleteClient() {
-    this.facture.client.addEventListener('input',  event => {
-      console.log(this.facture.client.value);
-      fetch("/clients.json?query[nom]="+this.facture.client.value)
+    this.facture.client.nom.addEventListener('input',  event => {
+      // console.log(this.facture.client.nom.value);
+      fetch("/clients.json?query[nom]="+this.facture.client.nom.value)
         .then(response => response.json())
         .then(data => this._updateClientsSuggestedList(data));
     })
-    // facture_client_attributes_nom
-    // var client = algoliasearch('YourApplicationID', 'YourSearchOnlyAPIKey');
-    // var index = client.initIndex('YourIndex');
+
+    this.facture.client.nom.addEventListener('input',  event => {
+      this.facture.client.indicateur.classList.remove('is-hidden');
+      this.facture.client.id.value = '';
+    }, { once: true })
   }
 
   _updateClientsSuggestedList(data) {
-    this.facture.liste_clients.innerHTML = "";
+    var that = this;
+    this.facture.client.liste.innerHTML = "";
     if (data.length > 0) {
-      var new_content = ""
       data.forEach(client => {
-        new_content += '<a href="#" class="dropdown-item">' + client.nom + '</a>';
+        var link = document.createElement("a");
+        var linkName = document.createTextNode(client.nom);
+        link.className = "dropdown-item";
+        link.appendChild(linkName);
+        link.addEventListener('click', event => {
+          that.facture.client.id.value          = client.id;
+          that.facture.client.nom.value         = client.nom;
+          that.facture.client.adresse.value     = client.adresse;
+          that.facture.client.code_postal.value = client.code_postal;
+          that.facture.client.ville.value       = client.ville;
+          that.facture.client.pays.value        = client.pays;
+          that.facture.client.numero_tva_intracommunautaire.value = client.numero_tva_intracommunautaire;
+          that.facture.client.email.value       = client.email;
+          that.facture.client.telephone.value   = client.telephone;
+          that.facture.client.seleteur.value    = client.seleteur;
+          that.facture.client.indicateur.classList.add('is-hidden');
+          that.facture.client.seleteur.classList.remove('is-active');
+          this.facture.client.nom.addEventListener('input',  event => {
+            that.facture.client.indicateur.classList.remove('is-hidden');
+            that.facture.client.id.value = '';
+          }, { once: true })
+        })
+        this.facture.client.liste.appendChild(link);
       })
-      this.facture.liste_clients.innerHTML = new_content;
-      this.facture.menu_clients.classList.add('is-active');
+      this.facture.client.seleteur.classList.add('is-active');
     } else {
-      this.facture.menu_clients.classList.remove('is-active');
+      this.facture.client.seleteur.classList.remove('is-active');
     }
   }
 

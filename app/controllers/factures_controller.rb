@@ -44,13 +44,32 @@ class FacturesController < ApplicationController
 
   # POST /factures or /factures.json
   def create
-    @facture = Facture.new(facture_params)
+    params = facture_params
+
+    # respond_to do |format|
+    #   format.html { render "debug" }
+    # end
+
+    if params[:client_attributes][:id] != ""
+      # Client already existing to link and possibly update
+      client = Client.find(params[:client_attributes][:id])
+      client.assign_attributes(params[:client_attributes])
+      params.delete :client_attributes
+      @facture = Facture.new(params)
+      @facture.client = client
+    else
+      # New client to create
+      @facture = Facture.new(params)
+    end
+
     @facture.user = current_user
     @facture.facture_statut = current_user.facture_statuts.where(defaut: true).first
+
     if @facture.client
       @facture.client.taxe = @facture.taxe
       @facture.client.user = current_user
     end
+
     if !est_brouillon?
       @facture.est_brouillon = false
     end
@@ -71,11 +90,31 @@ class FacturesController < ApplicationController
 
   # PATCH/PUT /factures/1 or /factures/1.json
   def update
+    params = facture_params
+
+    # respond_to do |format|
+    #   format.html { render "debug" }
+    # end
+
+    if params[:client_attributes][:id] == ""
+      # Creating a new associated client
+      @facture.client = Client.new
+      @facture.client.assign_attributes(params[:client_attributes])
+      @facture.client.taxe = @facture.taxe
+      @facture.client.user = current_user
+      params.delete :client_attributes
+    elsif params[:client_attributes][:id] != @facture.client.id
+      # Changing the associated client
+      client = Client.find(params[:client_attributes][:id])
+      client.assign_attributes(params[:client_attributes])
+      params.delete :client_attributes
+      @facture.client = client
+    end
     if !est_brouillon?
       @facture.est_brouillon = false
     end
     respond_to do |format|
-      if @facture.update(facture_params)
+      if @facture.update(params)
         format.html { redirect_to edit_facture_path(@facture), notice: "Facture was successfully updated." }
         format.json { render :show, status: :ok, location: @facture }
       else

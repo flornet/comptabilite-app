@@ -1,8 +1,11 @@
 <div class="field">
-  <div class="control">
+  <div class="control has-icons-right">
     <div class="dropdown">
       <div class="dropdown-trigger">
         <%= form.text_field :nom, id: "facture_client_attributes_client", name:"facture[client_attributes][client]", class: "input", placeholder: "Client", autocomplete: "off" %>
+        <span id="creating-client-indicator" class="icon is-right <%='is-hidden' unless @creating_new %>">
+          <i class="fas fa-asterisk"></i>
+        </span>
       </div>
       <div class="dropdown-menu" id="dropdown-menu" role="menu">
         <div class="dropdown-content">
@@ -56,3 +59,6 @@
     <%= form.text_field :telephone, class: "input", placeholder: :telephone %>
   </div>
 </div>
+<% if @creating_new %>
+  <%= form.hidden_field :id %>
+<% end %>
