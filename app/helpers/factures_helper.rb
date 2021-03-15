@@ -25,7 +25,7 @@ module FacturesHelper
           # `association.to_s.singularize + "_fields"` ends up evaluating to `address_fields`
           # The render function will then look for `views/people/_address_fields.html.erb`
           # The render function also needs to be passed the value of 'builder', because `views/people/_address_fields.html.erb` needs this to render the form tags.
-          render(association.to_s.singularize + "_fields_form", f: builder)
+          render('factures/partials/' + association.to_s.singularize + "_fields_form", f: builder)
       end
 
       # This renders a simple link, but passes information into `data` attributes.
@@ -36,6 +36,18 @@ module FacturesHelper
       # The `id:` value needs to match the value used in `child_index: id`.
       link_to(name, '#', class: "add_fields button", data: {id: id, fields: fields.gsub("\n", "")})
 
+  end
+
+  def links_to_choose_model(models, default_model)
+    output = ""
+    models.each do |modele|
+      css_class = "button"
+      if default_model == modele
+        css_class += " is-active"
+      end
+      output += link_to(modele.nom, new_facture_path(:with_model => modele.id), class: css_class)
+    end
+    output.html_safe
   end
 
   def numero_pour_facture(facture)

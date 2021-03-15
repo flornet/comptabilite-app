@@ -6,4 +6,6 @@ class Client < ApplicationRecord
 
   validates :nom,  :presence => true
   validates :nom, uniqueness: { case_sensitive: false }
+
+  scope :filtered, ->(query_params) { Client::Filter.new.filter(self, query_params) }
 end

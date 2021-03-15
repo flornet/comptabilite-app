@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_10_191237) do
+ActiveRecord::Schema.define(version: 2021_03_15_145816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,12 +44,9 @@ ActiveRecord::Schema.define(version: 2021_03_10_191237) do
     t.text "coordonnees_societe"
     t.string "logo"
     t.text "mention1_texte"
-    t.boolean "mention1_active", default: false
     t.text "mention2_texte"
-    t.boolean "mention2_active", default: false
     t.text "mention3_texte"
-    t.boolean "mention3_active", default: false
-    t.string "mention_legale"
+    t.text "mention_legale"
     t.string "pdf"
     t.bigint "taxe_id", null: false
     t.bigint "devis_statut_id", null: false
@@ -57,6 +54,7 @@ ActiveRecord::Schema.define(version: 2021_03_10_191237) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "contrast_color", default: "#000000", null: false
     t.index ["client_id"], name: "index_devis_on_client_id"
     t.index ["devis_statut_id"], name: "index_devis_on_devis_statut_id"
     t.index ["taxe_id"], name: "index_devis_on_taxe_id"
@@ -87,12 +85,9 @@ ActiveRecord::Schema.define(version: 2021_03_10_191237) do
     t.text "coordonnees_societe"
     t.string "logo"
     t.text "mention1_texte"
-    t.boolean "mention1_active", default: false
     t.text "mention2_texte"
-    t.boolean "mention2_active", default: false
     t.text "mention3_texte"
-    t.boolean "mention3_active", default: false
-    t.string "mention_legale"
+    t.text "mention_legale"
     t.string "modele"
     t.boolean "defaut", default: false
     t.bigint "user_id"
@@ -100,6 +95,7 @@ ActiveRecord::Schema.define(version: 2021_03_10_191237) do
     t.string "date_validite"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "contrast_color", default: "#000000", null: false
     t.index ["user_id"], name: "index_document_modeles_on_user_id"
   end
 
@@ -133,12 +129,9 @@ ActiveRecord::Schema.define(version: 2021_03_10_191237) do
     t.text "coordonnees_societe"
     t.string "logo"
     t.text "mention1_texte"
-    t.boolean "mention1_active", default: false
     t.text "mention2_texte"
-    t.boolean "mention2_active", default: false
     t.text "mention3_texte"
-    t.boolean "mention3_active", default: false
-    t.string "mention_legale"
+    t.text "mention_legale"
     t.string "pdf"
     t.boolean "est_brouillon", default: true, null: false
     t.bigint "taxe_id", null: false
@@ -147,6 +140,7 @@ ActiveRecord::Schema.define(version: 2021_03_10_191237) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "contrast_color", default: "#000000", null: false
     t.index ["client_id"], name: "index_factures_on_client_id"
     t.index ["facture_statut_id"], name: "index_factures_on_facture_statut_id"
     t.index ["taxe_id"], name: "index_factures_on_taxe_id"

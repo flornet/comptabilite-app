@@ -1,4 +1,5 @@
 <div class="facture-form">
+    <%= links_to_choose_model(current_user.document_modeles.order(:nom), @modele_selectionne) %>
     <h1 class="title is-4">Nouvelle facture</h1>
     <%= link_to 'Revenir à la liste', factures_path, class: "button" %>
     <%= render 'form', facture: @facture %>

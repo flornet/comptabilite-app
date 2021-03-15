@@ -5,12 +5,9 @@ class CreateDocumentModeles < ActiveRecord::Migration[6.1]
       t.text :coordonnees_societe
       t.string :logo
       t.text :mention1_texte
-      t.boolean :mention1_active, :default => false
       t.text :mention2_texte
-      t.boolean :mention2_active, :default => false
       t.text :mention3_texte
-      t.boolean :mention3_active, :default => false
-      t.string :mention_legale
+      t.text :mention_legale
       t.string :modele
       t.boolean :defaut, :default => false
       t.references :user, foreign_key: true

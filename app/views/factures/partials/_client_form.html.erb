@@ -1,0 +1,58 @@
+<div class="field">
+  <div class="control">
+    <div class="dropdown">
+      <div class="dropdown-trigger">
+        <%= form.text_field :nom, id: "facture_client_attributes_client", name:"facture[client_attributes][client]", class: "input", placeholder: "Client", autocomplete: "off" %>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu" role="menu">
+        <div class="dropdown-content">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <%= form.text_area :adresse, rows: 2, class: "textarea", placeholder: :adresse %>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-body">
+    <div class="field code-postal">
+      <div class="control">
+        <%= form.text_field :code_postal, class: "input", placeholder: :code_postal %>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control is-expanded">
+        <%= form.text_field :ville, class: "input", placeholder: :ville %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <%= form.text_field :pays, class: "input", placeholder: :pays %>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <%= form.text_field :numero_tva_intracommunautaire, class: "input", placeholder: :numero_tva_intracommunautaire %>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <%= form.text_field :email, class: "input", placeholder: :email %>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control">
+    <%= form.text_field :telephone, class: "input", placeholder: :telephone %>
+  </div>
+</div>

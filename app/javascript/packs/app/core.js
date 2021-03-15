@@ -1,4 +1,5 @@
-import bulmaCalendar from 'bulma-calendar';
+import flatpickr from "flatpickr";
+import { French } from "flatpickr/dist/l10n/fr.js"
 import currency from "currency.js";
 
 class comptaApp {
@@ -6,7 +7,6 @@ class comptaApp {
   constructor() {
     this.setupBulma();
     this.setupFacture();
-
   }
 
   setupBulma() {
@@ -20,10 +20,9 @@ class comptaApp {
     });
 
     // Initialize all input of type date
-    var calendars = bulmaCalendar.attach('[type="date"]', {
-      weekStart: 1,
-      showFooter:false,
-      dateFormat: 'DD/MM/YYYY'
+    flatpickr(".flatpickr", {
+      dateFormat: "d/m/Y",
+      locale: French
     });
 
     // Initialize clickable rows
@@ -63,24 +62,42 @@ class comptaApp {
       this.facture.total_ttc_dummy    = document.getElementById('facture_montant_ttc_dummy');
       this.facture.total_ttc          = document.getElementById('facture_montant_ttc');
       this.facture.taux_tva           = document.getElementById('facture_taxe_id');
+      this.facture.client             = document.getElementById('facture_client_attributes_client');
+      this.facture.menu_clients       = this.facture.client.closest('.dropdown');
+      this.facture.liste_clients      = this.facture.menu_clients.querySelectorAll('.dropdown-content')[0];
       this._bindFieldsButtons();
       this._setupAutoGrow();
       this._setupPriceFields();
+      this._setupAutoCompleteClient();
+    }
+  }
+  _setupAutoCompleteClient() {
+    this.facture.client.addEventListener('input',  event => {
+      console.log(this.facture.client.value);
+      fetch("/clients.json?query[nom]="+this.facture.client.value)
+        .then(response => response.json())
+        .then(data => this._updateClientsSuggestedList(data));
+    })
+    // facture_client_attributes_nom
+    // var client = algoliasearch('YourApplicationID', 'YourSearchOnlyAPIKey');
+    // var index = client.initIndex('YourIndex');
+  }
+
+  _updateClientsSuggestedList(data) {
+    this.facture.liste_clients.innerHTML = "";
+    if (data.length > 0) {
+      var new_content = ""
+      data.forEach(client => {
+        new_content += '<a href="#" class="dropdown-item">' + client.nom + '</a>';
+      })
+      this.facture.liste_clients.innerHTML = new_content;
+      this.facture.menu_clients.classList.add('is-active');
+    } else {
+      this.facture.menu_clients.classList.remove('is-active');
     }
   }
 
   _setupPriceFields() {
-    // var fields = document.querySelectorAll('.price-input');
-    // if (fields.length > 0) {
-    //   fields.forEach(field => {
-    //     field.value = field.value.replace('.', ',');
-    //     field.value = this._formatHumanCurrency(field.value);
-    //   })
-    // }
-    // this.facture.montant_tva_dummy.innerText  = this._formatHumanCurrency(currency(this.facture.montant_tva.value));
-    // this.facture.total_ht_dummy.innerText     = this._formatHumanCurrency(currency(this.facture.total_ht.value));
-    // this.facture.total_ttc_dummy.innerText    = this._formatHumanCurrency(currency(this.facture.total_ttc.value));
-
     // Tracking changes in Taxe rate
     this.facture.taux_tva.addEventListener("change", event => {
       this._updateTVA();

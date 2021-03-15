@@ -3,7 +3,7 @@ class ClientsController < ApplicationController
 
   # GET /clients or /clients.json
   def index
-    @clients = current_user.clients
+    @clients = current_user.clients.filtered(query_params).order(:nom)
   end
 
   # GET /clients/1 or /clients/1.json
@@ -66,5 +66,10 @@ class ClientsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def client_params
       params.require(:client).permit(:nom, :adresse, :code_postal, :ville, :pays, :numero_tva_intracommunautaire, :email, :telephone, :taxe_id)
+    end
+
+    def query_params
+      query_params = params[:query]
+      query_params ? query_params.permit(:nom) : {}
     end
 end

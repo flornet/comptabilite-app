@@ -1,14 +1,23 @@
-<hr />
-<% if current_page?(action: 'new') %>
-<div class="field">
-  Modèle
-  <div class="select">
-    <%= select_tag "modele", options_from_collection_for_select(current_user.document_modeles.order(:nom), :id, :nom, @modele_par_defaut.id) %>
-  </div>
-</div>
-<hr />
-<% end %>
+<style type="text/css">
+  .has-bg-primary-color {
+    background-color: <%= @facture.contrast_color %> !important;
+    color: #ffffff !important;
+  }
+  .has-text-primary-color {
+    color: <%= @facture.contrast_color %> !important;
+  }
+</style>
+<%
+if current_page?(action: 'new')
+  @creating_new = true
+else
+  @creating_new = false
+end %>
+
 <%= form_with(model: facture, html: {autocomplete: "off"}) do |form| %>
+  <% if @creating_new %>
+    <%= form.hidden_field :facture_statut_id%>
+  <% else %>
     <div class="field">
       <%= form.label :facture_statut_id, class: "label" %>
       <div class="select">
@@ -16,6 +25,24 @@
       </div>
     </div>
     <hr />
+  <% end %>
+
+  <div class="panel facture-actions">
+    <div class="panel-block">
+        <div class="buttons">
+          <% if @creating_new %>
+            <%= form.button "Sauvegarder en brouillon", name: 'commit', value: "brouillon", class: "button is-secondary is-fullwidth" %>
+            <%= form.button "Créer la facture", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
+          <% elsif @facture.est_brouillon %>
+            <%= form.button "Enregistrer", name: 'commit',value: "brouillon", class: "button is-secondary is-fullwidth" %>
+            <%= form.button "Créer la facture", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
+          <% else %>
+            <%= form.button "Enregistrer", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+  
     <div class="card facture-feuille">
         <% if facture.errors.any? %>
           <div class="notification is-danger">
@@ -30,117 +57,68 @@
           </div>
         <% end %>
 
-        <div class="fournisseur">
-          <div class="field">
-            <div class="control">
-              <%= form.text_area :coordonnees_societe, rows: 5, class: "textarea is-small" %>
-            </div>
-          </div>
-        </div>
-
-        <div class="client">
-          <%= form.fields_for :client do |client_form| %>
-            <%= render "client_form", form: client_form %>
-          <% end %>
-        </div>
-
-        <div class="contenu-principal">
-          <div class="field">
-            <div class="control">
-              <%= form.text_field :designation, class: "input is-medium",  placeholder: :designation %>
-            </div>
-          </div>
-
-          <div class="field has-addons">
-            <p class="control">
-              <span class="select">
-                <%= form.select :type_document, ["Facture", "Avoir"] %>
-              </span>
-            </p>
-            <p class="control">
-              <span class="button is-static">
-                <%= numero_pour_facture(@facture) %>
-              </span>
-            </p>
-          </div>
-
-          <div class="field has-addons">
-            <p class="control">
-              <span class="button is-static">
-                Date d'émission :
-              </span>
-            </p>
-            <div class="field-body">
-              <div class="field date-emission is-narrow">
-                <p class="control">
-                  <%= form.text_field :date, type: "date" %>
-                </p>
+        <div class="tile is-ancestor">
+          <div class="tile is-4 is-parent">
+            <div class="tile is-child">
+              <div class="fournisseur">
+                <%= render "factures/partials/fournisseur_form", form: form %>
               </div>
             </div>
           </div>
+          <div class="tile is-8 is-parent">
+            <div class="tile is-child">
+              <div class="tile is-ancestor">
+                <div class="tile is-3 is-parent">
+                  <div class="tile is-child">
+                  </div>
+                </div>
+                <div class="tile is-9 is-parent">
+                  <div class="tile is-child">
+                    <div class="client">
+                      <%= form.fields_for :client do |client_form| %>
+                        <%= render "factures/partials/client_form", form: client_form %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+        <div class="contenu-principal">
+          <%= render "factures/partials/entete_form", form: form %>
 
           <div class="facture-lignes">
-            <table class="table is-fullwidth is-narrow is-bordered" id="table_lignes_facture">
+            <table class="table is-fullwidth is-narrow" id="table_lignes_facture">
               <thead>
                 <tr>
-                  <th class="has-text-left" colspan="2">Désignation</th>
-                  <th class="is-narrow">Montant HT</th>
+                  <th class="has-text-left has-bg-primary-color" colspan="2">Désignation</th>
+                  <th class="is-narrow has-bg-primary-color">Montant HT</th>
                 </tr>
               </thead>
               <tbody>
               <%= form.fields_for :facture_lignes do |facture_ligne| %>
-                  <%= render "facture_ligne_fields_form", f: facture_ligne %>
+                  <%= render "factures/partials/facture_ligne_fields_form", f: facture_ligne %>
               <% end %>
               </tbody>
               <tfoot>
-                <%= render "facture_pied_form", form: form %>
+                <%= render "factures/partials/pied_form", form: form %>
               </tfoot>
             </table>
-
           </div>
 
-
           <div class="facture-mentions">
-            <div class="field">
-              <div class="control grow-wrap">
-                <%= form.text_area :mention1_texte, rows: 2, class: "textarea auto-grow" %>
-              </div>
-            </div>
-
-            <div class="field">
-              <div class="control grow-wrap">
-                <%= form.text_area :mention2_texte, rows: 2, class: "textarea auto-grow" %>
-              </div>
-            </div>
-
-            <div class="field">
-              <div class="control grow-wrap">
-                <%= form.text_area :mention3_texte, rows: 2, class: "textarea auto-grow" %>
-              </div>
-            </div>
-
-            <div class="field">
-              <div class="control grow-wrap">
-                <%= form.text_area :mention_legale, rows: 2, class: "textarea auto-grow" %>
-              </div>
-            </div>
+            <%= render "factures/partials/mentions_form", form: form %>
           </div>
 
         </div>
-  </div>
-  <div class="panel facture-actions">
-    <div class="panel-block">
-        <div class="buttons">
-          <% if current_page?(action: 'new') %>
-            <%= form.button "Sauvegarder en brouillon", name: 'commit', value: "brouillon", class: "button is-secondary is-fullwidth" %>
-            <%= form.button "Créer la facture", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
-          <% elsif @facture.est_brouillon %>
-            <%= form.button "Enregistrer", name: 'commit',value: "brouillon", class: "button is-secondary is-fullwidth" %>
-            <%= form.button "Créer la facture", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
-          <% else %>
-            <%= form.button "Enregistrer", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
-          <% end %>
-      </div>
-    </div>
+
   </div>
 <% end %>

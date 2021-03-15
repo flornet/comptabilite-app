@@ -1,37 +1,55 @@
+@charset "utf-8";
+
+$size-6: 0.8rem;
+
+@import "bulma/bulma";
+
+$factureFieldBorderStyle: dashed;
+
 .one-page-form {
   width: 400px;
 }
 .card.facture-feuille {
   width: 735px;
   min-height: 1040px;
-  float:left;
-  position: relative;
+  // float:left;
+  // position: relative;
+  padding: 4rem;
 }
 .card.facture-feuille .fournisseur {
-  position: absolute;
-  width: 300px;
-  left: 30px;
-  top: 30px;
+  // position: absolute;
+  // width: 300px;
+  // left: 30px;
+  // top: 30px;
+}
+.card.facture-feuille .fournisseur .textarea {
+  box-shadow: none;
+  border-radius: 0;
+  border-style: $factureFieldBorderStyle;
 }
 .card.facture-feuille .client {
-  position: absolute;
-  width: 300px;
-  right: 30px;
-  top: 30px;
+  // position: absolute;
+  // width: 300px;
+  // right: 30px;
+  // top: 30px;
 }
 .card.facture-feuille .contenu-principal {
-  position: absolute;
-  top: 250px;
-  left: 30px;
-  right:30px;
+  // position: absolute;
+  // top: 260px;
+  // left: 30px;
+  // right:30px;
 }
-.card.facture-feuille .facture-pied td.totaux-labels {
-  width:100px;
-}
-
-
 .card.facture-feuille .facture-mentions {
   margin-top:30px;
+}
+.card.facture-feuille .contenu-principal input,
+.card.facture-feuille .contenu-principal textarea {
+  box-shadow: none;
+  border-style: $factureFieldBorderStyle;
+}
+.card.facture-feuille .contenu-principal .field:not(.has-addons) input,
+.card.facture-feuille .contenu-principal .field:not(.has-addons) textarea {
+  border-radius: 0;
 }
 .card.facture-feuille .contenu-principal .facture-lignes tbody tr .row-action {
   position: absolute;
@@ -40,6 +58,13 @@
 }
 .card.facture-feuille .contenu-principal .facture-lignes .table th.is-narrow {
   width: 19%;
+}
+.card.facture-feuille .contenu-principal .facture-lignes .table th,
+.card.facture-feuille .contenu-principal .facture-lignes .table td {
+  border: 0;
+}
+.card.facture-feuille .contenu-principal .facture-lignes .table th:not(:last-child) {
+  border-right: 2px solid #fff;
 }
 .card.facture-feuille .client .field:not(:last-child) {
   margin-bottom: 0;
@@ -57,17 +82,17 @@
 .card.facture-feuille .client .field .textarea {
   border-bottom: 0;
 }
-.card.facture-feuille .client .is-small.input,
-.card.facture-feuille .client .is-small.textarea {
+.card.facture-feuille .client .input,
+.card.facture-feuille .client .textarea {
   box-shadow: none;
   border-radius: 0;
-  border-style: dotted;
+  border-style: $factureFieldBorderStyle;
 }
-.card.facture-feuille .client .field:first-child .is-small.input {
+.card.facture-feuille .client .field:first-child .input {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
 }
-.card.facture-feuille .client .field:last-of-type .is-small.input {
+.card.facture-feuille .client .field:last-of-type .input {
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
 }
@@ -101,12 +126,33 @@
   max-width: 100%;
   cursor: pointer;
 }
+.card.facture-feuille .facture-lignes tfoot td {
+  height: 3.2em;
+}
+.card.facture-feuille .facture-lignes td,
+.card.facture-feuille .facture-lignes tfoot td span.select {
+    vertical-align: middle;
+}
+.card.facture-feuille .facture-lignes td .field:not(:last-child) {
+  margin-bottom: 0;
+}
 .panel.facture-actions {
-  float:left;
-  margin-left: 20px;
+  position: -webkit-fixed;
+  position:fixed;
+
+  left: 980px;
 }
 .panel.facture-actions .buttons {
   width: 180px;
+}
+.has-text-gray {
+  color: $grey-light !important;
+}
+.has-border-top {
+  border-top: 1px $grey-light solid !important;
+}
+.control.is-fullwidth {
+  width:100%;
 }
 
 .grow-wrap {

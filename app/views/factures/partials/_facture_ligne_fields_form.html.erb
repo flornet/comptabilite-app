@@ -11,7 +11,7 @@
     <div class="field">
       <div class="control price-input-wrap">
         <%= f.hidden_field :montant_ht %>
-        <input type="text" class="input price-input" autocomplete="off" value="<%= montant_humanise(f.object.montant_ht) %>"></input>
+        <input type="text" class="input price-input has-text-right" autocomplete="off" value="<%= montant_humanise(f.object.montant_ht) %>"></input>
       </div>
     </div>
     <div class="row-action">

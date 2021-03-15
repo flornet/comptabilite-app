@@ -12,22 +12,26 @@ class FacturesController < ApplicationController
 
   # GET /factures/new
   def new
+    if params[:with_model]
+      @modele_selectionne = current_user.document_modeles.find(params[:with_model])
+    else
+      @modele_selectionne = current_user.document_modeles.where(defaut: true).first
+    end
     @facture = Facture.new
     1.times { @facture.facture_lignes.build }
     @facture.client = Client.new
     @facture.facture_statut = current_user.facture_statuts.where(defaut: true).first
     @facture.taxe = current_user.taxes.where(defaut: true).first
 
-    @modele_par_defaut = current_user.document_modeles.where(defaut: true).first
-    @facture.coordonnees_societe = @modele_par_defaut.coordonnees_societe
-    @facture.logo = @modele_par_defaut.logo
-    @facture.mention1_texte = @modele_par_defaut.mention1_texte
-    @facture.mention1_active = @modele_par_defaut.mention1_active
-    @facture.mention2_texte = @modele_par_defaut.mention2_texte
-    @facture.mention2_active = @modele_par_defaut.mention2_active
-    @facture.mention3_texte = @modele_par_defaut.mention3_texte
-    @facture.mention3_active = @modele_par_defaut.mention3_active
-    @facture.mention_legale = @modele_par_defaut.mention_legale
+
+    @facture.coordonnees_societe  = @modele_selectionne.coordonnees_societe
+    @facture.logo                 = @modele_selectionne.logo
+    @facture.contrast_color       = @modele_selectionne.contrast_color
+    @facture.date_reglement       = @modele_selectionne.date_reglement
+    @facture.mention1_texte       = @modele_selectionne.mention1_texte
+    @facture.mention2_texte       = @modele_selectionne.mention2_texte
+    @facture.mention3_texte       = @modele_selectionne.mention3_texte
+    @facture.mention_legale       = @modele_selectionne.mention_legale
 
     @facture.user = current_user
     @facture.date = Date.today
@@ -56,6 +60,9 @@ class FacturesController < ApplicationController
         format.html { redirect_to edit_facture_path(@facture), notice: "Facture was successfully created." }
         format.json { render :show, status: :created, location: @facture }
       else
+        if (!@facture.client)
+          @facture.client = Client.new
+        end
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @facture.errors, status: :unprocessable_entity }
       end
@@ -95,7 +102,8 @@ class FacturesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def facture_params
-      params.require(:facture).permit(:type_document, :date, :designation, :montant_ht, :montant_tva, :montant_ttc, :est_brouillon, :pdf, :taxe_id, :facture_statut_id, :client_id, :coordonnees_societe, :coordonnees_societe, :logo, :mention1_texte, :mention1_active, :mention2_texte, :mention2_active, :mention3_texte, :mention3_active, :mention_legale, facture_lignes_attributes: [:id, :designation, :montant_ht, :_destroy], client_attributes: [:id, :nom, :adresse, :code_postal, :ville, :pays, :numero_tva_intracommunautaire, :email, :telephone])
+      params[:facture][:client_attributes][:nom] = params[:facture][:client_attributes].delete :client
+      params.require(:facture).permit(:type_document, :contrast_color, :date, :designation, :montant_ht, :montant_tva, :montant_ttc, :est_brouillon, :pdf, :taxe_id, :facture_statut_id, :client_id, :coordonnees_societe, :coordonnees_societe, :logo, :date_reglement, :mention1_texte, :mention2_texte, :mention3_texte, :mention_legale, facture_lignes_attributes: [:id, :designation, :montant_ht, :_destroy], client_attributes: [:id, :nom, :adresse, :code_postal, :ville, :pays, :numero_tva_intracommunautaire, :email, :telephone])
     end
 
     def est_brouillon?
