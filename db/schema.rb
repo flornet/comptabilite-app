@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_15_145816) do
+ActiveRecord::Schema.define(version: 2021_03_16_093255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "clients", force: :cascade do |t|
-    t.string "nom"
+    t.string "nom", null: false
     t.text "adresse"
     t.string "code_postal"
     t.string "ville"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_145816) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["taxe_id"], name: "index_clients_on_taxe_id"
+    t.index ["user_id", "nom"], name: "index_clients_on_user_id_and_nom", unique: true
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
@@ -43,6 +44,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_145816) do
     t.string "date_validite"
     t.text "coordonnees_societe"
     t.string "logo"
+    t.string "contrast_color", default: "#000000", null: false
     t.text "mention1_texte"
     t.text "mention2_texte"
     t.text "mention3_texte"
@@ -54,7 +56,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_145816) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "contrast_color", default: "#000000", null: false
+    t.datetime "date_version_client"
     t.index ["client_id"], name: "index_devis_on_client_id"
     t.index ["devis_statut_id"], name: "index_devis_on_devis_statut_id"
     t.index ["taxe_id"], name: "index_devis_on_taxe_id"
@@ -72,30 +74,31 @@ ActiveRecord::Schema.define(version: 2021_03_15_145816) do
   end
 
   create_table "devis_statuts", force: :cascade do |t|
-    t.string "nom"
+    t.string "nom", null: false
     t.boolean "defaut", default: false
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "nom"], name: "index_devis_statuts_on_user_id_and_nom", unique: true
     t.index ["user_id"], name: "index_devis_statuts_on_user_id"
   end
 
   create_table "document_modeles", force: :cascade do |t|
-    t.string "nom"
+    t.string "nom", null: false
     t.text "coordonnees_societe"
     t.string "logo"
+    t.string "contrast_color", default: "#000000", null: false
     t.text "mention1_texte"
     t.text "mention2_texte"
     t.text "mention3_texte"
     t.text "mention_legale"
-    t.string "modele"
     t.boolean "defaut", default: false
     t.bigint "user_id"
     t.string "date_reglement"
     t.string "date_validite"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "contrast_color", default: "#000000", null: false
+    t.index ["user_id", "nom"], name: "index_document_modeles_on_user_id_and_nom", unique: true
     t.index ["user_id"], name: "index_document_modeles_on_user_id"
   end
 
@@ -109,11 +112,12 @@ ActiveRecord::Schema.define(version: 2021_03_15_145816) do
   end
 
   create_table "facture_statuts", force: :cascade do |t|
-    t.string "nom"
+    t.string "nom", null: false
     t.boolean "defaut", default: false
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "nom"], name: "index_facture_statuts_on_user_id_and_nom", unique: true
     t.index ["user_id"], name: "index_facture_statuts_on_user_id"
   end
 
@@ -128,6 +132,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_145816) do
     t.string "date_reglement"
     t.text "coordonnees_societe"
     t.string "logo"
+    t.string "contrast_color", default: "#000000", null: false
     t.text "mention1_texte"
     t.text "mention2_texte"
     t.text "mention3_texte"
@@ -140,7 +145,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_145816) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "contrast_color", default: "#000000", null: false
+    t.datetime "date_version_client"
     t.index ["client_id"], name: "index_factures_on_client_id"
     t.index ["facture_statut_id"], name: "index_factures_on_facture_statut_id"
     t.index ["taxe_id"], name: "index_factures_on_taxe_id"
@@ -149,12 +154,13 @@ ActiveRecord::Schema.define(version: 2021_03_15_145816) do
   end
 
   create_table "taxes", force: :cascade do |t|
-    t.string "nom"
+    t.string "nom", null: false
     t.decimal "taux", default: "0.0"
     t.boolean "defaut", default: false
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "nom"], name: "index_taxes_on_user_id_and_nom", unique: true
     t.index ["user_id"], name: "index_taxes_on_user_id"
   end
 
@@ -170,6 +176,17 @@ ActiveRecord::Schema.define(version: 2021_03_15_145816) do
     t.integer "dernier_numero_devis", default: 1, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.text "object_changes"
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "clients", "taxes", column: "taxe_id"

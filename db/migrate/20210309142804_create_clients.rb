@@ -1,7 +1,7 @@
 class CreateClients < ActiveRecord::Migration[6.1]
   def change
     create_table :clients do |t|
-      t.string :nom
+      t.string :nom, null: false
       t.text :adresse
       t.string :code_postal
       t.string :ville

@@ -1,6 +1,7 @@
 @charset "utf-8";
 
-$size-6: 0.8rem;
+// $size-6: 0.8rem;
+$body-size: 13px;
 
 @import "bulma/bulma";
 
@@ -97,7 +98,7 @@ $factureFieldBorderStyle: dashed;
   border-bottom-right-radius: 2px;
 }
 .card.facture-feuille .client #creating-client-indicator {
-  
+
 }
 .card.facture-feuille .contenu-principal .date-emission {
   width:8em;
@@ -190,10 +191,14 @@ $factureFieldBorderStyle: dashed;
   grid-area: 1 / 1 / 2 / 2;
 }
 
+table.client-versions .tags:not(:last-child) {
+  margin-bottom: 0rem;
+}
+
 
 html,body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 14px;
+  // font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  // font-size: 14px;
   line-height: 1.5;
   height: 100%;
   background-color: #fff;

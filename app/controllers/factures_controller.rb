@@ -40,6 +40,7 @@ class FacturesController < ApplicationController
 
   # GET /factures/1/edit
   def edit
+    @facture.client = @facture.client_current_version
   end
 
   # POST /factures or /factures.json

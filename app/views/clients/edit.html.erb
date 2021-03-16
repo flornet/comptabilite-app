@@ -1,6 +1,10 @@
-<h1>Editing Client</h1>
-
-<%= render 'form', client: @client %>
-
-<%= link_to 'Show', @client %> |
-<%= link_to 'Back', clients_path %>
+<h1 class="title is-4">Modifier le client</h1>
+<%= link_to 'Revenir à la liste', clients_path, class: "button" %>
+<div class="columns">
+  <div class="column is-4">
+    <%= render 'form', client: @client %>
+  </div>
+  <div class="column is-8">
+    <%= render 'versions', client: @client %>
+  </div>
+</div>

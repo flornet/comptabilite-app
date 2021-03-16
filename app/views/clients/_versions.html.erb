@@ -1,0 +1,37 @@
+<h2 class="title is-5">Historique des versions</h2>
+<table class="table is-fullwidth is-narrow client-versions">
+  <thead>
+    <tr>
+      <th class="has-text-left">Date</th>
+      <th class="has-text-left">Données</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @client.versions.reverse.each do |version| %>
+      <tr>
+        <td><%= version.created_at.strftime("%d/%m/%Y à %H:%M") %></td>
+        <td>
+          <% version.changeset.each do |key, change| %>
+            <% if key != "updated_at" %>
+              <div class="tags has-addons">
+                <span class="tag is-light"><%= key.camelcase %></span>
+                <span class="tag is-danger"><%= change[0].empty? ? '[vide]' : change[0] %></span>
+                <span class="icon tag is-light"><i class="fas fa-chevron-right "></i></span>
+                <span class="tag is-success"><%= change[1].empty? ? '[vide]' : change[1] %></span>
+              </div>
+            <% end %>
+          <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+
+<hr />
+Facture 1 :
+<hr />
+<%= @client.paper_trail.version_at('2021-03-16 09:23:33 UTC').inspect %>
+
+<hr />
+Facture 2 :
+<hr />
+<%= @client.paper_trail.version_at('2021-03-16 09:27:23 UTC').inspect %>

@@ -1,7 +1,7 @@
 class CreateDevisStatuts < ActiveRecord::Migration[6.1]
   def change
     create_table :devis_statuts do |t|
-      t.string :nom
+      t.string :nom, null: false
       t.boolean :defaut, :default => false
       t.references :user, foreign_key: true
 

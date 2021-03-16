@@ -31,37 +31,44 @@ class User < ApplicationRecord
     DevisStatut.create(nom: "annulé", user: self)
 
     DocumentModele.create(
-      nom: "We Love Users",
-      logo: "wlu-logo.png",
-      contrast_color: "#70d4af",
-coordonnees_societe: "EURL WE LOVE USERS
+      nom:                  "We Love Users",
+      logo:                 "wlu-logo.png",
+      contrast_color:       "#70d4af",
+      coordonnees_societe:  "EURL WE LOVE USERS
 95 AVENUE DE SAINT-OUEN
 75017 PARIS
 Tel: 06 37 33 26 55
 @: f.jaouali@weloveusers.com",
-mention1_texte: "",
-mention2_texte: "RIB : 16958 00001 97153429177 16
+      mention1_texte:       "",
+      mention2_texte:       "RIB : 16958 00001 97153429177 16
 IBAN - BIC : FR76 1695 8000 0197 1534 2917 716 - QNTOFRP1XXX",
-mention3_texte: "En cas de retard de paiement, une pénalité de 3 fois le taux d'intérêt légal sera appliquée, à laquelle s'ajoutera une indemnité forfaitaire pour frais de recouvrement de 40 €.
+      mention3_texte:       "En cas de retard de paiement, une pénalité de 3 fois le taux d'intérêt légal sera appliquée, à laquelle s'ajoutera une indemnité forfaitaire pour frais de recouvrement de 40 €.
 Pas d'escompte en cas de paiement anticipé",
-mention_legale: "EURL au capital de 5 000 euros
+      mention_legale:       "EURL au capital de 5 000 euros
 Siret : 810 746 388 00018 - RCS : PARIS - NAF : 7022Z
-TVA Intracommunautaire : FR 66 810 746 388", modele: "weloveusers", user: self, defaut: true, date_reglement: "A réception", date_validite: "30 jours")
+TVA Intracommunautaire : FR 66 810 746 388",
+      user:                 self,
+      defaut:               true,
+      date_reglement:       "A réception",
+      date_validite:        "30 jours")
     DocumentModele.create(
-      nom: "Luminose",
-      logo: "luminose-logo.png",
-      contrast_color: "#60407f",
-coordonnees_societe: "EURL WE LOVE USERS
+      nom:                  "Luminose",
+      logo:                 "luminose-logo.png",
+      contrast_color:       "#60407f",
+      coordonnees_societe:  "EURL WE LOVE USERS
 95 AVENUE DE SAINT-OUEN
 75017 PARIS
 Tel: 06 37 33 26 55
 @: f.jaouali@weloveusers.com",
-mention1_texte: "",
-mention2_texte: "",
-mention3_texte: "En cas de retard de paiement, une pénalité de 3 fois le taux d'intérêt légal sera appliquée, à laquelle s'ajoutera une indemnité forfaitaire pour frais de recouvrement de 40 €.
+      mention1_texte:       "",
+      mention2_texte:       "",
+      mention3_texte:       "En cas de retard de paiement, une pénalité de 3 fois le taux d'intérêt légal sera appliquée, à laquelle s'ajoutera une indemnité forfaitaire pour frais de recouvrement de 40 €.
 Pas d'escompte en cas de paiement anticipé",
-mention_legale: "EURL au capital de 5 000 euros
+      mention_legale:       "EURL au capital de 5 000 euros
 Siret : 810 746 388 00018 - RCS : PARIS - NAF : 7022Z
-TVA Intracommunautaire : FR 66 810 746 388", modele: "luminose", user: self, date_reglement: "A réception", date_validite: "30 jours")
+TVA Intracommunautaire : FR 66 810 746 388",
+      user:                 self,
+      date_reglement:       "A réception",
+      date_validite:        "30 jours")
   end
 end

@@ -14,6 +14,8 @@ else
   @creating_new = false
 end %>
 
+<%= @facture.date_version_client %>
+
 <%= form_with(model: facture, html: {autocomplete: "off"}) do |form| %>
   <% if @creating_new %>
     <%= form.hidden_field :facture_statut_id%>
@@ -21,7 +23,7 @@ end %>
     <div class="field">
       <%= form.label :facture_statut_id, class: "label" %>
       <div class="select">
-        <%= form.collection_select :facture_statut_id, FactureStatut.order(:nom), :id, :nom%>
+        <%= form.collection_select :facture_statut_id, current_user.facture_statuts.order(:nom), :id, :nom%>
       </div>
     </div>
     <hr />
@@ -42,7 +44,7 @@ end %>
       </div>
     </div>
   </div>
-  
+
     <div class="card facture-feuille">
         <% if facture.errors.any? %>
           <div class="notification is-danger">
@@ -58,21 +60,21 @@ end %>
         <% end %>
 
         <div class="tile is-ancestor">
-          <div class="tile is-4 is-parent">
+          <div class="tile is-5 is-parent">
             <div class="tile is-child">
               <div class="fournisseur">
                 <%= render "factures/partials/fournisseur_form", form: form %>
               </div>
             </div>
           </div>
-          <div class="tile is-8 is-parent">
+          <div class="tile is-7 is-parent">
             <div class="tile is-child">
               <div class="tile is-ancestor">
-                <div class="tile is-3 is-parent">
+                <div class="tile is-2 is-parent">
                   <div class="tile is-child">
                   </div>
                 </div>
-                <div class="tile is-9 is-parent">
+                <div class="tile is-10 is-parent">
                   <div class="tile is-child">
                     <div class="client">
                       <%= form.fields_for :client do |client_form| %>
