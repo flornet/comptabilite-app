@@ -1,5 +1,14 @@
-<h1>New Devi</h1>
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to(devis_path) %>
+  <%= page_title("Nouveau devis") %>
+</nav>
 
-<%= render 'form', devi: @devi %>
+<div class="action-buttons">
+    <div class="field is-grouped">
+        <%= links_to_choose_model(current_user.document_modeles.order(:nom), @modele_selectionne) %>
+    </div>
+</div>
 
-<%= link_to 'Back', devis_path %>
+<div class="facture-form">
+    <%= render 'form', devi: @devi %>
+</div>

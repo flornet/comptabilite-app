@@ -1,33 +1,38 @@
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to_root() %>
+  <%= page_title("Modèles de documents") %>
+</nav>
 
-  <h1 class="title is-4">Modèles de documents</h1>
-  <div class="action-buttons">
-      <div class="control is-grouped">
-          <%= link_to 'Nouveau modèle', new_document_modele_path, class: "button is-primary" %>
-      </div>
-  </div>
+<div class="action-buttons">
+    <div class="field is-grouped">
+      <p class="control">
+        <%= link_to 'Nouveau modèle', new_document_modele_path, class: "button is-primary" %>
+      </p>
+    </div>
+</div>
 
-  <table class="table is-fullwidth is-hoverable">
-    <thead>
-      <tr>
-        <th class="has-text-left">Nom</th>
-        <th class="has-text-left">Logo</th>
-        <th class="has-text-left">Couleur</th>
-        <th>Défaut</th>
+<table class="table is-fullwidth is-hoverable">
+  <thead>
+    <tr>
+      <th class="has-text-left">Nom</th>
+      <th class="has-text-left">Logo</th>
+      <th class="has-text-left">Couleur</th>
+      <th>Défaut</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @document_modeles.each do |document_modele| %>
+      <tr class='clickable-row is-clickable' data-href='<%= url_for edit_document_modele_path(document_modele)%>'>
+        <td><%= document_modele.nom %></td>
+        <td><%= document_modele.logo %></td>
+        <td><%= document_modele.contrast_color %></td>
+        <td class="has-text-centered">
+          <% if document_modele.defaut %>
+          <span class="icon"><i class="fas fa-check"></i></span>
+          <% end %>
+        </td>
       </tr>
-    </thead>
-
-    <tbody>
-      <% @document_modeles.each do |document_modele| %>
-        <tr class='clickable-row is-clickable' data-href='<%= url_for edit_document_modele_path(document_modele)%>'>
-          <td><%= document_modele.nom %></td>
-          <td><%= document_modele.logo %></td>
-          <td><%= document_modele.contrast_color %></td>
-          <td class="has-text-centered">
-            <% if document_modele.defaut %>
-            <span class="icon"><i class="fas fa-check"></i></span>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <% end %>
+  </tbody>
+</table>

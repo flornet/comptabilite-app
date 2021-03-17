@@ -1,5 +1,8 @@
-<h1>New Client</h1>
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to(clients_path) %>
+  <%= page_title("Nouveau client") %>
+</nav>
 
-<%= render 'form', client: @client %>
-
-<%= link_to 'Back', clients_path %>
+<div class="one-page-form">
+    <%= render 'form', client: @client %>
+</div>

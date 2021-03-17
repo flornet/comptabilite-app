@@ -1,9 +1,3 @@
-<div class="logo has-text-centered">
-    <%= image_tag(@facture.logo, srcset: { "2x-#{@facture.logo}" => "2x" }) %>
-    <%= form.hidden_field :logo %>
-    <%= form.hidden_field :contrast_color %>
-</div>
-
 <div class="field">
   <div class="control grow-wrap">
     <%= form.text_area :coordonnees_societe, rows: 5, class: "textarea auto-grow" %>

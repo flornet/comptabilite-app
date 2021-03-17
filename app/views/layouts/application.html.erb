@@ -12,9 +12,11 @@
   </head>
 
   <body>
-    <div class="columns" id="compta-app">
-        <%= render "layouts/nav" %>
-        <div class="column is-10 yield is-fullheight">
+    <div class="is-fullheight" id="compta-app">
+        <aside class="aside is-relative">
+          <%= render "layouts/nav" %>
+        </aside>
+        <div class="yield has-navbar-fixed-top">
           <%= render "layouts/notifications" %>
           <%= yield %>
         </div>

@@ -1,54 +1,61 @@
-<p id="notice"><%= notice %></p>
+<style type="text/css">
+  .has-bg-primary-color {
+    background-color: <%= @facture.contrast_color %> !important;
+    color: #ffffff !important;
+  }
+  .has-text-primary-color {
+    color: <%= @facture.contrast_color %> !important;
+  }
+</style>
 
-<p>
-  <strong>Type:</strong>
-  <%= @facture.type_document %>
-</p>
+<div class="card content facture-feuille">
 
-<p>
-  <strong>Date:</strong>
-  <%= @facture.date %>
-</p>
+  <div class="tile is-ancestor">
+    <div class="tile is-parent is-5">
+        <div class="logo has-text-centered">
+            <%= wicked_pdf_image_tag(@facture.logo, srcset: { "2x-#{@facture.logo}" => "2x" }) %>
+        </div>
+    </div>
+    <div class="tile is-parent is-2"></div>
+    <div class="tile is-parent is-5"></div>
+  </div>
+  <div class="tile is-ancestor">
+    <div class="tile is-parent is-5">
+        <%= simple_format(@facture.coordonnees_societe, class: "has-text-left coordonnees") %>
+    </div>
+    <div class="tile is-parent is-2"></div>
+    <div class="tile is-parent is-5">
+      <div class="tile is-child">
+        <%= render "factures/partials/client_show" %>
+      </div>
+    </div>
+  </div>
 
-<p>
-  <strong>Numero:</strong>
-  <%= @facture.numero %>
-</p>
+  <div class="contenu-principal">
+    <%= render "factures/partials/entete_show" %>
+    <div class="facture-lignes">
+      <table class="table is-fullwidth is-narrow" id="table_lignes_facture">
+        <thead>
+          <tr>
+            <th class="has-text-left has-bg-primary-color" colspan="2">Désignation</th>
+            <th class="is-narrow has-bg-primary-color">Montant HT</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @facture.facture_lignes.each do |facture_ligne| %>
+            <%= render "factures/partials/facture_ligne_show", facture_ligne: facture_ligne %>
+        <% end %>
+        </tbody>
+        <tfoot>
+          <%= render "factures/partials/pied_show" %>
+        </tfoot>
+      </table>
+    </div>
 
-<p>
-  <strong>Designation:</strong>
-  <%= @facture.designation %>
-</p>
+    <div class="facture-mentions">
+      <%= render "factures/partials/mentions_show" %>
+    </div>
 
-<p>
-  <strong>Montant ht:</strong>
-  <%= @facture.montant_ht %>
-</p>
+  </div>
 
-<p>
-  <strong>Montant ttc:</strong>
-  <%= @facture.montant_ttc %>
-</p>
-
-<p>
-  <strong>Pdf:</strong>
-  <%= @facture.pdf %>
-</p>
-
-<p>
-  <strong>Taxe:</strong>
-  <%= @facture.taxe.nom %>
-</p>
-
-<p>
-  <strong>Facture statut:</strong>
-  <%= @facture.facture_statut.nom %>
-</p>
-
-<p>
-  <strong>Client:</strong>
-  <%= @facture.client.nom %>
-</p>
-
-<%= link_to 'Edit', edit_facture_path(@facture) %> |
-<%= link_to 'Back', factures_path %>
+</div>

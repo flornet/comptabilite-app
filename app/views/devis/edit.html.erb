@@ -1,6 +1,8 @@
-<h1>Editing Devi</h1>
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to(devis_path) %>
+  <%= page_title("Modifier un devis") %>
+</nav>
 
-<%= render 'form', devi: @devi %>
-
-<%= link_to 'Show', @devi %> |
-<%= link_to 'Back', devis_path %>
+<div class="facture-form">
+    <%= render 'form', devi: @devi %>
+</div>

@@ -1,5 +1,7 @@
 class FacturesController < ApplicationController
   before_action :set_facture, only: %i[ show edit update destroy ]
+  before_action :set_modele, only: %i[ new create ]
+  before_action :set_creating_new, only: %i[ new create ]
 
   # GET /factures or /factures.json
   def index
@@ -8,34 +10,34 @@ class FacturesController < ApplicationController
 
   # GET /factures/1 or /factures/1.json
   def show
+    filename = "Facture #{@facture.numero} - #{@facture.client.nom} - #{montant_pour_pdf(@facture.montant_ttc)}" #Facture 20210203-000119 - MAIF - 11 556,00e
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  show_as_html: params.key?('debug'),
+                save_to_file: Rails.root.join('sauvegardes/factures', "#{filename}.pdf"),
+                pdf: filename,
+                disposition: 'attachment',
+                template: "factures/show.pdf.erb",
+                layout: "pdf.html.erb",
+                footer:  {
+                  font_size: 8,
+                  spacing: 20,
+                  center: @facture.mention_legale + '
+
+' + 'Page [page] / [topage]'
+                },
+                margin:  {
+                            top: 10,
+                            bottom: 30
+                          }
+      end
+    end
   end
 
   # GET /factures/new
   def new
-    if params[:with_model]
-      @modele_selectionne = current_user.document_modeles.find(params[:with_model])
-    else
-      @modele_selectionne = current_user.document_modeles.where(defaut: true).first
-    end
-    @facture = Facture.new
-    1.times { @facture.facture_lignes.build }
-    @facture.client = Client.new
-    @facture.facture_statut = current_user.facture_statuts.where(defaut: true).first
-    @facture.taxe = current_user.taxes.where(defaut: true).first
-
-
-    @facture.coordonnees_societe  = @modele_selectionne.coordonnees_societe
-    @facture.logo                 = @modele_selectionne.logo
-    @facture.contrast_color       = @modele_selectionne.contrast_color
-    @facture.date_reglement       = @modele_selectionne.date_reglement
-    @facture.mention1_texte       = @modele_selectionne.mention1_texte
-    @facture.mention2_texte       = @modele_selectionne.mention2_texte
-    @facture.mention3_texte       = @modele_selectionne.mention3_texte
-    @facture.mention_legale       = @modele_selectionne.mention_legale
-
-    @facture.user = current_user
-    @facture.date = Date.today
-    @facture.numero = @facture.generate_new_invoice_number
+    @facture = current_user.factures.build_with_model(@modele_selectionne)
   end
 
   # GET /factures/1/edit
@@ -45,44 +47,16 @@ class FacturesController < ApplicationController
 
   # POST /factures or /factures.json
   def create
-    params = facture_params
-
-    # respond_to do |format|
-    #   format.html { render "debug" }
-    # end
-
-    if params[:client_attributes][:id] != ""
-      # Client already existing to link and possibly update
-      client = Client.find(params[:client_attributes][:id])
-      client.assign_attributes(params[:client_attributes])
-      params.delete :client_attributes
-      @facture = Facture.new(params)
-      @facture.client = client
-    else
-      # New client to create
-      @facture = Facture.new(params)
-    end
-
-    @facture.user = current_user
-    @facture.facture_statut = current_user.facture_statuts.where(defaut: true).first
-
-    if @facture.client
-      @facture.client.taxe = @facture.taxe
-      @facture.client.user = current_user
-    end
-
-    if !est_brouillon?
-      @facture.est_brouillon = false
-    end
+    @facture = current_user.factures.build_from_create_params(facture_params, est_brouillon?)
 
     respond_to do |format|
       if @facture.save
         format.html { redirect_to edit_facture_path(@facture), notice: "Facture was successfully created." }
         format.json { render :show, status: :created, location: @facture }
       else
-        if (!@facture.client)
-          @facture.client = Client.new
-        end
+        # if (!@facture.client)
+        #   @facture.client = Client.new
+        # end
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @facture.errors, status: :unprocessable_entity }
       end
@@ -91,31 +65,8 @@ class FacturesController < ApplicationController
 
   # PATCH/PUT /factures/1 or /factures/1.json
   def update
-    params = facture_params
-
-    # respond_to do |format|
-    #   format.html { render "debug" }
-    # end
-
-    if params[:client_attributes][:id] == ""
-      # Creating a new associated client
-      @facture.client = Client.new
-      @facture.client.assign_attributes(params[:client_attributes])
-      @facture.client.taxe = @facture.taxe
-      @facture.client.user = current_user
-      params.delete :client_attributes
-    elsif params[:client_attributes][:id] != @facture.client.id
-      # Changing the associated client
-      client = Client.find(params[:client_attributes][:id])
-      client.assign_attributes(params[:client_attributes])
-      params.delete :client_attributes
-      @facture.client = client
-    end
-    if !est_brouillon?
-      @facture.est_brouillon = false
-    end
     respond_to do |format|
-      if @facture.update(params)
+      if @facture.update_from_nested_params(facture_params, est_brouillon?)
         format.html { redirect_to edit_facture_path(@facture), notice: "Facture was successfully updated." }
         format.json { render :show, status: :ok, location: @facture }
       else
@@ -140,6 +91,18 @@ class FacturesController < ApplicationController
       @facture = Facture.find(params[:id])
     end
 
+    def set_modele
+      if params[:with_model]
+        @modele_selectionne = current_user.document_modeles.find(params[:with_model])
+      else
+        @modele_selectionne = current_user.document_modeles.where(defaut: true).first
+      end
+    end
+
+    def set_creating_new
+      @creating_new = true
+    end
+
     # Only allow a list of trusted parameters through.
     def facture_params
       params[:facture][:client_attributes][:nom] = params[:facture][:client_attributes].delete :client
@@ -147,6 +110,11 @@ class FacturesController < ApplicationController
     end
 
     def est_brouillon?
-      params[:commit] == "brouillon"
+      params[:commit] == "brouillon" ? true : false
     end
+
+    def montant_pour_pdf(nombre)
+      ActionController::Base.helpers.number_to_currency(nombre, unit: "e", separator: ",", delimiter: " ", format: "%n%u", negative_format: "-%n%u")
+    end
+
 end

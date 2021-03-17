@@ -1,31 +1,24 @@
-<p id="notice"><%= notice %></p>
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to_root() %>
+  <%= page_title("Lignes de devis") %>
+</nav>
 
-<h1>Devis Lignes</h1>
-
-<table>
+<table class="table is-fullwidth is-hoverable">
   <thead>
     <tr>
-      <th>Devis</th>
-      <th>Designation</th>
-      <th>Montant ht</th>
-      <th colspan="3"></th>
+      <th class="has-text-left">Facture</th>
+      <th class="has-text-left">Désignation</th>
+      <th class="has-text-left">Montant HT (€)</th>
     </tr>
   </thead>
 
   <tbody>
     <% @devis_lignes.each do |devis_ligne| %>
       <tr>
-        <td><%= devis_ligne.devis_id %></td>
+        <td><%= numero_pour_facture(devis_ligne.devis) %></td>
         <td><%= devis_ligne.designation %></td>
-        <td><%= devis_ligne.montant_ht %></td>
-        <td><%= link_to 'Show', devis_ligne %></td>
-        <td><%= link_to 'Edit', edit_devis_ligne_path(devis_ligne) %></td>
-        <td><%= link_to 'Destroy', devis_ligne, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class="has-text-right"><%= montant_humanise(devis_ligne.montant_ht) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Devis Ligne', new_devis_ligne_path %>

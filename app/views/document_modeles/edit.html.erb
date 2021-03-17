@@ -1,6 +1,8 @@
-<h1>Editing Document Modele</h1>
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to(document_modeles_path) %>
+  <%= page_title("Modifier le modèle de document") %>
+</nav>
 
-<%= render 'form', document_modele: @document_modele %>
-
-<%= link_to 'Show', @document_modele %> |
-<%= link_to 'Back', document_modeles_path %>
+<div class="one-page-form">
+    <%= render 'form', document_modele: @document_modele %>
+</div>

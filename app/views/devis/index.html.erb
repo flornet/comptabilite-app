@@ -1,45 +1,47 @@
-<h1 class="title is-4">Devis</h1>
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to_root() %>
+  <%= page_title("Devis") %>
+</nav>
+
 <div class="action-buttons">
-    <div class="control is-grouped">
+    <div class="field is-grouped">
+      <p class="control">
         <%= link_to 'Nouveau devis', new_devi_path, class: "button is-primary" %>
+      </p>
     </div>
 </div>
 
-<table class="table">
+<table class="table is-fullwidth is-hoverable">
   <thead>
     <tr>
-      <th>Type</th>
-      <th>Date</th>
-      <th>Numero</th>
-      <th>Designation</th>
-      <th>Montant ht</th>
-      <th>Montant ttc</th>
-      <th>Document modele</th>
-      <th>Pdf</th>
-      <th>Taxe</th>
-      <th>Devis statut</th>
-      <th>Client</th>
-      <th colspan="3"></th>
+      <th class="has-text-left">Date</th>
+      <th class="has-text-left">Numéro de devis</th>
+      <th class="has-text-left">État</th>
+      <th class="has-text-left">Nom client</th>
+      <th class="has-text-left">Désignation</th>
+      <th class="has-text-left">Montant HT (€)</th>
+      <th class="has-text-left">TVA (€)</th>
+      <th class="has-text-left">Montant TTC (€)</th>
+      <th class="has-text-left">PDF</th>
     </tr>
   </thead>
 
   <tbody>
     <% @devis.each do |devi| %>
-      <tr>
-        <td><%= devi.type %></td>
+      <tr class='clickable-row is-clickable' data-href='<%= url_for edit_devi_path(devi)%>'>
         <td><%= devi.date %></td>
         <td><%= devi.numero %></td>
+        <td><%= devi.devis_statut_id.nom %></td>
+        <td><%= devi.client.nom %></td>
         <td><%= devi.designation %></td>
-        <td><%= devi.montant_ht %></td>
-        <td><%= devi.montant_ttc %></td>
-        <td><%= devi.document_modele_id %></td>
-        <td><%= devi.pdf %></td>
-        <td><%= devi.taxe_id %></td>
-        <td><%= devi.devis_statut_id %></td>
-        <td><%= devi.client_id %></td>
-        <td><%= link_to 'Show', devi %></td>
-        <td><%= link_to 'Edit', edit_devi_path(devi) %></td>
-        <td><%= link_to 'Destroy', devi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class="has-text-right"><%= montant_humanise(devi.montant_ht) %></td>
+        <td class="has-text-right"><%= montant_humanise(devi.montant_tva) %></td>
+        <td class="has-text-right"><%= montant_humanise(devi.montant_ttc) %></td>
+        <td>
+          <% if devi.pdf %>
+          <span class="icon"><i class="fas fa-file-pdf"></i></span>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

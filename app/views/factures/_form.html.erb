@@ -7,15 +7,6 @@
     color: <%= @facture.contrast_color %> !important;
   }
 </style>
-<%
-if current_page?(action: 'new')
-  @creating_new = true
-else
-  @creating_new = false
-end %>
-
-<%= @facture.date_version_client %>
-
 <%= form_with(model: facture, html: {autocomplete: "off"}) do |form| %>
   <% if @creating_new %>
     <%= form.hidden_field :facture_statut_id%>
@@ -40,6 +31,7 @@ end %>
             <%= form.button "Créer la facture", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
           <% else %>
             <%= form.button "Enregistrer", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
+            <%= link_to "Générer le PDF", facture_path(@facture, format: :pdf), class: "button is-fullwidth" %>
           <% end %>
       </div>
     </div>
@@ -60,38 +52,33 @@ end %>
         <% end %>
 
         <div class="tile is-ancestor">
-          <div class="tile is-5 is-parent">
-            <div class="tile is-child">
-              <div class="fournisseur">
-                <%= render "factures/partials/fournisseur_form", form: form %>
-              </div>
+          <div class="tile is-parent is-5">
+            <div class="logo has-text-centered">
+                <%= image_tag(@facture.logo, srcset: { "2x-#{@facture.logo}" => "2x" }) %>
+                <%= form.hidden_field :logo %>
+                <%= form.hidden_field :contrast_color %>
             </div>
           </div>
-          <div class="tile is-7 is-parent">
+          <div class="tile is-parent is-2"></div>
+          <div class="tile is-parent is-5"></div>
+        </div>
+        <div class="tile is-ancestor">
+          <div class="tile is-parent is-5">
+            <div class="fournisseur">
+              <%= render "factures/partials/fournisseur_form", form: form %>
+            </div>
+          </div>
+          <div class="tile is-parent is-2"></div>
+          <div class="tile is-parent is-5">
             <div class="tile is-child">
-              <div class="tile is-ancestor">
-                <div class="tile is-2 is-parent">
-                  <div class="tile is-child">
-                  </div>
-                </div>
-                <div class="tile is-10 is-parent">
-                  <div class="tile is-child">
-                    <div class="client">
-                      <%= form.fields_for :client do |client_form| %>
-                        <%= render "factures/partials/client_form", form: client_form %>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
+              <div class="client">
+                <%= form.fields_for :client do |client_form| %>
+                  <%= render "factures/partials/client_form", form: client_form %>
+                <% end %>
               </div>
-
             </div>
           </div>
         </div>
-
-
-
-
 
 
         <div class="contenu-principal">

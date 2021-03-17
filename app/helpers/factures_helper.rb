@@ -45,7 +45,9 @@ module FacturesHelper
       if default_model == modele
         css_class += " is-active"
       end
+      output += '<p class="control">'
       output += link_to(modele.nom, new_facture_path(:with_model => modele.id), class: css_class)
+      output += '</p>'
     end
     output.html_safe
   end

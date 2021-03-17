@@ -1,39 +1,45 @@
-<aside class="column is-2 aside hero is-fullheight">
-    <div>
-        <div class="main">
-            <a href="<%= url_for root_path %>" class="item"><span class="name">Accueil</span></a>
-            <hr class="navbar-divider">
-            <a href="<%= url_for devis_path %>" class="item"><span class="name">Devis</span></a>
-            <a href="<%= url_for factures_path %>" class="item"><span class="name">Factures</span></a>
-            <hr class="navbar-divider">
-            <a href="<%= url_for taxes_path %>" class="item"><span class="name">Taxes</span></a>
-            <a href="<%= url_for clients_path %>" class="item"><span class="name">Clients</span></a>
-            <a href="<%= url_for document_modeles_path %>" class="item"><span class="name">Modèles</span></a>
-        </div>
 
-        <div class="main">
-          <% if user_signed_in? %>
-          <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">
-              Compte
-              </a>
-              <div class="navbar-dropdown">
-                Logged in as <strong><%= current_user.email %></strong>.
-                  <%= link_to 'Mon profil', edit_user_registration_path, :class => 'navbar-item' %>
-                  <%= link_to "Statuts de devis", devis_statuts_path, :class => 'navbar-item' %>
-                  <%= link_to "Statuts de factures", facture_statuts_path, :class => 'navbar-item' %>
-                  <hr class="navbar-divider">
-                  <%= link_to "Lignes de devis", devis_lignes_path, :class => 'navbar-item' %>
-                  <%= link_to "Lignes de factures", facture_lignes_path, :class => 'navbar-item' %>
-                  <hr class="navbar-divider">
-                  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-item'  %>
-              </div>
-          </div>
-
-          <% else %>
-            <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %>
-            <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-          <% end %>
-        </div>
+    <div class="main">
+        <a href="<%= url_for root_path %>" class="item <%= current_page_active_class?(root_path)%>"><span class="name">Accueil</span></a>
+        <hr class="navbar-divider">
+        <a href="<%= url_for devis_path %>" class="item <%= current_page_active_class?(devis_path)%>"><span class="name">Devis</span></a>
+        <a href="<%= url_for factures_path %>" class="item <%= current_page_active_class?(factures_path)%>"><span class="name">Factures</span></a>
+        <hr class="navbar-divider">
+        <a href="<%= url_for taxes_path %>" class="item <%= current_page_active_class?(taxes_path)%>"><span class="name">Taxes</span></a>
+        <a href="<%= url_for clients_path %>" class="item <%= current_page_active_class?(clients_path)%>"><span class="name">Clients</span></a>
+        <a href="<%= url_for document_modeles_path %>" class="item <%= current_page_active_class?(document_modeles_path)%>"><span class="name">Modèles</span></a>
     </div>
-</aside>
+
+    <div class="main low">
+      <% if user_signed_in? %>
+      <div class="dropdown is-up is-fullwidth">
+        <div class="dropdown-trigger">
+          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu7">
+            <span class="icon is-small"><i class="fas fa-cog"></i></span>
+            <span>Mon compte</span>
+            <span class="icon is-small">
+              <i class="fas fa-angle-up" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu7" role="menu">
+          <div class="dropdown-content">
+            <div class="dropdown-item">
+              <p>Logged in as <strong><%= current_user.email %></strong>.</p>
+            </div>
+            <%= link_to 'Mon profil', edit_user_registration_path, :class => 'dropdown-item' %>
+            <%= link_to "Statuts de devis", devis_statuts_path, :class => 'dropdown-item' %>
+            <%= link_to "Statuts de factures", facture_statuts_path, :class => 'dropdown-item' %>
+            <hr class="dropdown-divider">
+            <%= link_to "Lignes de devis", devis_lignes_path, :class => 'dropdown-item' %>
+            <%= link_to "Lignes de factures", facture_lignes_path, :class => 'dropdown-item' %>
+            <hr class="dropdown-divider">
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'dropdown-item'  %>
+          </div>
+        </div>
+      </div>
+      <% else %>
+        <%= link_to "Connexion", new_user_session_path, :class => 'button is-primary'  %>
+        <%= link_to "Créer un compte", new_user_registration_path, :class => 'button'  %>
+      <% end %>
+    </div>

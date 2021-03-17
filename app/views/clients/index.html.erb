@@ -1,8 +1,13 @@
-<h1 class="title is-4">Clients</h1>
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to_root() %>
+  <%= page_title("Clients") %>
+</nav>
 
 <div class="action-buttons">
-    <div class="control is-grouped">
+    <div class="field is-grouped">
+      <p class="control">
         <%= link_to 'Nouveau client', new_client_path, class: "button is-primary" %>
+      </p>
     </div>
 </div>
 

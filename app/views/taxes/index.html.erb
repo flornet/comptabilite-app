@@ -1,31 +1,36 @@
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to_root() %>
+  <%= page_title("Taxes") %>
+</nav>
 
-  <h1 class="title is-4">Taxes</h1>
-  <div class="action-buttons">
-      <div class="control is-grouped">
-          <%= link_to 'Nouveau taux de TVA', new_tax_path, class: "button is-primary" %>
-      </div>
-  </div>
+<div class="action-buttons">
+    <div class="field is-grouped">
+      <p class="control">
+        <%= link_to 'Nouveau taux de TVA', new_tax_path, class: "button is-primary" %>
+      </p>
+    </div>
+</div>
 
-  <table class="table is-fullwidth is-hoverable">
-    <thead>
-      <tr>
-        <th class="has-text-left">Nom</th>
-        <th class="has-text-left">Taux</th>
-        <th>Défaut</th>
+<table class="table is-fullwidth is-hoverable">
+  <thead>
+    <tr>
+      <th class="has-text-left">Nom</th>
+      <th class="has-text-left">Taux</th>
+      <th>Défaut</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @taxes.each do |tax| %>
+      <tr class='clickable-row is-clickable' data-href='<%= url_for edit_tax_path(tax)%>'>
+        <td><%= tax.nom %></td>
+        <td><%= tax.taux %></td>
+        <td class="has-text-centered">
+          <% if tax.defaut %>
+          <span class="icon"><i class="fas fa-check"></i></span>
+          <% end %>
+        </td>
       </tr>
-    </thead>
-
-    <tbody>
-      <% @taxes.each do |tax| %>
-        <tr class='clickable-row is-clickable' data-href='<%= url_for edit_tax_path(tax)%>'>
-          <td><%= tax.nom %></td>
-          <td><%= tax.taux %></td>
-          <td class="has-text-centered">
-            <% if tax.defaut %>
-            <span class="icon"><i class="fas fa-check"></i></span>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <% end %>
+  </tbody>
+</table>

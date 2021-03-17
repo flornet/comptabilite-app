@@ -1,5 +1,8 @@
-<div class=" one-page-form">
-    <h1 class="title is-4">Modifier le statut de devis</h1>
-    <%= link_to 'Revenir à la liste', devis_statuts_path, class: "button" %>
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to(devis_statuts_path) %>
+  <%= page_title("Modifier le statut de devis") %>
+</nav>
+
+<div class="one-page-form">
     <%= render 'form', devis_statut: @devis_statut %>
 </div>

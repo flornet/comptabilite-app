@@ -1,5 +1,8 @@
-<div class=" one-page-form">
-    <h1 class="title is-4">Nouveau statut de facture</h1>
-    <%= link_to 'Revenir à la liste', facture_statuts_path, class: "button" %>
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to(facture_statuts_path) %>
+  <%= page_title("Nouveau statut de facture") %>
+</nav>
+
+<div class="one-page-form">
     <%= render 'form', facture_statut: @facture_statut %>
 </div>

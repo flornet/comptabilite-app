@@ -7,21 +7,77 @@ $body-size: 13px;
 
 $factureFieldBorderStyle: dashed;
 
+/***** LAYOUT *****/
+html,body {
+  height: 100%;
+}
+.aside {
+  top:0;
+  bottom:0;
+  left:0;
+  position: fixed !important;
+  position: -webkit-fixed !important;
+  display:block;
+  background-color: #F9F9F9;
+  border-right: 1px solid #DEDEDE;
+  width: 17em;
+}
+.yield {
+  display:block;
+  margin-left: 17em;
+  background-color: #fff;
+  border-right: 1px solid #DEDEDE;
+  padding: 40px 20px;
+}
+.aside .main {
+  padding: 3em;
+  color: #6F7B7E;
+}
+.aside .main .item {
+  display: block;
+  padding: 10px 0;
+  color: #6F7B7E;
+}
+.aside .main .item.is-active {
+  background-color: $grey-lightest;
+  margin: 0 -3em;
+  padding-left: 3em;
+}
+.aside .main .item:active,
+.aside .main .item:hover {
+  background-color: #F2F2F2;
+  margin: 0 -3em;
+  padding-left: 3em;
+}
+.aside .main .name {
+  color: #5D5D5D;
+}
+.aside .main.low {
+  position: absolute;
+  bottom: 0;
+}
+
 .one-page-form {
   width: 400px;
 }
+div.has-navbar-fixed-top {
+  padding-top: 5em;
+}
+div.has-navbar-fixed-top .navbar.is-fixed-top {
+  left: 17em;
+}
+.action-buttons {
+  margin-bottom: 1.5rem;
+}
+
+/***** FACTURES *****/
 .card.facture-feuille {
   width: 735px;
   min-height: 1040px;
-  // float:left;
-  // position: relative;
   padding: 4rem;
 }
 .card.facture-feuille .fournisseur {
-  // position: absolute;
-  // width: 300px;
-  // left: 30px;
-  // top: 30px;
+
 }
 .card.facture-feuille .fournisseur .textarea {
   box-shadow: none;
@@ -29,16 +85,10 @@ $factureFieldBorderStyle: dashed;
   border-style: $factureFieldBorderStyle;
 }
 .card.facture-feuille .client {
-  // position: absolute;
-  // width: 300px;
-  // right: 30px;
-  // top: 30px;
+
 }
 .card.facture-feuille .contenu-principal {
-  // position: absolute;
-  // top: 260px;
-  // left: 30px;
-  // right:30px;
+
 }
 .card.facture-feuille .facture-mentions {
   margin-top:30px;
@@ -144,7 +194,7 @@ $factureFieldBorderStyle: dashed;
   position: -webkit-fixed;
   position:fixed;
 
-  left: 980px;
+  left: calc(780px + 17em);
 }
 .panel.facture-actions .buttons {
   width: 180px;
@@ -155,7 +205,9 @@ $factureFieldBorderStyle: dashed;
 .has-border-top {
   border-top: 1px $grey-light solid !important;
 }
-.control.is-fullwidth {
+.control.is-fullwidth,
+.dropdown.is-fullwidth,
+.dropdown.is-fullwidth .dropdown-trigger {
   width:100%;
 }
 
@@ -194,191 +246,60 @@ $factureFieldBorderStyle: dashed;
 table.client-versions .tags:not(:last-child) {
   margin-bottom: 0rem;
 }
-
-
-html,body {
-  // font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  // font-size: 14px;
-  line-height: 1.5;
-  height: 100%;
-  background-color: #fff;
-}
-.nav.is-dark {
-  background-color: #232B2D;
-  color: #F6F7F7;
-}
-.nav.is-dark .nav-item a, .nav.is-dark a.nav-item {
-    color: #F6F7F7;
-}
-.nav.is-dark .nav-item a.button.is-default {
-    color: #F6F7F7;
-    background-color: transparent;
-    border-width: 2px;
-}
-.nav.menu {
-  border-bottom: 1px solid #e1e1e1;
-}
-.nav.menu .nav-item .icon-btn {
-  border: 3px solid #B7C6C9;
-  border-radius: 90px;
-  padding: 5px 7px;
-  color: #B7C6C9;
-}
-.nav.menu .nav-item.is-active .icon-btn {
-  color: #2EB398;
-  border: 3px solid #2EB398;
-}
-.nav.menu .nav-item .icon-btn .fa {
-  font-size: 20px;
-  color: #B7C6C9;
-}
-.nav.menu .nav-item.is-active .icon-btn .fa {
-  color: #2EB398;
-}
-.aside {
-  display:block;
-  background-color: #F9F9F9;
-  border-right: 1px solid #DEDEDE;
-}
-.yield {
-  display:block;
-  background-color: #fff;
-  border-right: 1px solid #DEDEDE;
-  padding: 40px 20px;
-}
-.message {
-  display:block;
-  background-color: #fff;
-  padding: 40px 20px;
-}
-.aside .compose {
-  height: 95px;
-  margin:0 -10px;
-  padding: 25px 30px;
-}
-.aside .compose .button {
-  color: #F6F7F7;
-}
-.aside .compose .button .compose {
-  font-size: 14px;
-  font-weight: 700;
-}
-.aside .main {
-  padding: 40px;
-  color: #6F7B7E;
-}
-.aside .title {
-  color: #6F7B7E;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-.aside .main .item {
-  display: block;
-  padding: 10px 0;
-  color: #6F7B7E;
-}
-.aside .main .item.active {
-  background-color: #F1F1F1;
-  margin: 0 -50px;
-  padding-left: 50px;
-}
-.aside .main .item:active,.aside .main .item:hover {
-  background-color: #F2F2F2;
-  margin: 0 -50px;
-  padding-left: 50px;
-}
-.aside .main .icon {
-  font-size: 19px;
-  padding-right: 30px;
-  color: #A0A0A0;
-}
-.aside .main .name {
-  font-size: 15px;
-  color: #5D5D5D;
-  font-weight: 500;
-}
-.messages .action-buttons {
-  padding: 0;
-  margin-top: -20px;
-}
-.message .action-buttons {
-  padding: 0;
-  margin-top: -5px;
+.nowrap {
+  white-space: nowrap !important;
 }
 
-.pg {
-  display: inline-block;
-  top:10px;
+
+/***** PDF FACTURES *****/
+.designation {
+  margin-top:3em;
 }
-.action-buttons .pg .title {
-  display: block;
-  margin-top: 0;
-  padding-top: 0;
-  margin-bottom: 3px;
-  font-size:12px;
-  color: #AAAAA;
+body.pdf {
+  font-size:16px;
 }
-.action-buttons .pg a{
-  font-size:12px;
-  color: #AAAAAA;
-  text-decoration: none;
+body.pdf .yield {
+  display:block;
+  margin-left: 0;
+  background-color: #fff;
+  border-right: 0;
+  padding: 1em 0 0 0;
 }
-.inbox-messages {
-  margin-top:60px;
+body.pdf .aside {
+  display: none;
 }
-.message-preview {
-  margin-top: 60px;
+body.pdf .facture-feuille .tile:not(.is-child) {
+  display: flex !important;
 }
-.inbox-messages .card {
-  width: 100%;
+body.pdf .facture-feuille .tile.is-5 {
+  flex: none !important;
+  width: 41.6666666667% !important;
 }
-.inbox-messages strong {
-  color: #5D5D5D;
+body.pdf .facture-feuille .tile.is-2 {
+  flex: none !important;
+  width: 16.6666666667% !important;
 }
-.inbox-messages .msg-check {
-  padding: 0 20px;
+body.pdf .facture-feuille .facture-mentions {
+  margin-top:10em;
+  font-size:0.9em;
 }
-.inbox-messages .msg-subject {
-  padding: 10px 0;
-  color: #5D5D5D;
+body.pdf .facture-feuille .logo {
+  width:300px;
+  margin-bottom:1em;
 }
-.inbox-messages .msg-attachment {
-  float:right;
+body.pdf .facture-feuille .client {
+  margin-top:3em;
 }
-.inbox-messages .msg-snippet {
-  padding: 5px 20px 0px 5px;
+body.pdf .content table td,
+body.pdf .content table th {
+  border: 0;
 }
-.inbox-messages .msg-subject .fa {
-  font-size: 14px;
-  padding:3px 0;
+body.pdf .content .facture-lignes table thead th:not(:last-child) {
+  border-right: 2px solid #fff;
 }
-.inbox-messages .msg-timestamp {
-  float: right;
-  padding: 0 20px;
-  color: #5D5D5D;
+body.pdf .content .facture-lignes table tbody tr td {
+  border-bottom: 1px #ccc solid;
 }
-.message-preview .avatar {
-  display: inline-block;
-}
-.message-preview .top .address {
-  display: inline-block;
-  padding: 0 20px;
-}
-.avatar img {
-  width: 40px;
-  border-radius: 50px;
-  border: 2px solid #999;
-  padding: 2px;
-}
-.address .name {
-  font-size: 16px;
-  font-weight: bold;
-}
-.address .email {
-  font-weight: bold;
-  color: #B6C7D1;
-}
-.card.active {
-  background-color:#F5F5F5;
+body.pdf .content .facture-lignes table tfoot {
+  font-size: 1.1em;
 }

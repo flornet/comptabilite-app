@@ -1,0 +1,21 @@
+<tr>
+  <td></td>
+  <td class="is-narrow has-text-primary-color has-text-weight-bold">TOTAL HT</td>
+  <td class="has-text-right has-text-primary-color has-text-weight-bold nowrap">
+      <span id="facture_montant_ht_dummy"><%= montant_humanise(@facture.montant_ht) %></span>
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td class="is-narrow has-text-weight-bold has-text-gray">TVA <%= @facture.taxe.nom %></td>
+  <td class="has-text-right has-text-weight-bold has-text-gray nowrap">
+    <span id="facture_montant_tva_dummy"><%= montant_humanise(@facture.montant_tva) %></span>
+  </td>
+</tr>
+<tr class="has-text-weight-bold">
+  <td></td>
+  <td class="is-narrow has-text-primary-color has-border-top">TOTAL TTC</td>
+  <td class="has-text-right has-text-primary-color has-border-top nowrap">
+      <span id="facture_montant_ttc_dummy"><%= montant_humanise(@facture.montant_ttc) %></span>
+  </td>
+</tr>

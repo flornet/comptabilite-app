@@ -1,8 +1,13 @@
-<h1 class="title is-4">Factures</h1>
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to_root() %>
+  <%= page_title("Factures") %>
+</nav>
 
 <div class="action-buttons">
-    <div class="control is-grouped">
+    <div class="field is-grouped">
+      <p class="control">
         <%= link_to 'Nouvelle Facture', new_facture_path, class: "button is-primary" %>
+      </p>
     </div>
 </div>
 

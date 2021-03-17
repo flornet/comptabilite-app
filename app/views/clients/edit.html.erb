@@ -1,5 +1,8 @@
-<h1 class="title is-4">Modifier le client</h1>
-<%= link_to 'Revenir à la liste', clients_path, class: "button" %>
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to(clients_path) %>
+  <%= page_title("Modifier le client") %>
+</nav>
+
 <div class="columns">
   <div class="column is-4">
     <%= render 'form', client: @client %>

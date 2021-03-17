@@ -1,5 +1,8 @@
-<div class=" one-page-form">
-    <h1 class="title is-4">Nouvelle taxe</h1>
-    <%= link_to 'Revenir à la liste', taxes_path, class: "button" %>
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to(taxes_path) %>
+  <%= page_title("Nouvelle taxe") %>
+</nav>
+
+<div class="one-page-form">
     <%= render 'form', tax: @tax %>
 </div>

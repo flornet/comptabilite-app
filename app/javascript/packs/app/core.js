@@ -10,6 +10,14 @@ class comptaApp {
   }
 
   setupBulma() {
+    // Dropdowns
+    (document.querySelectorAll('.dropdown:not(.special)') || []).forEach(($dropdown) => {
+      $dropdown.addEventListener('click', (event) => {
+        $dropdown.classList.toggle('is-active');
+        event.stopPropagation();
+      });
+    });
+
     // Close button for notifications
     (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
       const $notification = $delete.parentNode;
@@ -27,11 +35,24 @@ class comptaApp {
 
     // Initialize clickable rows
     (document.querySelectorAll('.clickable-row') || []).forEach(($row) => {
-      $row.addEventListener('click', () => {
-        if (typeof Turbolinks !== 'undefined') {
-          Turbolinks.visit($row.dataset.href);
+      $row.addEventListener('click', (event) => {
+        if (event.metaKey || event.ctrlKey || event.altKey) {
+          // Open a new tab
+          var a = window.document.createElement("a");
+          a.target = '_blank';
+          a.href = $row.dataset.href;
+
+          // Dispatch fake click
+          var e = window.document.createEvent("MouseEvents");
+          e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+          a.dispatchEvent(e);
         } else {
-          window.location.assign($row.dataset.href);
+          // Open in current window
+          if (typeof Turbolinks !== 'undefined') {
+            Turbolinks.visit($row.dataset.href);
+          } else {
+            window.location.assign($row.dataset.href);
+          }
         }
       });
     });
