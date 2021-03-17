@@ -15,7 +15,7 @@ class FacturesController < ApplicationController
       format.html
       format.pdf do
         render  show_as_html: params.key?('debug'),
-                save_to_file: Rails.root.join('sauvegardes/factures', "#{filename}.pdf"),
+                # save_to_file: Rails.root.join('sauvegardes/factures', "#{filename}.pdf"),
                 pdf: filename,
                 disposition: 'attachment',
                 template: "factures/show.pdf.erb",
