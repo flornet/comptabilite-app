@@ -7,14 +7,20 @@ class comptaApp {
   constructor() {
     this.setupBulma();
     this.setupFacture();
+    this.setupSelecteursStatut();
   }
 
   setupBulma() {
     // Dropdowns
     (document.querySelectorAll('.dropdown:not(.special)') || []).forEach(($dropdown) => {
       $dropdown.addEventListener('click', (event) => {
-        $dropdown.classList.toggle('is-active');
+        if (event.target.closest('.dropdown-trigger') != null || event.target.classList.contains('dropdown-item')) {
+          $dropdown.classList.toggle('is-active');
+        }
         event.stopPropagation();
+        document.addEventListener('click', (event) => {
+          $dropdown.classList.remove('is-active');
+        }, { once: true });
       });
     });
 
@@ -36,22 +42,25 @@ class comptaApp {
     // Initialize clickable rows
     (document.querySelectorAll('.clickable-row') || []).forEach(($row) => {
       $row.addEventListener('click', (event) => {
-        if (event.metaKey || event.ctrlKey || event.altKey) {
-          // Open a new tab
-          var a = window.document.createElement("a");
-          a.target = '_blank';
-          a.href = $row.dataset.href;
+        // console.log(event.target.closest('.dropdown-trigger'));
+        if (event.target.closest('.dropdown') == null) { // Don't follow link if a button or dropdown is clicked
+          if (event.metaKey || event.ctrlKey || event.altKey) {
+            // Open a new tab
+            var a = window.document.createElement("a");
+            a.target = '_blank';
+            a.href = $row.dataset.href;
 
-          // Dispatch fake click
-          var e = window.document.createEvent("MouseEvents");
-          e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-          a.dispatchEvent(e);
-        } else {
-          // Open in current window
-          if (typeof Turbolinks !== 'undefined') {
-            Turbolinks.visit($row.dataset.href);
+            // Dispatch fake click
+            var e = window.document.createEvent("MouseEvents");
+            e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            a.dispatchEvent(e);
           } else {
-            window.location.assign($row.dataset.href);
+            // Open in current window
+            if (typeof Turbolinks !== 'undefined') {
+              Turbolinks.visit($row.dataset.href);
+            } else {
+              window.location.assign($row.dataset.href);
+            }
           }
         }
       });
@@ -102,6 +111,53 @@ class comptaApp {
       this._setupAutoCompleteClient();
     }
   }
+  setupSelecteursStatut() {
+    var selecteur_statut = document.querySelectorAll('.selecteur-statut-facture');
+    if (selecteur_statut.length > 0) {
+      selecteur_statut.forEach(selecteur => {
+        var links   = selecteur.querySelectorAll('.dropdown-item');
+        var button  = selecteur.querySelectorAll('.dropdown-trigger .button')[0];
+        var nom     = button.querySelectorAll('.nom')[0];
+        if (links.length > 0) {
+          links.forEach(link => {
+            link.addEventListener('click', e => {
+              button.classList.add('is-loading');
+              button.classList.add('is-white');
+              button.classList.remove('is-' + nom.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase());
+
+              const token = document.getElementsByName("csrf-token")[0].content;
+              const headers = new Headers();
+              headers.append('X-CSRF-Token', token);
+
+              const formData = new FormData();
+              formData.append('[facture][facture_statut_id]', link.dataset.factureStatutId);
+
+              fetch(link.href + '.json', {
+                method: 'PUT',
+                headers: headers,
+                body: formData
+              })
+                .then(response => response.json())
+                .then(data => {
+                  button.classList.remove('is-loading');
+                  button.classList.remove('is-white');
+                  button.classList.add('is-' + link.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase());
+                  nom.innerText = link.innerText;
+                })
+                .catch((error) => {
+                  button.classList.remove('is-loading');
+                  button.classList.remove('is-white');
+                  button.classList.add('is-' + nom.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase());
+                  console.error('Error:', error);
+                });
+              e.preventDefault();
+            })
+          })
+        }
+      })
+    }
+  }
+
   _setupAutoCompleteClient() {
     this.facture.client.nom.addEventListener('input',  event => {
       // console.log(this.facture.client.nom.value);

@@ -70,15 +70,15 @@ class User < ApplicationRecord
     Taxe.create(nom: "2.1%", taux: "0.021", user: self)
     Taxe.create(nom: "0%", taux: "0", user: self)
 
-    FactureStatut.create(nom: "envoyée", user: self)
-    FactureStatut.create(nom: "payée", user: self)
-    FactureStatut.create(nom: "enregistrée", defaut: true, user: self)
-    FactureStatut.create(nom: "annulée", user: self)
+    FactureStatut.create(nom: "Envoyée", user: self)
+    FactureStatut.create(nom: "Payée", user: self)
+    FactureStatut.create(nom: "Enregistrée", defaut: true, user: self)
+    FactureStatut.create(nom: "Annulée", user: self)
 
-    DevisStatut.create(nom: "envoyé", user: self)
-    DevisStatut.create(nom: "signé", user: self)
-    DevisStatut.create(nom: "non envoyé", defaut: true, user: self)
-    DevisStatut.create(nom: "annulé", user: self)
+    DevisStatut.create(nom: "Envoyé", user: self)
+    DevisStatut.create(nom: "Signé", user: self)
+    DevisStatut.create(nom: "Non envoyé", defaut: true, user: self)
+    DevisStatut.create(nom: "Annulé", user: self)
 
     DocumentModele.create(
       nom:                  "We Love Users",

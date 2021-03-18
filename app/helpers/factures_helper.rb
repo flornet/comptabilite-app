@@ -56,7 +56,20 @@ module FacturesHelper
     if !facture.id? || (facture.id? && !facture.est_brouillon)
       "N°#{facture.numero}"
     else
-      "Pas de numéro"
+      '<span class="tag is-light">Pas de numéro</span>'.html_safe
     end
+  end
+
+  def statut_pour_facture(facture)
+    if !facture.id? || (facture.id? && !facture.est_brouillon)
+      render "factures/partials/facture_statut_selecteur", facture: facture
+      # ('<span class="tag ' + css_class_for_status(facture.facture_statut) + '">' + facture.facture_statut.nom + '</span>').html_safe
+    else
+      '<span class="tag brouillon is-light">Brouillon</span>'.html_safe
+    end
+  end
+
+  def css_class_for_status(facture_statut)
+    'is-' + I18n.transliterate(facture_statut.nom).downcase
   end
 end

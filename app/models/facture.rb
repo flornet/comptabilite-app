@@ -20,18 +20,20 @@ class Facture < ApplicationRecord
   end
 
   def update_from_nested_params(params, est_brouillon = false)
-    if params[:client_attributes][:id] == ""
-      # Creating a new associated client
-      self.client = self.user.clients.build() #Client.new
-      self.client.assign_attributes(params[:client_attributes])
-      self.client.taxe = self.taxe
-      params.delete :client_attributes
-    elsif params[:client_attributes][:id] != self.client.id
-      # Changing the associated client
-      client = Client.find(params[:client_attributes][:id])
-      client.assign_attributes(params[:client_attributes])
-      params.delete :client_attributes
-      self.client = client
+    if !params[:client_attributes].nil?
+      if params[:client_attributes][:id] == ""
+        # Creating a new associated client
+        self.client = self.user.clients.build() #Client.new
+        self.client.assign_attributes(params[:client_attributes])
+        self.client.taxe = self.taxe
+        params.delete :client_attributes
+      elsif params[:client_attributes][:id] != self.client.id
+        # Changing the associated client
+        client = Client.find(params[:client_attributes][:id])
+        client.assign_attributes(params[:client_attributes])
+        params.delete :client_attributes
+        self.client = client
+      end
     end
     self.est_brouillon = est_brouillon
     return self.update(params)

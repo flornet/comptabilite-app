@@ -8,18 +8,6 @@
   }
 </style>
 <%= form_with(model: facture, html: {autocomplete: "off"}) do |form| %>
-  <% if @creating_new %>
-    <%= form.hidden_field :facture_statut_id%>
-  <% else %>
-    <div class="field">
-      <%= form.label :facture_statut_id, class: "label" %>
-      <div class="select">
-        <%= form.collection_select :facture_statut_id, current_user.facture_statuts.order(:nom), :id, :nom%>
-      </div>
-    </div>
-    <hr />
-  <% end %>
-
   <div class="panel facture-actions">
     <div class="panel-block">
         <div class="buttons">
@@ -29,6 +17,7 @@
           <% elsif @facture.est_brouillon %>
             <%= form.button "Enregistrer", name: 'commit',value: "brouillon", class: "button is-secondary is-fullwidth" %>
             <%= form.button "Créer la facture", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
+            <%= link_to 'Supprimer', facture_path(@facture), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "button is-danger is-fullwidth" %>
           <% else %>
             <%= form.button "Enregistrer", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
             <%= link_to "Générer le PDF", facture_path(@facture, format: :pdf), class: "button is-fullwidth" %>
@@ -38,6 +27,12 @@
   </div>
 
     <div class="card facture-feuille">
+      <% if @creating_new %>
+        <%= form.hidden_field :facture_statut_id%>
+      <% else %>
+        <%= statut_pour_facture(@facture) %>
+      <% end %>
+
         <% if facture.errors.any? %>
           <div class="notification is-danger">
             <h2 class="is-size-5"><%= pluralize(facture.errors.count, "error") %> prohibited this facture from being saved:</h2>

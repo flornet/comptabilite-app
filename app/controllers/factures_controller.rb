@@ -51,7 +51,7 @@ class FacturesController < ApplicationController
 
     respond_to do |format|
       if @facture.save
-        format.html { redirect_to edit_facture_path(@facture), notice: "Facture was successfully created." }
+        format.html { redirect_to edit_facture_path(@facture) }
         format.json { render :show, status: :created, location: @facture }
       else
         # if (!@facture.client)
@@ -67,7 +67,7 @@ class FacturesController < ApplicationController
   def update
     respond_to do |format|
       if @facture.update_from_nested_params(facture_params, est_brouillon?)
-        format.html { redirect_to edit_facture_path(@facture), notice: "Facture was successfully updated." }
+        format.html { redirect_to edit_facture_path(@facture) }
         format.json { render :show, status: :ok, location: @facture }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -80,7 +80,7 @@ class FacturesController < ApplicationController
   def destroy
     @facture.destroy
     respond_to do |format|
-      format.html { redirect_to factures_url, notice: "Facture was successfully destroyed." }
+      format.html { redirect_to factures_url }
       format.json { head :no_content }
     end
   end
@@ -105,7 +105,8 @@ class FacturesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def facture_params
-      params[:facture][:client_attributes][:nom] = params[:facture][:client_attributes].delete :client
+      Rails.logger.debug(params)
+      params[:facture][:client_attributes][:nom] = params[:facture][:client_attributes].delete :client unless params[:facture][:client_attributes].nil?
       params.require(:facture).permit(:type_document, :contrast_color, :date, :designation, :montant_ht, :montant_tva, :montant_ttc, :est_brouillon, :pdf, :taxe_id, :facture_statut_id, :client_id, :coordonnees_societe, :coordonnees_societe, :logo, :date_reglement, :mention1_texte, :mention2_texte, :mention3_texte, :mention_legale, facture_lignes_attributes: [:id, :designation, :montant_ht, :_destroy], client_attributes: [:id, :nom, :adresse, :code_postal, :ville, :pays, :numero_tva_intracommunautaire, :email, :telephone])
     end
 

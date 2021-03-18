@@ -199,6 +199,40 @@ div.has-navbar-fixed-top .navbar.is-fixed-top {
 .panel.facture-actions .buttons {
   width: 180px;
 }
+.selecteur-statut-facture a.button {
+  border-color: transparent;
+}
+.card.facture-feuille .selecteur-statut-facture,
+.card.facture-feuille .tag.brouillon {
+  position:absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+
+/***** STYLE *****/
+.tag:not(body).is-payee,
+.dropdown a.is-payee  {
+  background-color: #00d1b2;
+  color: #fff;
+}
+.tag:not(body).is-enregistree,
+.dropdown a.is-enregistree  {
+  background-color: #ffe08a;
+  color: rgba(0,0,0,.7);
+}
+.tag:not(body).is-envoyee,
+.dropdown a.is-envoyee  {
+  background-color: #485fc7;
+  color: #fff;
+}
+.tag:not(body).is-annulee,
+.dropdown a.is-annulee {
+  background-color: #fff;
+  color: #0a0a0a;
+}
 .has-text-gray {
   color: $grey-light !important;
 }

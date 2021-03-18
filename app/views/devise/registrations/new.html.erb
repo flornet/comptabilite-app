@@ -18,7 +18,7 @@
     </div>
     <% if @minimum_password_length %>
     <p class="help">
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <em>(<%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %>)</em>
     </p>
     <% end %>
   </div>
@@ -32,7 +32,7 @@
 
   <div class="field is-grouped is-grouped-right">
     <div class="control">
-      <%= f.submit "Créer mon compte", class: "button is-primary" %>
+      <%= f.submit t('.sign_up'), class: "button is-primary" %>
     </div>
   </div>
 <% end %>
