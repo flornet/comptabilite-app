@@ -7,7 +7,7 @@ module ApplicationHelper
     output = ''
     output += '<div class="navbar-item">'
     output += '<a href="' + url_for(root_path) + '" class="button">'
-    output += '<span class="icon"><i class="fas fa-chevron-left"></i></span>'
+    output += '<span class="icon"><i class="fa fa-chevron-left"></i></span>'
     output += "<span>Revenir à l'accueil</span>"
     output += '</a>'
     output += '</div>'
@@ -18,7 +18,7 @@ module ApplicationHelper
     output = ''
     output += '<div class="navbar-item">'
     output += '<a href="' + url_for(path) + '" class="button">'
-    output += '<span class="icon"><i class="fas fa-chevron-left"></i></span>'
+    output += '<span class="icon"><i class="fa fa-chevron-left"></i></span>'
     output += '<span>Revenir à la liste</span>'
     output += '</a>'
     output += '</div>'

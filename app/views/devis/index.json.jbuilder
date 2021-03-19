@@ -1,1 +1,1 @@
-json.array! @devis, partial: "devis/devi", as: :devi
+json.array! @factures, partial: "factures/facture", as: :facture

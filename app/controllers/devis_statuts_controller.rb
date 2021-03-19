@@ -26,7 +26,7 @@ class DevisStatutsController < ApplicationController
 
     respond_to do |format|
       if @devis_statut.save
-        format.html { redirect_to @devis_statut, notice: "Devis statut was successfully created." }
+        format.html { redirect_to edit_devis_statut_path(@devis_statut), notice: "Devis statut was successfully created." }
         format.json { render :show, status: :created, location: @devis_statut }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class DevisStatutsController < ApplicationController
   def update
     respond_to do |format|
       if @devis_statut.update(devis_statut_params)
-        format.html { redirect_to @devis_statut, notice: "Devis statut was successfully updated." }
+        format.html { redirect_to edit_devis_statut_path(@devis_statut), notice: "Devis statut was successfully updated." }
         format.json { render :show, status: :ok, location: @devis_statut }
       else
         format.html { render :edit, status: :unprocessable_entity }

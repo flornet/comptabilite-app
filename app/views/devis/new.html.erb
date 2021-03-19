@@ -5,10 +5,10 @@
 
 <div class="action-buttons">
     <div class="field is-grouped">
-        <%= links_to_choose_model(current_user.document_modeles.order(:nom), @modele_selectionne) %>
+        <%= links_to_choose_devis_model(current_user.document_modeles.order(:nom), @modele_selectionne) %>
     </div>
 </div>
 
-<div class="facture-form">
+<div class="devis-form">
     <%= render 'form', devi: @devi %>
 </div>

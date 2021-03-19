@@ -1,0 +1,11 @@
+<h1 class="designation title is-4 has-text-primary-color has-text-weight-bold"><%= @devi.designation %></h1>
+
+<table class="table is-narrow">
+  <tr>
+    <td colspan="2"><div class="numero"><%= @devi.type_document %> <%= numero_pour_devis(@devi) %></div></td>
+  </tr>
+  <tr>
+    <td><div class="date">Date d'émission : <%= @devi.date %></div></td>
+    <td><div class="reglement">Délai de validité : <%= @devi.date_validite %></div></td>
+  </tr>
+</table>

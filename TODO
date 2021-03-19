@@ -1,3 +1,5 @@
 current_user PARTOUT !!!
 interdire les modifications / suppression des Taxes dès qu'ils ont des enfants
 validateur de nom unique sur client : KO
+- Défaut : forcer un seul par défaut (document_modele, taxes, statuts)
+- Factures annulées : ajouter une mention dans le PDF

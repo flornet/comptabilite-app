@@ -52,6 +52,17 @@ module FacturesHelper
     output.html_safe
   end
 
+  def date_pour_facture(facture)
+
+    output = ""
+    output += "<div class='is-size-5'>" + facture.date.strftime("%d") + '</div>'
+    output += "<div class='is-size-7'>" + facture.date.strftime("%^b.")
+    output += facture.date.strftime(" %y") unless facture.date.year == Date.today.year
+    output += '</div>'
+    # facture.date.strftime("%d")
+    output.html_safe
+  end
+
   def numero_pour_facture(facture)
     if !facture.id? || (facture.id? && !facture.est_brouillon)
       "N°#{facture.numero}"
@@ -70,6 +81,6 @@ module FacturesHelper
   end
 
   def css_class_for_status(facture_statut)
-    'is-' + I18n.transliterate(facture_statut.nom).downcase
+    'is-' + I18n.transliterate(facture_statut.nom).downcase.gsub(" ", "-")
   end
 end

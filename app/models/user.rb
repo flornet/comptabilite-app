@@ -1,8 +1,11 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable,
+         :rememberable,
+         :validatable
   has_many :taxes, class_name: "Taxe", dependent: :destroy
   has_many :factures, dependent: :destroy do
 
@@ -55,8 +58,57 @@ class User < ApplicationRecord
     end
 
   end
+  has_many :devis, dependent: :destroy do
+
+    def build_with_model(model)
+      devis = build
+      devis.devis_lignes.build
+      devis.build_client
+      devis.devis_statut        = devis.user.devis_statuts.where(defaut: true).first
+      devis.taxe                = devis.user.taxes.where(defaut: true).first
+      devis.coordonnees_societe = model.coordonnees_societe
+      devis.logo                = model.logo
+      devis.contrast_color      = model.contrast_color
+      devis.date_validite       = model.date_validite
+      devis.mention1_texte      = ""
+      devis.mention2_texte      = ""
+      devis.mention3_texte      = ""
+      devis.mention_legale      = model.mention_legale
+      devis.date                = Date.today
+      devis.numero              = devis.generate_new_devis_number
+      devis
+    end
+
+    def build_from_create_params(params)
+      if params[:client_attributes][:id] != ""
+        # Client already existing to link and possibly update
+        client = Client.find(params[:client_attributes][:id])
+        client.assign_attributes(params[:client_attributes])
+        params.delete :client_attributes
+        devis = proxy_association.owner.devis.build(params)
+        devis.client = client
+      else
+        # New client to create
+        devis = proxy_association.owner.devis.build(params)
+      end
+
+      if !devis.client
+        devis.build_client()
+      end
+
+      if devis.devis_lignes.size <= 0
+        devis.devis_lignes.build
+      end
+
+      devis.client.taxe = devis.taxe
+      devis.client.user = devis.user
+      devis.devis_statut = devis.user.devis_statuts.where(defaut: true).first
+
+      return devis
+    end
+
+  end
   has_many :document_modeles, dependent: :destroy
-  has_many :devis, dependent: :destroy
   has_many :clients, dependent: :destroy
   has_many :facture_statuts, dependent: :destroy
   has_many :devis_statuts, dependent: :destroy

@@ -2,8 +2,8 @@
     <div class="main">
         <a href="<%= url_for root_path %>" class="item <%= current_page_active_class?(root_path)%>"><span class="name">Accueil</span></a>
         <hr class="navbar-divider">
-        <a href="<%= url_for devis_path %>" class="item <%= current_page_active_class?(devis_path)%>"><span class="name">Devis</span></a>
         <a href="<%= url_for factures_path %>" class="item <%= current_page_active_class?(factures_path)%>"><span class="name">Factures</span></a>
+        <a href="<%= url_for devis_path %>" class="item <%= current_page_active_class?(devis_path)%>"><span class="name">Devis</span></a>
         <hr class="navbar-divider">
         <a href="<%= url_for taxes_path %>" class="item <%= current_page_active_class?(taxes_path)%>"><span class="name">Taxes</span></a>
         <a href="<%= url_for clients_path %>" class="item <%= current_page_active_class?(clients_path)%>"><span class="name">Clients</span></a>
@@ -15,10 +15,10 @@
       <div class="dropdown is-up is-fullwidth">
         <div class="dropdown-trigger">
           <button class="button" aria-haspopup="true" aria-controls="dropdown-menu7">
-            <span class="icon is-small"><i class="fas fa-cog"></i></span>
+            <span class="icon is-small"><i class="fa fa-cog"></i></span>
             <span>Mon compte</span>
             <span class="icon is-small">
-              <i class="fas fa-angle-up" aria-hidden="true"></i>
+              <i class="fa fa-angle-up" aria-hidden="true"></i>
             </span>
           </button>
         </div>
@@ -33,13 +33,15 @@
             <hr class="dropdown-divider">
             <%= link_to "Lignes de devis", devis_lignes_path, :class => 'dropdown-item' %>
             <%= link_to "Lignes de factures", facture_lignes_path, :class => 'dropdown-item' %>
-            <hr class="dropdown-divider">
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'dropdown-item'  %>
           </div>
         </div>
       </div>
       <% else %>
+        <div class="buttons">
         <%= link_to "Connexion", new_user_session_path, :class => 'button is-primary'  %>
-        <%= link_to "Créer un compte", new_user_registration_path, :class => 'button'  %>
+        <%
+        # =link_to "Créer un compte", new_user_registration_path, :class => 'button'
+        %>
+        </div>
       <% end %>
     </div>

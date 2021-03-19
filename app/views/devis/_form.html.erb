@@ -1,72 +1,104 @@
-<%= form_with(model: devi) do |form| %>
-  <% if devi.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(devi.errors.count, "error") %> prohibited this devi from being saved:</h2>
-
-      <ul>
-        <% devi.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<style type="text/css">
+  .has-bg-primary-color {
+    background-color: <%= @devi.contrast_color %> !important;
+    color: #ffffff !important;
+  }
+  .has-text-primary-color {
+    color: <%= @devi.contrast_color %> !important;
+  }
+</style>
+<%= form_with(model: devi, html: {autocomplete: "off"}) do |form| %>
+  <div class="panel devis-actions">
+    <div class="panel-block">
+        <div class="buttons">
+          <% if @creating_new %>
+            <%= form.button "Créer le devis", name: 'commit', value: "devi", class: "button is-primary is-fullwidth" %>
+          <% else %>
+            <%= form.button "Enregistrer", name: 'commit', value: "devi", class: "button is-primary is-fullwidth" %>
+            <%= link_to "Générer le PDF", devi_path(@devi, format: :pdf), class: "button is-fullwidth" %>
+            <%= link_to 'Supprimer', devi_path(@devi), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "button is-danger is-fullwidth" %>
+          <% end %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :type_document %>
-    <%= form.select :type_document, ["Devis"] %>
   </div>
 
-  <div class="field">
-    <%= form.label :date %>
-    <%= form.date_select :date %>
-  </div>
+    <div class="card devis-feuille">
+      <% if @creating_new %>
+        <%= form.hidden_field :devi_statut_id%>
+      <% else %>
+        <%= statut_pour_devis(@devi) %>
+      <% end %>
 
-  <div class="field">
-    <%= form.label :numero %>
-    <%= form.text_field :numero %>
-  </div>
+        <% if devi.errors.any? %>
+          <div class="notification is-danger">
+            <h2 class="is-size-5"><%= pluralize(devi.errors.count, "error") %> prohibited this devi from being saved:</h2>
+            <div class="content">
+            <ul>
+              <% devi.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+            </div>
+          </div>
+        <% end %>
 
-  <div class="field">
-    <%= form.label :designation %>
-    <%= form.text_field :designation %>
-  </div>
+        <div class="tile is-ancestor">
+          <div class="tile is-parent is-5">
+            <div class="logo has-text-centered">
+                <%= image_tag(@devi.logo) %>
+                <%= form.hidden_field :logo %>
+                <%= form.hidden_field :contrast_color %>
+            </div>
+          </div>
+          <div class="tile is-parent is-2"></div>
+          <div class="tile is-parent is-5"></div>
+        </div>
+        <div class="tile is-ancestor">
+          <div class="tile is-parent is-5">
+            <div class="fournisseur">
+              <%= render "devis/partials/fournisseur_form", form: form %>
+            </div>
+          </div>
+          <div class="tile is-parent is-2"></div>
+          <div class="tile is-parent is-5">
+            <div class="tile is-child">
+              <div class="client">
+                <%= form.fields_for :client do |client_form| %>
+                  <%= render "devis/partials/client_form", form: client_form %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <div class="field">
-    <%= form.label :montant_ht %>
-    <%= form.text_field :montant_ht %>
-  </div>
 
-  <div class="field">
-    <%= form.label :montant_ttc %>
-    <%= form.text_field :montant_ttc %>
-  </div>
+        <div class="contenu-principal">
+          <%= render "devis/partials/entete_form", form: form %>
 
-  <div class="field">
-    <%= form.label :document_modele_id %>
-    <%= form.text_field :document_modele_id %>
-  </div>
+          <div class="devis-lignes">
+            <table class="table is-fullwidth is-narrow" id="table_lignes_devis">
+              <thead>
+                <tr>
+                  <th class="has-text-left has-bg-primary-color" colspan="2">Désignation</th>
+                  <th class="is-narrow has-bg-primary-color">Montant HT</th>
+                </tr>
+              </thead>
+              <tbody>
+              <%= form.fields_for :devis_lignes do |devis_ligne| %>
+                  <%= render "devis/partials/devis_ligne_fields_form", f: devis_ligne %>
+              <% end %>
+              </tbody>
+              <tfoot>
+                <%= render "devis/partials/pied_form", form: form %>
+              </tfoot>
+            </table>
+          </div>
 
-  <div class="field">
-    <%= form.label :pdf %>
-    <%= form.text_field :pdf %>
-  </div>
+          <div class="devi-mentions">
+            <%= render "devis/partials/mentions_form", form: form %>
+          </div>
 
-  <div class="field">
-    <%= form.label :taxe_id %>
-    <%= form.text_field :taxe_id %>
-  </div>
+        </div>
 
-  <div class="field">
-    <%= form.label :devis_statut_id %>
-    <%= form.text_field :devis_statut_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :client_id %>
-    <%= form.text_field :client_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
   </div>
 <% end %>

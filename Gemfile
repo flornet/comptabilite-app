@@ -24,6 +24,9 @@ gem 'wkhtmltopdf-binary'
 gem 'rails-i18n', '~> 6.0.0'
 gem 'devise'
 gem 'devise-i18n'
+gem 'font-awesome-rails'
+gem 'groupdate'
+gem 'chartkick'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

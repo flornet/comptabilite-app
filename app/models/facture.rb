@@ -1,6 +1,4 @@
 class Facture < ApplicationRecord
-  # attribute :client_updated_at_traker
-
   belongs_to :taxe
   belongs_to :facture_statut
   belongs_to :client

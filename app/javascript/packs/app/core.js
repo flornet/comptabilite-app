@@ -69,22 +69,22 @@ class comptaApp {
 
   setupFacture() {
     this.facture = {};
+    this.humanReadableCurrencyOptions = {
+                                          separator: ' ',
+                                          decimal: ',',
+                                          symbol: '€',
+                                          pattern: '# !',
+                                          negativePattern: "- # !"
+                                        };
+    this.machineReadableCurrencyOptions = {
+                                          separator: '',
+                                          decimal: ',',
+                                          symbol: '€',
+                                          pattern: '#',
+                                          negativePattern: "-#"
+                                        };
     this.facture.table_lignes_facture = document.getElementById('table_lignes_facture');
     if (this.facture.table_lignes_facture !== null) {
-      this.humanReadableCurrencyOptions = {
-                                            separator: ' ',
-                                            decimal: ',',
-                                            symbol: '€',
-                                            pattern: '# !',
-                                            negativePattern: "- # !"
-                                          };
-      this.machineReadableCurrencyOptions = {
-                                            separator: '',
-                                            decimal: ',',
-                                            symbol: '€',
-                                            pattern: '#',
-                                            negativePattern: "-#"
-                                          };
       this.facture.total_ht_dummy     = document.getElementById('facture_montant_ht_dummy');
       this.facture.total_ht           = document.getElementById('facture_montant_ht');
       this.facture.montant_tva_dummy  = document.getElementById('facture_montant_tva_dummy');
@@ -109,28 +109,69 @@ class comptaApp {
       this._setupAutoGrow();
       this._setupPriceFields();
       this._setupAutoCompleteClient();
+    } else {
+      this.facture.table_lignes_facture = document.getElementById('table_lignes_devis');
+      if (this.facture.table_lignes_facture !== null) {
+
+        this.facture.total_ht_dummy     = document.getElementById('devi_montant_ht_dummy');
+        this.facture.total_ht           = document.getElementById('devi_montant_ht');
+        this.facture.montant_tva_dummy  = document.getElementById('devi_montant_tva_dummy');
+        this.facture.montant_tva        = document.getElementById('devi_montant_tva');
+        this.facture.total_ttc_dummy    = document.getElementById('devi_montant_ttc_dummy');
+        this.facture.total_ttc          = document.getElementById('devi_montant_ttc');
+        this.facture.taux_tva           = document.getElementById('devi_taxe_id');
+        this.facture.client             = {};
+        this.facture.client.id          = document.getElementById('devi_client_attributes_id');
+        this.facture.client.nom         = document.getElementById('devi_client_attributes_client');
+        this.facture.client.adresse     = document.getElementById('devi_client_attributes_adresse');
+        this.facture.client.code_postal = document.getElementById('devi_client_attributes_code_postal');
+        this.facture.client.ville       = document.getElementById('devi_client_attributes_ville');
+        this.facture.client.pays        = document.getElementById('devi_client_attributes_pays');
+        this.facture.client.numero_tva_intracommunautaire = document.getElementById('devi_client_attributes_numero_tva_intracommunautaire');
+        this.facture.client.email       = document.getElementById('devi_client_attributes_email');
+        this.facture.client.telephone   = document.getElementById('devi_client_attributes_telephone');
+        this.facture.client.seleteur    = this.facture.client.nom.closest('.dropdown');
+        this.facture.client.liste       = this.facture.client.seleteur.querySelectorAll('.dropdown-content')[0];
+        this.facture.client.indicateur  = document.getElementById('creating-client-indicator');
+        this._bindFieldsButtons();
+        this._setupAutoGrow();
+        this._setupPriceFields();
+        this._setupAutoCompleteClient();
+      }
     }
   }
   setupSelecteursStatut() {
-    var selecteur_statut = document.querySelectorAll('.selecteur-statut-facture');
+    var selecteur_statut = document.querySelectorAll('.selecteur-statut');
     if (selecteur_statut.length > 0) {
       selecteur_statut.forEach(selecteur => {
+        var type = "facture";
+        if (selecteur.classList.contains('devis')) {
+          type = "devis";
+        }
         var links   = selecteur.querySelectorAll('.dropdown-item');
         var button  = selecteur.querySelectorAll('.dropdown-trigger .button')[0];
         var nom     = button.querySelectorAll('.nom')[0];
         if (links.length > 0) {
           links.forEach(link => {
             link.addEventListener('click', e => {
+              e.preventDefault();
+
               button.classList.add('is-loading');
               button.classList.add('is-white');
-              button.classList.remove('is-' + nom.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase());
+              button.classList.remove('is-' + nom.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(" ","-").toLowerCase());
 
               const token = document.getElementsByName("csrf-token")[0].content;
               const headers = new Headers();
               headers.append('X-CSRF-Token', token);
 
               const formData = new FormData();
-              formData.append('[facture][facture_statut_id]', link.dataset.factureStatutId);
+              if (type == "facture") {
+                formData.append('[facture][facture_statut_id]', link.dataset.factureStatutId);
+              } else {
+                if (type == "devis") {
+                  formData.append('[devi][devis_statut_id]', link.dataset.deviStatutId);
+                }
+              }
 
               fetch(link.href + '.json', {
                 method: 'PUT',
@@ -141,16 +182,15 @@ class comptaApp {
                 .then(data => {
                   button.classList.remove('is-loading');
                   button.classList.remove('is-white');
-                  button.classList.add('is-' + link.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase());
+                  button.classList.add('is-' + link.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(" ","-").toLowerCase());
                   nom.innerText = link.innerText;
                 })
                 .catch((error) => {
                   button.classList.remove('is-loading');
                   button.classList.remove('is-white');
-                  button.classList.add('is-' + nom.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase());
+                  button.classList.add('is-' + nom.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(" ","-").toLowerCase());
                   console.error('Error:', error);
                 });
-              e.preventDefault();
             })
           })
         }

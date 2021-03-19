@@ -5,7 +5,7 @@ class FacturesController < ApplicationController
 
   # GET /factures or /factures.json
   def index
-    @factures = current_user.factures.order(numero: "DESC")
+    @factures = current_user.factures.order(date: "DESC")
   end
 
   # GET /factures/1 or /factures/1.json
@@ -54,9 +54,6 @@ class FacturesController < ApplicationController
         format.html { redirect_to edit_facture_path(@facture) }
         format.json { render :show, status: :created, location: @facture }
       else
-        # if (!@facture.client)
-        #   @facture.client = Client.new
-        # end
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @facture.errors, status: :unprocessable_entity }
       end
@@ -105,7 +102,6 @@ class FacturesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def facture_params
-      Rails.logger.debug(params)
       params[:facture][:client_attributes][:nom] = params[:facture][:client_attributes].delete :client unless params[:facture][:client_attributes].nil?
       params.require(:facture).permit(:type_document, :contrast_color, :date, :designation, :montant_ht, :montant_tva, :montant_ttc, :est_brouillon, :pdf, :taxe_id, :facture_statut_id, :client_id, :coordonnees_societe, :coordonnees_societe, :logo, :date_reglement, :mention1_texte, :mention2_texte, :mention3_texte, :mention_legale, facture_lignes_attributes: [:id, :designation, :montant_ht, :_destroy], client_attributes: [:id, :nom, :adresse, :code_postal, :ville, :pays, :numero_tva_intracommunautaire, :email, :telephone])
     end

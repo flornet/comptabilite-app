@@ -70,166 +70,215 @@ div.has-navbar-fixed-top .navbar.is-fixed-top {
   margin-bottom: 1.5rem;
 }
 
-/***** FACTURES *****/
-.card.facture-feuille {
+/***** FACTURES & DEVIS *****/
+.card.facture-feuille,
+.card.devis-feuille {
   width: 735px;
   min-height: 1040px;
   padding: 4rem;
 }
-.card.facture-feuille .fournisseur {
-
+.card.facture-feuille .fournisseur,
+.card.devis-feuille .fournisseur {
+  width:100%;
 }
-.card.facture-feuille .fournisseur .textarea {
+.card.facture-feuille .fournisseur .textarea,
+.card.devis-feuille .fournisseur .textarea {
   box-shadow: none;
   border-radius: 0;
   border-style: $factureFieldBorderStyle;
 }
-.card.facture-feuille .client {
-
+.card.facture-feuille .client .dropdown-trigger .is-right,
+.card.devis-feuille .client .dropdown-trigger .is-right {
+  position: absolute;
+  right:0.4em;
+  top:0.4em;
 }
-.card.facture-feuille .contenu-principal {
-
-}
-.card.facture-feuille .facture-mentions {
+.card.facture-feuille .facture-mentions,
+.card.devis-feuille .facture-mentions {
   margin-top:30px;
 }
 .card.facture-feuille .contenu-principal input,
-.card.facture-feuille .contenu-principal textarea {
+.card.facture-feuille .contenu-principal textarea,
+.card.devis-feuille .contenu-principal input,
+.card.devis-feuille .contenu-principal textarea {
   box-shadow: none;
   border-style: $factureFieldBorderStyle;
 }
 .card.facture-feuille .contenu-principal .field:not(.has-addons) input,
-.card.facture-feuille .contenu-principal .field:not(.has-addons) textarea {
+.card.facture-feuille .contenu-principal .field:not(.has-addons) textarea,
+.card.devis-feuille .contenu-principal .field:not(.has-addons) input,
+.card.devis-feuille .contenu-principal .field:not(.has-addons) textarea {
   border-radius: 0;
 }
-.card.facture-feuille .contenu-principal .facture-lignes tbody tr .row-action {
+.card.facture-feuille .contenu-principal .facture-lignes tbody tr .row-action,
+.card.devis-feuille .contenu-principal .devis-lignes tbody tr .row-action {
   position: absolute;
   right:-1.5em;
   top:0.8em;
 }
-.card.facture-feuille .contenu-principal .facture-lignes .table th.is-narrow {
+.card.facture-feuille .contenu-principal .facture-lignes .table th.is-narrow,
+.card.devis-feuille .contenu-principal .devis-lignes .table th.is-narrow {
   width: 19%;
 }
 .card.facture-feuille .contenu-principal .facture-lignes .table th,
-.card.facture-feuille .contenu-principal .facture-lignes .table td {
+.card.facture-feuille .contenu-principal .facture-lignes .table td,
+.card.devis-feuille .contenu-principal .devis-lignes .table th,
+.card.devis-feuille .contenu-principal .devis-lignes .table td {
   border: 0;
 }
-.card.facture-feuille .contenu-principal .facture-lignes .table th:not(:last-child) {
+.card.facture-feuille .contenu-principal .facture-lignes .table th:not(:last-child),
+.card.devis-feuille .contenu-principal .devis-lignes .table th:not(:last-child) {
   border-right: 2px solid #fff;
 }
-.card.facture-feuille .client .field:not(:last-child) {
+.card.facture-feuille .client .field:not(:last-child),
+.card.devis-feuille .client .field:not(:last-child) {
   margin-bottom: 0;
 }
-.card.facture-feuille .client .field-body > .field:not(:last-child) {
+.card.facture-feuille .client .field-body > .field:not(:last-child),
+.card.devis-feuille .client .field-body > .field:not(:last-child) {
   margin-right: 0;
 }
-.card.facture-feuille .client .code-postal {
+.card.facture-feuille .client .code-postal,
+.card.devis-feuille .client .code-postal {
   width:2em;
 }
-.card.facture-feuille .client .code-postal .input {
+.card.facture-feuille .client .code-postal .input,
+.card.devis-feuille .client .code-postal .input {
   border-right: 0;
 }
 .card.facture-feuille .client .field:not(:last-of-type) .input,
-.card.facture-feuille .client .field .textarea {
+.card.facture-feuille .client .field .textarea,
+.card.devis-feuille .client .field:not(:last-of-type) .input,
+.card.devis-feuille .client .field .textarea {
   border-bottom: 0;
 }
 .card.facture-feuille .client .input,
-.card.facture-feuille .client .textarea {
+.card.facture-feuille .client .textarea,
+.card.devis-feuille .client .input,
+.card.devis-feuille .client .textarea {
   box-shadow: none;
   border-radius: 0;
   border-style: $factureFieldBorderStyle;
 }
-.card.facture-feuille .client .field:first-child .input {
+.card.facture-feuille .client .field:first-child .input,
+.card.devis-feuille .client .field:first-child .input {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
 }
-.card.facture-feuille .client .field:last-of-type .input {
+.card.facture-feuille .client .field:last-of-type .input,
+.card.devis-feuille .client .field:last-of-type .input {
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
 }
-.card.facture-feuille .client #creating-client-indicator {
-
-}
-.card.facture-feuille .contenu-principal .date-emission {
+.card.facture-feuille .contenu-principal .date-emission,
+.card.devis-feuille .contenu-principal .date-emission {
   width:8em;
 }
-.card.facture-feuille .contenu-principal .date-emission .datetimepicker {
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker,
+.card.devis-feuille .contenu-principal .date-emission .datetimepicker {
   width: 320px;
 }
-.card.facture-feuille .contenu-principal .date-emission .datetimepicker-clear-button {
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-clear-button,
+.card.devis-feuille .contenu-principal .date-emission .datetimepicker-clear-button {
   display: none;
 }
-.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper {
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper,
+.card.devis-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper {
   flex: 0;
   border-color: #dbdbdb;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
-.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper:hover {
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper:hover,
+.card.devis-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper:hover {
   border-color: #b5b5b5;
 }
 .card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy::before,
-.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy:before {
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy:before,
+.card.devis-feuille .contenu-principal .date-emission .datetimepicker-dummy::before,
+.card.devis-feuille .contenu-principal .date-emission .datetimepicker-dummy:before {
   display: none;
 }
-.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper .datetimepicker-dummy-input:first-child {
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper .datetimepicker-dummy-input:first-child,
+.card.devis-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper .datetimepicker-dummy-input:first-child {
   text-indent: 0;
   text-align: center;
 }
-.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper .datetimepicker-dummy-input {
+.card.facture-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper .datetimepicker-dummy-input,
+.card.devis-feuille .contenu-principal .date-emission .datetimepicker-dummy .datetimepicker-dummy-wrapper .datetimepicker-dummy-input {
   max-width: 100%;
   cursor: pointer;
 }
-.card.facture-feuille .facture-lignes tfoot td {
+.card.facture-feuille .facture-lignes tfoot td,
+.card.devis-feuille .devis-lignes tfoot td {
   height: 3.2em;
 }
 .card.facture-feuille .facture-lignes td,
-.card.facture-feuille .facture-lignes tfoot td span.select {
+.card.facture-feuille .facture-lignes tfoot td span.select,
+.card.devis-feuille .devis-lignes td,
+.card.devis-feuille .devis-lignes tfoot td span.select {
     vertical-align: middle;
 }
-.card.facture-feuille .facture-lignes td .field:not(:last-child) {
+.card.facture-feuille .facture-lignes td .field:not(:last-child),
+.card.devis-feuille .devis-lignes td .field:not(:last-child) {
   margin-bottom: 0;
 }
-.panel.facture-actions {
+.panel.facture-actions,
+.panel.devis-actions {
   position: -webkit-fixed;
   position:fixed;
 
   left: calc(780px + 17em);
 }
-.panel.facture-actions .buttons {
+.panel.facture-actions .buttons,
+.panel.devis-actions .buttons {
   width: 180px;
 }
-.selecteur-statut-facture a.button {
+.selecteur-statut a.button {
   border-color: transparent;
 }
-.card.facture-feuille .selecteur-statut-facture,
-.card.facture-feuille .tag.brouillon {
+.card.facture-feuille .selecteur-statut,
+.card.facture-feuille .tag.brouillon,
+.card.devis-feuille .selecteur-statut,
+.card.devis-feuille .tag.brouillon {
   position:absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+}
+.card.facture-feuille .logo,
+.card.devis-feuille .logo {
+  width:100%;
 }
 
 
 
 /***** STYLE *****/
 .tag:not(body).is-payee,
-.dropdown a.is-payee  {
+.dropdown a.is-payee,
+.tag:not(body).is-signe,
+.dropdown a.is-signe  {
   background-color: #00d1b2;
   color: #fff;
 }
 .tag:not(body).is-enregistree,
-.dropdown a.is-enregistree  {
+.dropdown a.is-enregistree,
+.tag:not(body).is-non-envoye,
+.dropdown a.is-non-envoye  {
   background-color: #ffe08a;
   color: rgba(0,0,0,.7);
 }
 .tag:not(body).is-envoyee,
-.dropdown a.is-envoyee  {
+.dropdown a.is-envoyee,
+.tag:not(body).is-envoye,
+.dropdown a.is-envoye  {
   background-color: #485fc7;
   color: #fff;
 }
 .tag:not(body).is-annulee,
-.dropdown a.is-annulee {
+.dropdown a.is-annulee,
+.tag:not(body).is-annule,
+.dropdown a.is-annule {
   background-color: #fff;
   color: #0a0a0a;
 }
@@ -302,38 +351,47 @@ body.pdf .yield {
 body.pdf .aside {
   display: none;
 }
-body.pdf .facture-feuille .tile:not(.is-child) {
+body.pdf .facture-feuille .tile:not(.is-child),
+body.pdf .devis-feuille .tile:not(.is-child) {
   display: flex !important;
 }
-body.pdf .facture-feuille .tile.is-5 {
+body.pdf .facture-feuille .tile.is-5,
+body.pdf .devis-feuille .tile.is-5 {
   flex: none !important;
   width: 41.6666666667% !important;
 }
-body.pdf .facture-feuille .tile.is-2 {
+body.pdf .facture-feuille .tile.is-2,
+body.pdf .devis-feuille .tile.is-2 {
   flex: none !important;
   width: 16.6666666667% !important;
 }
-body.pdf .facture-feuille .facture-mentions {
+body.pdf .facture-feuille .facture-mentions,
+body.pdf .devis-feuille .devis-mentions {
   margin-top:10em;
   font-size:0.9em;
 }
-body.pdf .facture-feuille .logo {
+body.pdf .facture-feuille .logo,
+body.pdf .devis-feuille .logo {
   width:300px;
   margin-bottom:1em;
 }
-body.pdf .facture-feuille .client {
+body.pdf .facture-feuille .client,
+body.pdf .devis-feuille .client {
   margin-top:3em;
 }
 body.pdf .content table td,
 body.pdf .content table th {
   border: 0;
 }
-body.pdf .content .facture-lignes table thead th:not(:last-child) {
+body.pdf .content .facture-lignes table thead th:not(:last-child),
+body.pdf .content .devis-lignes table thead th:not(:last-child) {
   border-right: 2px solid #fff;
 }
-body.pdf .content .facture-lignes table tbody tr td {
+body.pdf .content .facture-lignes table tbody tr td,
+body.pdf .content .devis-lignes table tbody tr td {
   border-bottom: 1px #ccc solid;
 }
-body.pdf .content .facture-lignes table tfoot {
+body.pdf .content .facture-lignes table tfoot,
+body.pdf .content .devis-lignes table tfoot {
   font-size: 1.1em;
 }

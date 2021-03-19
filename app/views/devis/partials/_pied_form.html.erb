@@ -1,0 +1,28 @@
+<tr>
+  <td><%= link_to_add_devis_line "Ajouter une ligne", form, :devis_lignes %></td>
+  <td class="is-narrow has-text-primary-color has-text-weight-bold">TOTAL HT</td>
+  <td class="has-text-right has-text-primary-color has-text-weight-bold">
+      <%= form.hidden_field :montant_ht, readonly: "readonly" %>
+      <span id="devi_montant_ht_dummy"><%= montant_humanise(@devi.montant_ht) %></span>
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td class="is-narrow has-text-weight-bold has-text-gray">
+    TVA <span class="select">
+      <%= form.select :taxe_id, options_for_select(current_user.taxes.order(:nom).map { |t| [t.nom, t.id, {'data-taux' => t.taux }] }, @devi.taxe.id) %>
+    </span>
+  </td>
+  <td class="has-text-right has-text-weight-bold has-text-gray">
+    <%= form.hidden_field :montant_tva, readonly: "readonly" %>
+    <span id="devi_montant_tva_dummy"><%= montant_humanise(@devi.montant_tva) %></span>
+  </td>
+</tr>
+<tr class="has-text-weight-bold">
+  <td></td>
+  <td class="is-narrow has-text-primary-color has-border-top">TOTAL TTC</td>
+  <td class="has-text-right has-text-primary-color has-border-top">
+      <%= form.hidden_field :montant_ttc, readonly: "readonly" %>
+      <span id="devi_montant_ttc_dummy"><%= montant_humanise(@devi.montant_ttc) %></span>
+  </td>
+</tr>

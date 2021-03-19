@@ -49,7 +49,7 @@
         <div class="tile is-ancestor">
           <div class="tile is-parent is-5">
             <div class="logo has-text-centered">
-                <%= image_tag(@facture.logo, srcset: { "2x-#{@facture.logo}" => "2x" }) %>
+                <%= image_tag(@facture.logo) %>
                 <%= form.hidden_field :logo %>
                 <%= form.hidden_field :contrast_color %>
             </div>

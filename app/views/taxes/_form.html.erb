@@ -12,16 +12,28 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :nom %>
-    <%= form.text_field :nom %>
+    <%= form.label :nom, class: "label" %>
+    <div class="control">
+      <%= form.text_field :nom, class: "input" %>
+    </div>
   </div>
 
   <div class="field">
-    <%= form.label :taux %>
-    <%= form.text_field :taux %>
+    <%= form.label :taux, class: "label" %>
+    <div class="control">
+      <%= form.text_field :taux, class: "input" %>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="field">
+    <label class="checkbox">
+      <%= form.check_box :defaut, class: "checkbox" %> Par défaut
+    </label>
+  </div>
+
+  <div class="field is-grouped is-grouped-right">
+    <div class="control">
+      <%= form.submit "Enregistrer", class: "button is-primary" %>
+    </div>
   </div>
 <% end %>

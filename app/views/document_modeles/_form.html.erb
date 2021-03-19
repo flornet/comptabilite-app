@@ -1,54 +1,85 @@
 <%= form_with(model: document_modele) do |form| %>
   <% if document_modele.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(document_modele.errors.count, "error") %> prohibited this document_modele from being saved:</h2>
-
+    <div class="notification is-danger">
+      <h2 class="is-size-5"><%= pluralize(document_modele.errors.count, "error") %> prohibited this document_modele from being saved:</h2>
+      <div class="content">
       <ul>
         <% document_modele.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
+      </div>
     </div>
   <% end %>
 
   <div class="field">
-    <%= form.label :nom %>
-    <%= form.text_field :nom %>
+    <%= form.label :nom, class: "label" %>
+    <div class="control">
+      <%= form.text_field :nom, class: "input" %>
+    </div>
   </div>
 
   <div class="field">
-    <%= form.label :coordonnees_societe %>
-    <%= form.text_area :coordonnees_societe %>
+    <%= form.label :date_validite, class: "label" %>
+    <div class="control">
+      <%= form.text_field :date_validite, class: "input" %>
+    </div>
   </div>
 
   <div class="field">
-    <%= form.label :logo %>
-    <%= form.text_field :logo %>
+    <%= form.label :date_reglement, class: "label" %>
+    <div class="control">
+      <%= form.text_field :date_reglement, class: "input" %>
+    </div>
   </div>
 
   <div class="field">
-    <%= form.label :contrast_color %>
-    <%= form.text_field :contrast_color %>
+    <%= form.label :coordonnees_societe, class: "label" %>
+    <div class="control">
+      <%= form.text_area :coordonnees_societe, class: "textarea" %>
+    </div>
   </div>
 
   <div class="field">
-    <%= form.label :mention1_texte %>
-    <%= form.text_area :mention1_texte %>
+    <%= form.label :logo, class: "label" %>
+    <div class="control">
+      <%= form.text_field :logo, class: "input" %>
+    </div>
   </div>
 
   <div class="field">
-    <%= form.label :mention2_texte %>
-    <%= form.text_area :mention2_texte %>
+    <%= form.label :contrast_color, class: "label" %>
+    <div class="control">
+      <%= form.text_field :contrast_color, class: "input" %>
+    </div>
   </div>
 
   <div class="field">
-    <%= form.label :mention3_texte %>
-    <%= form.text_area :mention3_texte %>
+    <%= form.label :mention1_texte, class: "label" %>
+    <div class="control">
+      <%= form.text_area :mention1_texte, class: "textarea" %>
+    </div>
   </div>
 
   <div class="field">
-    <%= form.label :mention_legale %>
-    <%= form.text_area :mention_legale %>
+    <%= form.label :mention2_texte, class: "label" %>
+    <div class="control">
+      <%= form.text_area :mention2_texte, class: "textarea" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :mention3_texte, class: "label" %>
+    <div class="control">
+      <%= form.text_area :mention3_texte, class: "textarea" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :mention_legale, class: "label" %>
+    <div class="control">
+      <%= form.text_area :mention_legale, class: "textarea" %>
+    </div>
   </div>
 
   <div class="field">
@@ -57,7 +88,9 @@
     </label>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="field is-grouped is-grouped-right">
+    <div class="control">
+      <%= form.submit "Enregistrer", class: "button is-primary" %>
+    </div>
   </div>
 <% end %>

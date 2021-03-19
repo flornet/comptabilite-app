@@ -73,6 +73,15 @@
 
     <hr />
 
+    <h2 class="title is-4">Déconnexion</h2>
+
+    <div class="field is-grouped is-grouped-right">
+      <div class="control">
+        <%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => 'button'  %>
+      </div>
+    </div>
+    <hr />
+
     <h2 class="title is-4"><%= t('.cancel_my_account') %></h2>
 
     <div class="field is-grouped is-grouped-right">

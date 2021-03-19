@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<table class="table is-fullwidth is-hoverable">
+<table class="table is-fullwidth is-hoverable " >
   <thead>
     <tr>
       <th class="has-text-left">Date</th>
@@ -22,25 +22,24 @@
       <th class="has-text-left">Montant HT (€)</th>
       <th class="has-text-left">TVA (€)</th>
       <th class="has-text-left">Montant TTC (€)</th>
-      <th class="has-text-left">PDF</th>
+      <th class="has-text-left"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @devis.each do |devi| %>
       <tr class='clickable-row is-clickable' data-href='<%= url_for edit_devi_path(devi)%>'>
-        <td><%= devi.date %></td>
-        <td><%= devi.numero %></td>
-        <td><%= devi.devis_statut_id.nom %></td>
-        <td><%= devi.client.nom %></td>
-        <td><%= devi.designation %></td>
-        <td class="has-text-right"><%= montant_humanise(devi.montant_ht) %></td>
-        <td class="has-text-right"><%= montant_humanise(devi.montant_tva) %></td>
-        <td class="has-text-right"><%= montant_humanise(devi.montant_ttc) %></td>
-        <td>
-          <% if devi.pdf %>
-          <span class="icon"><i class="fas fa-file-pdf"></i></span>
-          <% end %>
+        <td class="has-text-centered"><%= date_pour_devis(devi) %></td>
+        <td class="is-vcentered"><%= numero_pour_devis(devi) %></td>
+        <td class="is-vcentered"><%= statut_pour_devis(devi) %></td>
+        <td class="is-vcentered"><%= devi.client.nom %></td>
+        <td class="is-vcentered"><%= devi.designation %></td>
+        <td class="is-vcentered has-text-right"><%= montant_humanise(devi.montant_ht) %></td>
+        <td class="is-vcentered has-text-right"><%= montant_humanise(devi.montant_tva) %></td>
+        <td class="is-vcentered has-text-right"><%= montant_humanise(devi.montant_ttc) %></td>
+        <td class="is-vcentered">
+            <%= link_to 'Supprimer', devi_path(devi), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "button is-small is-danger" %>
+            <a href="<%= devi_path(devi, format: :pdf) %>" class="button is-small">PDF</a>
         </td>
       </tr>
     <% end %>

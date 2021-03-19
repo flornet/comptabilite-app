@@ -26,7 +26,7 @@ class FactureStatutsController < ApplicationController
 
     respond_to do |format|
       if @facture_statut.save
-        format.html { redirect_to @facture_statut, notice: "Facture statut was successfully created." }
+        format.html { redirect_to edit_facture_statut_path(@facture_statut), notice: "Facture statut was successfully created." }
         format.json { render :show, status: :created, location: @facture_statut }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class FactureStatutsController < ApplicationController
   def update
     respond_to do |format|
       if @facture_statut.update(facture_statut_params)
-        format.html { redirect_to @facture_statut, notice: "Facture statut was successfully updated." }
+        format.html { redirect_to edit_facture_statut_path(@facture_statut), notice: "Facture statut was successfully updated." }
         format.json { render :show, status: :ok, location: @facture_statut }
       else
         format.html { render :edit, status: :unprocessable_entity }

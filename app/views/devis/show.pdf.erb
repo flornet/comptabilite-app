@@ -1,0 +1,60 @@
+<style type="text/css">
+  .has-bg-primary-color {
+    background-color: <%= @devi.contrast_color %> !important;
+    color: #ffffff !important;
+  }
+  .has-text-primary-color {
+    color: <%= @devi.contrast_color %> !important;
+  }
+</style>
+
+<div class="content devis-feuille">
+  <table class="table is-narrow">
+    <tr>
+      <td>
+        <div class="logo has-text-centered">
+            <%= image_tag wicked_pdf_asset_base64(@devi.logo) %>
+        </div>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        <div class="has-text-left fournisseur"><%= simple_format(@devi.coordonnees_societe) %></div>
+      </td>
+      <td></td>
+      <td>
+        <div class="client"><%= render "devis/partials/client_show.html" %></div>
+      </td>
+    </tr>
+  </table>
+
+  <div class="contenu-principal">
+    <%= render "devis/partials/entete_show.html" %>
+    <div class="devi-lignes">
+      <table class="table is-fullwidth is-narrow" id="table_lignes_devi">
+        <thead>
+          <tr>
+            <th class="has-text-left has-bg-primary-color" colspan="2">Désignation</th>
+            <th class="is-narrow has-bg-primary-color">Montant HT</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @devi.devis_lignes.each do |devis_ligne| %>
+            <%= render "devis/partials/devis_ligne_show.html", devis_ligne: devis_ligne %>
+        <% end %>
+        </tbody>
+        <tfoot>
+          <%= render "devis/partials/pied_show.html" %>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="devi-mentions">
+      <%= render "devis/partials/mentions_show.html" %>
+    </div>
+
+  </div>
+
+  </div>

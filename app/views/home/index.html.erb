@@ -1,2 +1,60 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<nav class="navbar is-light is-fixed-top">
+  <%= page_title("Accueil") %>
+</nav>
+
+<div class="tile is-ancestor">
+  <div class="tile is-vertical is-8">
+    <div class="tile ">
+      <div class="tile is-parent is-vertical">
+
+      </div>
+      <div class="tile is-parent is-vertical">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="tile is-ancestor">
+  <div class="tile is-vertical is-parent">
+    <div class="tile is-child notification is-primary">
+      <p class="title"><%= montant_humanise(@ca_ht_annuel) %></p>
+      <p class="subtitle">Chiffre d'affaires facturé <%= Date.today.year %></p>
+      <div class="content">
+        (note : sans exclure les factures annulées)
+      </div>
+    </div>
+    <div class="tile is-child notification is-primary">
+      <p class="title"><%= montant_humanise(@ca_ht_mensuel) %></p>
+      <p class="subtitle">Facturé en <%= I18n.t("date.month_names")[Date.today.month] %></p>
+      <div class="content">
+        (note : sans exclure les factures annulées)
+      </div>
+    </div>
+  </div>
+  <div class="tile is-6 is-parent">
+    <div class="tile is-child box">
+      <p class="title">Chiffre d'affaires facturé mensuel (<%= Date.today.year %>)</p>
+      <%= column_chart @graph_ca_ht_mensuel, label: "Total HT", suffix: " €", thousands: " ", decimal: ",", round: 2, zeros: true %>
+    </div>
+  </div>
+  <div class="tile is-3 is-parent">
+    <div class="tile is-child box">
+      <div class="content">
+        <table class="table is-hoverable " >
+            <% @graph_ca_ht_mensuel.each do |mois| %>
+              <tr>
+                <th class="has-text-left"><%= mois[0] %></th>
+                <td class="has-text-right"><%= montant_humanise(mois[1]) %></td>
+              </tr>
+            <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

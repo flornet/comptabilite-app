@@ -26,7 +26,7 @@ class DocumentModelesController < ApplicationController
 
     respond_to do |format|
       if @document_modele.save
-        format.html { redirect_to @document_modele, notice: "Document modele was successfully created." }
+        format.html { redirect_to edit_document_modele_path(@document_modele), notice: "Document modele was successfully created." }
         format.json { render :show, status: :created, location: @document_modele }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class DocumentModelesController < ApplicationController
   def update
     respond_to do |format|
       if @document_modele.update(document_modele_params)
-        format.html { redirect_to @document_modele, notice: "Document modele was successfully updated." }
+        format.html { redirect_to edit_document_modele_path(@document_modele), notice: "Document modele was successfully updated." }
         format.json { render :show, status: :ok, location: @document_modele }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -65,6 +65,6 @@ class DocumentModelesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def document_modele_params
-      params.require(:document_modele).permit(:nom, :defaut, :coordonnees_societe, :logo, :mention1_texte, :mention2_texte, :mention3_texte, :mention_legale, :contrast_color)
+      params.require(:document_modele).permit(:nom, :defaut, :date_reglement, :date_validite, :coordonnees_societe, :logo, :mention1_texte, :mention2_texte, :mention3_texte, :mention_legale, :contrast_color)
     end
 end

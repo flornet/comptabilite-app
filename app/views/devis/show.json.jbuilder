@@ -1,1 +1,1 @@
-json.partial! "devis/devi", devi: @devi
+json.partial! "devis/devis", devi: @devi
