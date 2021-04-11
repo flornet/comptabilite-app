@@ -27,7 +27,10 @@
             <div class="dropdown-item">
               <p>Logged in as <strong><%= current_user.email %></strong>.</p>
             </div>
+            <hr class="dropdown-divider">
+            <%= link_to 'Mon entreprise', admin_index_path, :class => 'dropdown-item' %>
             <%= link_to 'Mon profil', edit_user_registration_path, :class => 'dropdown-item' %>
+            <hr class="dropdown-divider">
             <%= link_to "Statuts de devis", devis_statuts_path, :class => 'dropdown-item' %>
             <%= link_to "Statuts de factures", facture_statuts_path, :class => 'dropdown-item' %>
             <hr class="dropdown-divider">

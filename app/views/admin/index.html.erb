@@ -1,0 +1,38 @@
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to_root() %>
+  <%= page_title("Mon entreprise") %>
+</nav>
+
+<div class=" one-page-form">
+  <div class="box">
+    <table class="table has-text-left is-hoverable is-fullwidth">
+      <tr>
+        <th>Code NAF/APE</th>
+        <td><%= @user.code_naf_ape %></td>
+      </tr>
+      <tr>
+        <th>TVA intracom.</th>
+        <td><%= @user.numero_tva %></td>
+      </tr>
+      <tr>
+        <th>SIREN</th>
+        <td><%= @user.numero_siren %></td>
+      </tr>
+      <tr>
+        <th>SIRET</th>
+        <td><%= @user.numero_siret %></td>
+      </tr>
+      <tr>
+        <th>Dernier n° pour les factures</th>
+        <td><%= @user.dernier_numero_facture %></td>
+      </tr>
+      <tr>
+        <th>Dernier n° pour les devis</th>
+        <td><%= @user.dernier_numero_devis %></td>
+      </tr>
+    </table>
+    <div class="field is-grouped is-grouped-right">
+        <%= link_to 'Modifier', admin_edit_path, class: "button is-primary" %>
+    </div>
+  </div>
+</div>

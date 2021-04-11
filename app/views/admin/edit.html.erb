@@ -1,0 +1,66 @@
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to(admin_index_path) %>
+  <%= page_title("Modifier mon entreprise") %>
+</nav>
+
+<div class=" one-page-form">
+  <%= form_with(model: @user, url: admin_update_path) do |form| %>
+    <% if @user.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+        <ul>
+          <% @user.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label "Code NAF/APE", class: "label" %>
+      <div class="control">
+        <%= form.text_field :code_naf_ape, class: "input" %>
+      </div>
+    </div>
+    <div class="field">
+      <%= form.label "TVA intracom.", class: "label" %>
+      <div class="control">
+        <%= form.text_field :numero_tva, class: "input" %>
+      </div>
+    </div>
+    <div class="field">
+      <%= form.label "SIREN", class: "label" %>
+      <div class="control">
+        <%= form.text_field :numero_siren, class: "input" %>
+      </div>
+    </div>
+    <div class="field">
+      <%= form.label "SIRET", class: "label" %>
+      <div class="control">
+        <%= form.text_field :numero_siret, class: "input" %>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= form.label :dernier_numero_facture, class: "label" %>
+      <div class="control">
+        <%= form.text_field :dernier_numero_facture, class: "input" %>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= form.label :dernier_numero_devis, class: "label" %>
+      <div class="control">
+        <%= form.text_field :dernier_numero_devis, class: "input" %>
+      </div>
+    </div>
+
+
+    <div class="field is-grouped is-grouped-right">
+      <div class="control">
+        <%= form.submit "Enregistrer", class: "button is-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

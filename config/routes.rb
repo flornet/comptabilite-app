@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'home/index'
-  get 'home/setup_data'
+  get 'admin/index'
+  get 'admin/edit'
+  patch 'admin/update'
   devise_for :users
   resources :devis_lignes
   resources :facture_lignes
