@@ -141,6 +141,7 @@ div.has-navbar-fixed-top .navbar.is-fixed-top {
 .card.devis-feuille .contenu-principal .devis-lignes .table th,
 .card.devis-feuille .contenu-principal .devis-lignes .table td {
   border: 0;
+  vertical-align: top;
 }
 .card.facture-feuille .contenu-principal .facture-lignes .table th:not(:last-child),
 .card.devis-feuille .contenu-principal .devis-lignes .table th:not(:last-child) {
@@ -156,7 +157,7 @@ div.has-navbar-fixed-top .navbar.is-fixed-top {
 }
 .card.facture-feuille .client .code-postal,
 .card.devis-feuille .client .code-postal {
-  width:2em;
+  width:4em;
 }
 .card.facture-feuille .client .code-postal .input,
 .card.devis-feuille .client .code-postal .input {
