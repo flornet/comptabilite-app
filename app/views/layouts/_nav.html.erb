@@ -1,4 +1,5 @@
 
+<% if user_signed_in? %>
     <div class="main">
         <a href="<%= url_for root_path %>" class="item <%= current_page_active_class?(root_path)%>"><span class="name">Accueil</span></a>
         <hr class="navbar-divider">
@@ -8,15 +9,16 @@
         <a href="<%= url_for taxes_path %>" class="item <%= current_page_active_class?(taxes_path)%>"><span class="name">Taxes</span></a>
         <a href="<%= url_for clients_path %>" class="item <%= current_page_active_class?(clients_path)%>"><span class="name">Clients</span></a>
         <a href="<%= url_for document_modeles_path %>" class="item <%= current_page_active_class?(document_modeles_path)%>"><span class="name">Modèles</span></a>
+        <hr class="navbar-divider">
+        <a href="<%= url_for admin_index_path %>" class="item <%= current_page_active_class?(admin_index_path)%>"><span class="name">Mon entreprise</span></a>
     </div>
 
     <div class="main low">
-      <% if user_signed_in? %>
       <div class="dropdown is-up is-fullwidth">
-        <div class="dropdown-trigger">
-          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu7">
+        <div class="dropdown-trigger is-fullwidth">
+          <button class="button is-fullwidth" aria-haspopup="true" aria-controls="dropdown-menu7">
             <span class="icon is-small"><i class="fa fa-cog"></i></span>
-            <span>Mon compte</span>
+            <span>Paramètres</span>
             <span class="icon is-small">
               <i class="fa fa-angle-up" aria-hidden="true"></i>
             </span>
@@ -24,27 +26,21 @@
         </div>
         <div class="dropdown-menu" id="dropdown-menu7" role="menu">
           <div class="dropdown-content">
+            <%= link_to "Statuts de devis", devis_statuts_path, :class => 'dropdown-item ' + current_page_active_class?(devis_statuts_path) %>
+            <%= link_to "Statuts de factures", facture_statuts_path, :class => 'dropdown-item ' + current_page_active_class?(facture_statuts_path) %>
+            <hr class="dropdown-divider">
+            <%= link_to "Lignes de devis", devis_lignes_path, :class => 'dropdown-item ' + current_page_active_class?(devis_lignes_path) %>
+            <%= link_to "Lignes de factures", facture_lignes_path, :class => 'dropdown-item ' + current_page_active_class?(facture_lignes_path) %>
+            <hr class="dropdown-divider">
             <div class="dropdown-item">
-              <p>Logged in as <strong><%= current_user.email %></strong>.</p>
+              <p>Connecté en tant que <strong><%= current_user.email %></strong>.</p>
             </div>
-            <hr class="dropdown-divider">
-            <%= link_to 'Mon entreprise', admin_index_path, :class => 'dropdown-item' %>
-            <%= link_to 'Mon profil', edit_user_registration_path, :class => 'dropdown-item' %>
-            <hr class="dropdown-divider">
-            <%= link_to "Statuts de devis", devis_statuts_path, :class => 'dropdown-item' %>
-            <%= link_to "Statuts de factures", facture_statuts_path, :class => 'dropdown-item' %>
-            <hr class="dropdown-divider">
-            <%= link_to "Lignes de devis", devis_lignes_path, :class => 'dropdown-item' %>
-            <%= link_to "Lignes de factures", facture_lignes_path, :class => 'dropdown-item' %>
+            <%= link_to "Mon compte", edit_user_registration_path, :class => 'dropdown-item ' + current_page_active_class?(edit_user_registration_path) %>
+            <%= form_tag(destroy_user_session_path, :method => :delete) do -%>
+              <button type="submit" class="dropdown-item">Déconnexion</button>
+            <% end -%>
           </div>
         </div>
       </div>
-      <% else %>
-        <div class="buttons">
-        <%= link_to "Connexion", new_user_session_path, :class => 'button is-primary'  %>
-        <%
-        # =link_to "Créer un compte", new_user_registration_path, :class => 'button'
-        %>
-        </div>
-      <% end %>
     </div>
+<% end %>

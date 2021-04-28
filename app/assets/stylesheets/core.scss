@@ -56,9 +56,21 @@ html,body {
   position: absolute;
   bottom: 0;
 }
+.aside .main.low .dropdown-menu button.dropdown-item {
+  border:0;
+  background: transparent;
+}
+.aside .main.low .dropdown-menu button.dropdown-item:hover {
+  background-color: whitesmoke;
+  color: #0a0a0a;
+  cursor: pointer;
+}
 
 .one-page-form {
   width: 400px;
+}
+.small-width-page {
+  width: 600px;
 }
 div.has-navbar-fixed-top {
   padding-top: 5em;
@@ -68,6 +80,10 @@ div.has-navbar-fixed-top .navbar.is-fixed-top {
 }
 .action-buttons {
   margin-bottom: 1.5rem;
+}
+.is-hidden-container {
+  position: absolute;
+  z-index: -1;
 }
 
 /***** FACTURES & DEVIS *****/

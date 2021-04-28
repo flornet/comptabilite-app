@@ -3,32 +3,38 @@
   <%= page_title("Mon entreprise") %>
 </nav>
 
-<div class=" one-page-form">
+<div class="small-width-page">
   <div class="box">
     <table class="table has-text-left is-hoverable is-fullwidth">
       <tr>
         <th>Code NAF/APE</th>
         <td><%= @user.code_naf_ape %></td>
+        <td></td>
       </tr>
       <tr>
         <th>TVA intracom.</th>
         <td><%= @user.numero_tva %></td>
+        <td><%= button_to_copy(@user.numero_tva) %></td>
       </tr>
       <tr>
         <th>SIREN</th>
         <td><%= @user.numero_siren %></td>
+        <td><%= button_to_copy(@user.numero_siren) %></td>
       </tr>
       <tr>
         <th>SIRET</th>
         <td><%= @user.numero_siret %></td>
+        <td><%= button_to_copy(@user.numero_siret) %></td>
       </tr>
       <tr>
         <th>Dernier n° pour les factures</th>
         <td><%= @user.dernier_numero_facture %></td>
+        <td></td>
       </tr>
       <tr>
         <th>Dernier n° pour les devis</th>
         <td><%= @user.dernier_numero_devis %></td>
+        <td></td>
       </tr>
     </table>
     <div class="field is-grouped is-grouped-right">

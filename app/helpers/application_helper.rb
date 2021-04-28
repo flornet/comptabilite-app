@@ -43,4 +43,12 @@ module ApplicationHelper
     end
   end
 
+  def button_to_copy(content)
+    output = ''
+    output += '<button class="button is-small bt-copy" data-copy-value="' + content + '">'
+    output += 'Copier'
+    output += '</button>'
+    output.html_safe
+  end
+
 end

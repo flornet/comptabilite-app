@@ -15,7 +15,7 @@
   <tbody>
     <% @devis_lignes.each do |devis_ligne| %>
       <tr>
-        <td><%= numero_pour_facture(devis_ligne.devis) %></td>
+        <td><%= numero_pour_devis(devis_ligne.devis) %></td>
         <td><%= devis_ligne.designation %></td>
         <td class="has-text-right"><%= montant_humanise(devis_ligne.montant_ht) %></td>
       </tr>

@@ -33,6 +33,24 @@ class comptaApp {
       });
     });
 
+    // Copy to clipboard buttons
+    (document.querySelectorAll('.button.bt-copy') || []).forEach(($copy) => {
+      $copy.addEventListener('click', () => {
+        const value = $copy.dataset.copyValue;
+        var container = window.document.createElement("div");
+        container.className = "is-hidden-container";
+        var a = window.document.createElement("input");
+        a.type = "text";
+        a.value = value;
+        container.appendChild(a);
+        $copy.parentNode.insertBefore(container, $copy);
+        a.select();
+        document.execCommand("copy");
+        a.blur();
+        $copy.parentNode.removeChild(container);
+      });
+    });
+
     // Initialize all input of type date
     flatpickr(".flatpickr", {
       dateFormat: "d/m/Y",
