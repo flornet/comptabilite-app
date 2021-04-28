@@ -21,7 +21,6 @@
           <% else %>
             <%= form.button "Enregistrer", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
             <%= link_to "Générer le PDF", facture_path(@facture, format: :pdf), class: "button is-fullwidth" %>
-            <%= link_to 'Supprimer', facture_path(@facture), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "button is-danger is-fullwidth" %>
           <% end %>
       </div>
     </div>
