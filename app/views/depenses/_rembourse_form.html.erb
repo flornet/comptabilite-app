@@ -1,0 +1,15 @@
+<%= form_with(model: depense) do |form| %>
+  <% if depense.errors.any? %>
+    <div id="error_explanation">
+        <h2><%= pluralize(depense.errors.count, "error") %> prohibited this depense from being saved:</h2>
+
+        <ul>
+          <% depense.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+    </div>
+  <% end %>
+  <%= form.check_box :rembourse, class: "switch is-rounded auto-submit", id: 'switch_depense_' + depense.id.to_s %>
+  <label for="<%= 'switch_depense_' + depense.id.to_s %>"></label>
+<% end %>

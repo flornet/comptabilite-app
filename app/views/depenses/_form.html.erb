@@ -1,0 +1,44 @@
+<%= form_with(model: depense) do |form| %>
+  <% if depense.errors.any? %>
+    <tr id="error_explanation">
+      <td colspan="7">
+        <h2><%= pluralize(depense.errors.count, "error") %> prohibited this depense from being saved:</h2>
+
+        <ul>
+          <% depense.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </td>
+    </tr>
+  <% end %>
+
+  <tr class="form">
+    <td class="is-vcentered"><%= form.text_field :date, type: "date", class: "input flatpickr" %></td>
+    <td class="is-vcentered"><%= form.text_field :libelle, class: "input", placeholder: :libelle %></td>
+    <td class="is-vcentered has-text-right">
+      <div class="price-input-wrap">
+        <%= form.hidden_field :montant_ttc %>
+        <input type="text" class="input price-input has-text-right" autocomplete="off" value="<%= montant_humanise(form.object.montant_ttc) %>"></input>
+      </div>
+    </td>
+    <td class="is-vcentered"><%= form.text_field :commentaire, class: "input", placeholder: :commentaire %></td>
+    <td class="is-vcentered has-text-right">
+      <div class="file is-small has-text-right">
+        <label class="file-label">
+          <%= form.file_field :justificatif, class: "file-input" %>
+          <span class="file-cta">
+            <span class="file-label">
+              Ajouter un justificatif
+            </span>
+          </span>
+        </label>
+      </div>
+    </td>
+    <td class="is-vcentered">
+      <%= form.check_box :rembourse, class: "switch is-rounded" %>
+      <label for="depense_rembourse"></label>
+    </td>
+    <td><%= form.submit "Ajouter", class: "button is-primary is-fullwidth" %></td>
+  </tr>
+<% end %>

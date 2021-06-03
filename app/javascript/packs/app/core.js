@@ -8,6 +8,7 @@ class comptaApp {
     this.setupBulma();
     this.setupFacture();
     this.setupSelecteursStatut();
+    this.setupFrais();
   }
 
   setupBulma() {
@@ -85,6 +86,18 @@ class comptaApp {
     });
   }
 
+  setupFrais() {
+    var frais = document.getElementById('table_frais');
+    if (frais !== null) {
+      this._priceInputAddFilters();
+      this._priceInputTrackChanges(false);
+      this._priceInputAddFocusOut();
+      this._priceInputAddFocusIn();
+      this._setupFileUploads();
+      this._setupRembourseCheckboxes();
+    }
+  }
+
   setupFacture() {
     this.facture = {};
     this.humanReadableCurrencyOptions = {
@@ -158,6 +171,7 @@ class comptaApp {
       }
     }
   }
+
   setupSelecteursStatut() {
     var selecteur_statut = document.querySelectorAll('.selecteur-statut');
     if (selecteur_statut.length > 0) {
@@ -214,6 +228,33 @@ class comptaApp {
         }
       })
     }
+  }
+
+  _setupFileUploads() {
+    document.addEventListener('input', event => {
+      if (event.target && event.target.type === 'file' && event.target.classList.contains('file-input')) {
+        var input = event.target;
+        if (input.files.length > 0) {
+          if (input.classList.contains('auto-submit')) {
+              input.closest('form').submit();
+          } else {
+            var label = input.nextElementSibling.querySelector(".file-label");
+            label.textContent = input.files[0].name;
+          }
+        }
+      }
+    });
+  }
+
+  _setupRembourseCheckboxes() {
+    document.addEventListener('input', event => {
+      if (event.target && event.target.type === 'checkbox' && event.target.classList.contains('switch')) {
+        var input = event.target;
+        if (input.classList.contains('auto-submit')) {
+            input.closest('form').submit();
+        }
+      }
+    });
   }
 
   _setupAutoCompleteClient() {
@@ -273,6 +314,19 @@ class comptaApp {
     })
 
     // Use event delegation to ensure any fields added after the page loads are captured.
+    this._priceInputAddFilters();
+
+    // Tracking changes in lines inputs
+    this._priceInputTrackChanges(true);
+
+    // Updating dummy fields values on focusOut
+    this._priceInputAddFocusOut();
+
+    // Updating real fields values on focusIn
+    this._priceInputAddFocusIn();
+  }
+
+  _priceInputAddFilters() {
     document.addEventListener('keydown', event => {
       if (event.target && event.target.type === 'text' && event.target.classList.contains('price-input')) {
         // console.log(event.keyCode);
@@ -306,8 +360,9 @@ class comptaApp {
         }
       }
     })
+  }
 
-    // Tracking changes in lines inputs
+  _priceInputTrackChanges(updateFacture) {
     document.addEventListener('input', event => {
       if (event.target && event.target.type === 'text' && event.target.classList.contains('price-input')) {
         var realInput = event.target.previousElementSibling;
@@ -316,20 +371,24 @@ class comptaApp {
           event.target.value = event.target.value.slice(0, -1)
         }
         realInput.value = event.target.value.replace(',', '.');
-        this._updateTotalHT();
-        this._updateTVA();
-        this._updateTotalTTC();
+        if (updateFacture) {
+          this._updateTotalHT();
+          this._updateTVA();
+          this._updateTotalTTC();
+        }
       }
     })
+  }
 
-    // Updating dummy fields values on focusOut
+  _priceInputAddFocusOut() {
     document.addEventListener('focusout', event => {
       if (event.target && event.target.type === 'text' && event.target.classList.contains('price-input')) {
         event.target.value = this._formatHumanCurrency(event.target.value);
       }
     })
+  }
 
-    // Updating real fields values on focusIn
+  _priceInputAddFocusIn() {
     document.addEventListener('focusin', event => {
       if (event.target && event.target.type === 'text' && event.target.classList.contains('price-input') && event.target.value !== '') {
         event.target.value = this._formatMachineCurrency(event.target.value)

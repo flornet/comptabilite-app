@@ -44,6 +44,9 @@ module ApplicationHelper
   end
 
   def button_to_copy(content)
+    if content == nil
+      content = ''
+    end
     output = ''
     output += '<button class="button is-small bt-copy" data-copy-value="' + content + '">'
     output += 'Copier'

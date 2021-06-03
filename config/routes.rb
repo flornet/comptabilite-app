@@ -4,6 +4,17 @@ Rails.application.routes.draw do
   get 'admin/edit'
   patch 'admin/update'
   devise_for :users
+  resources :photos do
+    member do
+      get 'preview'
+    end
+  end
+  resources :depenses do
+    member do
+      get 'remove_attachement'
+      patch 'add_attachement'
+    end
+  end
   resources :devis_lignes
   resources :facture_lignes
   resources :devis

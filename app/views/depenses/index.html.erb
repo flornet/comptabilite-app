@@ -1,0 +1,48 @@
+<nav class="navbar is-light is-fixed-top">
+  <%= back_link_to_root() %>
+  <%= page_title("Frais") %>
+</nav>
+
+<table id="table_frais" class="table is-fullwidth is-hoverable">
+  <thead>
+    <tr>
+      <th class="has-text-left">Date</th>
+      <th class="has-text-left">Libellé</th>
+      <th class="has-text-left">Montant TTC</th>
+      <th class="has-text-left">Commentaire</th>
+      <th class="has-text-left">Justificatif</th>
+      <th class="has-text-left">Remboursé</th>
+      <th class="has-text-left"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render 'form', depense: @depense %>
+    <% @depenses.each do |depense| %>
+      <tr>
+        <td class="is-vcentered"><%= depense.date %></td>
+        <td class="is-vcentered"><%= depense.libelle %></td>
+        <td class="is-vcentered has-text-right"><%= montant_humanise(depense.montant_ttc) %></td>
+        <td class="is-vcentered"><%= depense.commentaire %></td>
+        <td class="is-vcentered has-text-right">
+          <% if depense.has_justificatif %>
+            <a href="<%= depense_path(depense) %>" class="button is-small" target="_blank"><%= depense.justificatif_nom %></a>
+            <a href="<%= remove_attachement_depense_path(depense) %>" class="button is-small">
+              <span class="icon">
+                <i class="fa fa-times remove_fields is-clickable"></i>
+              </span>
+            </a>
+          <% else %>
+            <%= render 'add_attachement_form', depense: depense %>
+          <% end %>
+        </td>
+        <td class="is-vcentered">
+          <%= render 'rembourse_form', depense: depense %>
+        </td>
+        <td>
+          <%= link_to 'Supprimer', depense, method: :delete, data: {:confirm => 'Are you sure?'},class: "button is-small is-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

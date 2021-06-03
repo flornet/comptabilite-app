@@ -299,6 +299,9 @@ div.has-navbar-fixed-top .navbar.is-fixed-top {
   background-color: #fff;
   color: #0a0a0a;
 }
+.file.has-text-right {
+  flex-direction: row-reverse;
+}
 .has-text-gray {
   color: $grey-light !important;
 }
@@ -350,6 +353,17 @@ table.client-versions .tags:not(:last-child) {
   white-space: nowrap !important;
 }
 
+/***** FRAIS *****/
+table#table_frais tr.form td {
+  background: whitesmoke;
+  border-bottom: 2px solid #dbdbdb;
+}
+table#table_frais tr.form td input[type=text] {
+  border: 1px solid #dbdbdb;
+  box-shadow: none;
+  border-style: dashed;
+  border-radius: 0;
+}
 
 /***** PDF FACTURES *****/
 .designation {

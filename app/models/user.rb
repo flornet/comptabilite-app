@@ -7,6 +7,7 @@ class User < ApplicationRecord
          :rememberable,
          :validatable
   has_many :taxes, class_name: "Taxe", dependent: :destroy
+  has_many :depenses, dependent: :destroy
   has_many :factures, dependent: :destroy do
 
     def build_with_model(model)

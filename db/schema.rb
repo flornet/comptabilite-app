@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_11_123655) do
+ActiveRecord::Schema.define(version: 2021_06_03_165401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,21 @@ ActiveRecord::Schema.define(version: 2021_04_11_123655) do
     t.index ["taxe_id"], name: "index_clients_on_taxe_id"
     t.index ["user_id", "nom"], name: "index_clients_on_user_id_and_nom", unique: true
     t.index ["user_id"], name: "index_clients_on_user_id"
+  end
+
+  create_table "depenses", force: :cascade do |t|
+    t.date "date"
+    t.string "libelle"
+    t.string "commentaire"
+    t.decimal "montant_ttc", default: "0.0"
+    t.string "justificatif_nom"
+    t.string "justificatif_type_contenu"
+    t.binary "justificatif_data"
+    t.boolean "rembourse", default: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_depenses_on_user_id"
   end
 
   create_table "devis", force: :cascade do |t|
@@ -195,6 +210,7 @@ ActiveRecord::Schema.define(version: 2021_04_11_123655) do
 
   add_foreign_key "clients", "taxes", column: "taxe_id"
   add_foreign_key "clients", "users"
+  add_foreign_key "depenses", "users"
   add_foreign_key "devis", "clients"
   add_foreign_key "devis", "devis_statuts"
   add_foreign_key "devis", "taxes", column: "taxe_id"

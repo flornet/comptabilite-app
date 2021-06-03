@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @depense.date %>
+</p>
+
+<p>
+  <strong>Libelle:</strong>
+  <%= @depense.libelle %>
+</p>
+
+<p>
+  <strong>Commentaire:</strong>
+  <%= @depense.commentaire %>
+</p>
+
+<p>
+  <strong>Montant ttc:</strong>
+  <%= @depense.montant_ttc %>
+</p>
+
+<p>
+  <strong>Justificatif nom:</strong>
+  <%= @depense.justificatif_nom %>
+</p>
+
+<p>
+  <strong>Justificatif type contenu:</strong>
+  <%= @depense.justificatif_type_contenu %>
+</p>
+
+<p>
+  <strong>Justificatif data:</strong>
+  <%= @depense.justificatif_data %>
+</p>
+
+<p>
+  <strong>Rembourse:</strong>
+  <%= @depense.rembourse %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @depense.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_depense_path(@depense) %> |
+<%= link_to 'Back', depenses_path %>

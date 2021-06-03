@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2021-06-03
+  libelle: MyString
+  commentaire: MyString
+  montant_ttc: 9.99
+  justificatif_nom: MyString
+  justificatif_type_contenu: MyString
+  justificatif_data: 
+  rembourse: false
+  user: one
+
+two:
+  date: 2021-06-03
+  libelle: MyString
+  commentaire: MyString
+  montant_ttc: 9.99
+  justificatif_nom: MyString
+  justificatif_type_contenu: MyString
+  justificatif_data: 
+  rembourse: false
+  user: two
