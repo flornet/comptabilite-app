@@ -5,7 +5,7 @@ class FacturesController < ApplicationController
 
   # GET /factures or /factures.json
   def index
-    @factures = current_user.factures.order(date: "DESC")
+    @factures = current_user.factures.order(date: "DESC", numero: "DESC")
   end
 
   # GET /factures/1 or /factures/1.json

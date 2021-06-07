@@ -5,7 +5,7 @@ class DevisController < ApplicationController
 
   # GET /devis or /devis.json
   def index
-    @devis = current_user.devis.order(date: "DESC")
+    @devis = current_user.devis.order(date: "DESC", numero: "DESC")
   end
 
   # GET /devis/1 or /devis/1.json
