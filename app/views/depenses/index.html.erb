@@ -15,7 +15,6 @@
       <th class="has-text-left"></th>
     </tr>
   </thead>
-
   <tbody>
     <%= render 'form', depense: @depense %>
     <% @depenses.each do |depense| %>
@@ -27,13 +26,13 @@
         <td class="is-vcentered has-text-right">
           <% if depense.has_justificatif %>
             <a href="<%= depense_path(depense) %>" class="button is-small" target="_blank"><%= depense.justificatif_nom %></a>
-            <a href="<%= remove_attachement_depense_path(depense) %>" class="button is-small">
+            <a href="<%= destroy_attachement_depense_path(depense) %>" class="button is-small">
               <span class="icon">
                 <i class="fa fa-times remove_fields is-clickable"></i>
               </span>
             </a>
           <% else %>
-            <%= render 'add_attachement_form', depense: depense %>
+            <%= render 'create_attachement_form', depense: depense %>
           <% end %>
         </td>
         <td class="is-vcentered">

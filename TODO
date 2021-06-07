@@ -5,6 +5,7 @@ validateur de nom unique sur client : KO
 - Factures annulées :
     - Ajouter une mention dans le PDF
     - Ne pas tenir compte dans les stats
-- Notes de frais et indemnités KM
-- Upload de fichier pour les frais
+- Frais :
+    - Indemnités KM
+    - Modifier
 - Lien banque et upload de fichier

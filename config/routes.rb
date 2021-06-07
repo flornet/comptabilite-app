@@ -11,8 +11,7 @@ Rails.application.routes.draw do
   end
   resources :depenses do
     member do
-      get 'remove_attachement'
-      patch 'add_attachement'
+      get 'destroy_attachement'
     end
   end
   resources :devis_lignes
