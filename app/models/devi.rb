@@ -37,6 +37,16 @@ class Devi < ApplicationRecord
     return self.update(params)
   end
 
+  def duplicate
+    replica = dup
+    devis_lignes.each do |devis_ligne|
+      replica.devis_lignes << devis_ligne.dup
+    end
+    replica.date    = Date.today
+    replica.numero  = replica.generate_new_devis_number
+    replica
+  end
+
   private
 
     def define_number_devis

@@ -37,6 +37,16 @@ class Facture < ApplicationRecord
     return self.update(params)
   end
 
+  def duplicate
+    replica = dup
+    facture_lignes.each do |facture_ligne|
+      replica.facture_lignes << facture_ligne.dup
+    end
+    replica.date    = Date.today
+    replica.numero  = replica.generate_new_invoice_number
+    replica
+  end
+
   private
 
     def define_number_facture

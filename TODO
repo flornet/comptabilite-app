@@ -2,10 +2,24 @@ current_user PARTOUT !!!
 interdire les modifications / suppression des Taxes dès qu'ils ont des enfants
 validateur de nom unique sur client : KO
 - Défaut : forcer un seul par défaut (document_modele, taxes, statuts)
+
+Statistique :
+- Supprimer les "annulées"
+
+Frais :
+- Indemnités KM
+- Permettre de modifier
+
+Factures :
+- Enregistrer le PDF dans la BDD
+- Transformer devis en facture
+- Faire apparaître le bouton uniquement lorsque ça a changé ?
 - Factures annulées :
     - Ajouter une mention dans le PDF
     - Ne pas tenir compte dans les stats
-- Frais :
-    - Indemnités KM
-    - Modifier
-- Lien banque et upload de fichier
+
+(si changement de Qonto)
+Mouvements :
+- Importer les données de la banque
+- Fichiers joints banque / upload de fichier
+- Lien automatique avec facture

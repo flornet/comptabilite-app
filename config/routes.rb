@@ -16,8 +16,16 @@ Rails.application.routes.draw do
   end
   resources :devis_lignes
   resources :facture_lignes
-  resources :devis
-  resources :factures
+  resources :devis do
+    member do
+      get 'duplicate'
+    end
+  end
+  resources :factures do
+    member do
+      get 'duplicate'
+    end
+  end
   resources :clients
   resources :document_modeles
   resources :devis_statuts

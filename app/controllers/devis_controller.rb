@@ -1,7 +1,7 @@
 class DevisController < ApplicationController
   before_action :set_devi, only: %i[ show edit update destroy ]
   before_action :set_modele, only: %i[ new create ]
-  before_action :set_creating_new, only: %i[ new create ]
+  before_action :set_creating_new, only: %i[ new create duplicate ]
 
   # GET /devis or /devis.json
   def index
@@ -79,6 +79,17 @@ class DevisController < ApplicationController
     respond_to do |format|
       format.html { redirect_to devis_url }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /devis/1/duplicate or /devis/1.json/duplicate
+  def duplicate
+    @devis_source = Devi.find(params[:id])
+    @devi = @devis_source.duplicate
+
+    respond_to do |format|
+      format.html { render :new }
+      format.json { render json: @devi.errors, status: :unprocessable_entity }
     end
   end
 

@@ -1,7 +1,7 @@
 class FacturesController < ApplicationController
   before_action :set_facture, only: %i[ show edit update destroy ]
   before_action :set_modele, only: %i[ new create ]
-  before_action :set_creating_new, only: %i[ new create ]
+  before_action :set_creating_new, only: %i[ new create duplicate ]
 
   # GET /factures or /factures.json
   def index
@@ -79,6 +79,17 @@ class FacturesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to factures_url }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /factures/1/duplicate or /factures/1.json/duplicate
+  def duplicate
+    @facture_source = Facture.find(params[:id])
+    @facture = @facture_source.duplicate
+
+    respond_to do |format|
+      format.html { render :new }
+      format.json { render json: @facture.errors, status: :unprocessable_entity }
     end
   end
 

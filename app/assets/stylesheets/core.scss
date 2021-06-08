@@ -271,6 +271,16 @@ div.has-navbar-fixed-top .navbar.is-fixed-top {
 
 
 /***** STYLE *****/
+.buttons-divider {
+  display: block;
+  background-color: whitesmoke;
+  border: none;
+  height: 2px;
+  margin: 0.5 0 1rem 0;
+  padding: 0;
+  font-size: 1rem;
+  width:100%;
+}
 .tag:not(body).is-payee,
 .dropdown a.is-payee,
 .tag:not(body).is-signe,

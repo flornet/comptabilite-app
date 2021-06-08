@@ -18,9 +18,13 @@
             <%= form.button "Enregistrer", name: 'commit',value: "brouillon", class: "button is-secondary is-fullwidth" %>
             <%= form.button "Créer la facture", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
             <%= link_to 'Supprimer', facture_path(@facture), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "button is-danger is-fullwidth" %>
+            <hr class="buttons-divider">
+            <%= link_to "Dupliquer", duplicate_facture_path(@facture), class: "button is-fullwidth" %>
           <% else %>
             <%= form.button "Enregistrer", name: 'commit', value: "facture", class: "button is-primary is-fullwidth" %>
             <%= link_to "Générer le PDF", facture_path(@facture, format: :pdf), class: "button is-fullwidth" %>
+            <hr class="buttons-divider">
+            <%= link_to "Dupliquer", duplicate_facture_path(@facture), class: "button is-fullwidth" %>
           <% end %>
       </div>
     </div>

@@ -17,6 +17,8 @@
             <%= form.button "Enregistrer", name: 'commit', value: "devi", class: "button is-primary is-fullwidth" %>
             <%= link_to "Générer le PDF", devi_path(@devi, format: :pdf), class: "button is-fullwidth" %>
             <%= link_to 'Supprimer', devi_path(@devi), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "button is-danger is-fullwidth" %>
+            <hr class="buttons-divider">
+            <%= link_to "Dupliquer", duplicate_devi_path(@devi), class: "button is-fullwidth" %>
           <% end %>
       </div>
     </div>
