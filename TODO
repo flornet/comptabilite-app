@@ -3,9 +3,6 @@ interdire les modifications / suppression des Taxes dès qu'ils ont des enfants
 validateur de nom unique sur client : KO
 - Défaut : forcer un seul par défaut (document_modele, taxes, statuts)
 
-Statistique :
-- Supprimer les "annulées"
-
 Frais :
 - Indemnités KM
 - Permettre de modifier
@@ -16,7 +13,6 @@ Factures :
 - Faire apparaître le bouton uniquement lorsque ça a changé ?
 - Factures annulées :
     - Ajouter une mention dans le PDF
-    - Ne pas tenir compte dans les stats
 
 (si changement de Qonto)
 Mouvements :

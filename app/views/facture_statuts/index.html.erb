@@ -16,6 +16,7 @@
     <tr>
       <th class="has-text-left">Nom</th>
       <th>Défaut</th>
+      <th>Exclure des statistiques</th>
     </tr>
   </thead>
 
@@ -25,6 +26,11 @@
         <td><%= facture_statut.nom %></td>
         <td class="has-text-centered">
           <% if facture_statut.defaut %>
+          <span class="icon"><i class="fa fa-check"></i></span>
+          <% end %>
+        </td>
+        <td class="has-text-centered">
+          <% if facture_statut.exclure_statistiques %>
           <span class="icon"><i class="fa fa-check"></i></span>
           <% end %>
         </td>

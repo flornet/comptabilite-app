@@ -65,6 +65,6 @@ class FactureStatutsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def facture_statut_params
-      params.require(:facture_statut).permit(:nom, :defaut)
+      params.require(:facture_statut).permit(:nom, :defaut, :exclure_statistiques)
     end
 end
