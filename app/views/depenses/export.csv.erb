@@ -1,0 +1,5 @@
+<%- headers = ['Date', 'Libellé', 'Montant TTC', 'Commentaire', 'Justificatif'] -%>
+<%= CSV.generate_line headers %>
+<%- @depenses.each do |depense| -%>
+  <%= CSV.generate_line([depense.date, depense.libelle, depense.montant_ttc, depense.commentaire, depense.justificatif_nom]).html_safe -%>
+<%- end -%>

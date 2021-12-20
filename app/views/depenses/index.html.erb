@@ -3,6 +3,49 @@
   <%= page_title("Frais") %>
 </nav>
 
+<%= form_with(model: @depense, :html => {:id => "form-depense-container-01", :enctype => "multipart/alternative"}) do |form| %>
+    <% @formulaire_creation_frais = form %>
+    <% if @depense.errors.any? %>
+      <tr id="error_explanation">
+        <td colspan="7">
+          <h2><%= pluralize(@depense.errors.count, "error") %> prohibited this depense from being saved:</h2>
+
+          <ul>
+            <% @depense.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+
+    <%= form.file_field :justificatif, class: "file-input-outside is-hidden" %>
+
+<% end %>
+
+<%= form_with(method: 'get', local: true) do |search_form|%>
+<div class="form-line">
+  <div class="label">Afficher :</div>
+  <div class="field">
+    <div class="select is-fullwidth">
+      <%= select_year(@selected_year, {start_year: 2019, end_year: Date.today.year}, id: "selected_year", name: "selected_year", class: "auto-submit") %>
+    </div>
+  </div>
+
+  <div class="label">Télécharger :</div>
+
+  <div class="field has-addons">
+    <p class="control">
+      <button type="submit" name="form_action" class="button" value="exporter_table">Tableau (CSV)</button>
+    </p>
+    <p class="control">
+      <button type="submit" name="form_action" class="button" value="exporter_justificatifs">Justificatifs (Zip)</button>
+    </p>
+  </div>
+</div>
+
+<% end %>
+
 <table id="table_frais" class="table is-fullwidth is-hoverable">
   <thead>
     <tr>
@@ -16,7 +59,7 @@
     </tr>
   </thead>
   <tbody>
-    <%= render 'form', depense: @depense %>
+    <%= render 'form', form: @formulaire_creation_frais %>
     <% @depenses.each do |depense| %>
       <tr>
         <td class="is-vcentered"><%= depense.date %></td>

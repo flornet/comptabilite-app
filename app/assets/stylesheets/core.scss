@@ -364,6 +364,27 @@ table.client-versions .tags:not(:last-child) {
 }
 
 /***** FRAIS *****/
+.form-line {
+  display: inline-flex;
+  align-items: center;
+}
+.form-line .label {
+  flex: none;
+  margin:0;
+  margin-right: 1em;
+  padding:0;
+}
+.form-line .field {
+  flex: none;
+  margin:0;
+  padding:0;
+  margin-right: 3em;
+}
+.form-line .field .control {
+  flex: none;
+  margin:0;
+  padding:0;
+}
 table#table_frais tr.form td {
   background: whitesmoke;
   border-bottom: 2px solid #dbdbdb;

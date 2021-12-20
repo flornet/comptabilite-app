@@ -27,6 +27,7 @@ gem 'devise-i18n'
 gem 'font-awesome-rails'
 gem 'groupdate'
 gem 'chartkick'
+gem 'rubyzip'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

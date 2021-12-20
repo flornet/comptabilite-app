@@ -93,8 +93,10 @@ class comptaApp {
       this._priceInputTrackChanges(false);
       this._priceInputAddFocusOut();
       this._priceInputAddFocusIn();
+      this._setupCustomFileUploadOutside();
       this._setupFileUploads();
       this._setupRembourseCheckboxes();
+      this._setupYearFilterForm();
     }
   }
 
@@ -242,6 +244,35 @@ class comptaApp {
             label.textContent = input.files[0].name;
           }
         }
+      }
+    });
+  }
+
+  _setupCustomFileUploadOutside() {
+    var button = document.getElementById('custom-file-button-01');
+    button.addEventListener('click', event => {
+      if (button.label == null) {
+        button.label = button.querySelectorAll('.file-label')[0];
+      }
+      if (button.form == null) {
+        button.form = document.getElementById(button.dataset.form);
+      }
+      if (button.input == null) {
+        button.input = button.form.querySelectorAll('.' + button.dataset.input)[0];
+      }
+      button.input.addEventListener('input', event => {
+        if (button.input.files.length > 0) {
+          button.label.textContent = button.input.files[0].name;
+        }
+      });
+      button.input.click();
+    })
+  }
+
+  _setupYearFilterForm() {
+    document.addEventListener('change', event => {
+      if (event.target && event.target.type === 'select-one' && event.target.classList.contains('auto-submit')) {
+          event.target.closest('form').submit();
       }
     });
   }
