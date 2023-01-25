@@ -76,6 +76,9 @@
 
   <div class="field is-grouped is-grouped-right">
     <div class="control">
+      <% if client.factures.size == 0 && client.devis.size == 0 %>
+      <%= link_to 'Supprimer', client, method: :delete, data: {:confirm => 'Are you sure?'},class: "button is-danger" %>
+      <% end %>
       <%= form.submit "Enregistrer", class: "button is-primary" %>
     </div>
   </div>
