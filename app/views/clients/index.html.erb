@@ -8,14 +8,71 @@
       <p class="control">
         <%= link_to 'Nouveau client', new_client_path, class: "button is-primary" %>
       </p>
+      <div class="control">
+        <div class="dropdown">
+          <div class="dropdown-trigger">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu7">
+              <span class="icon is-small"><i class="fa fa-filter"></i></span>
+              <span>Filtres</span>
+              <span class="icon is-small">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu7" role="menu">
+            <div class="dropdown-content">
+              <%= form_with(method: 'get', local: true) do |search_form|%>
+              <input type="hidden" name="filter" value="1" />
+              <div class="dropdown-item">
+                <div class="label">Afficher :</div>
+                <div class="field">
+                  <label class="checkbox">
+                    <input type="checkbox" name="selected_prestations[]" value="1" id="selected_prestation_1" <%= 'checked' if @selected_prestations.include? "1" %>>
+                    Hypnose
+                  </label>
+                </div>
+                <div class="field">
+                  <label class="checkbox">
+                    <input type="checkbox" name="selected_prestations[]" value="2" id="selected_prestation_2" <%= 'checked' if @selected_prestations.include? "2" %>>
+                    Boutique
+                  </label>
+                </div>
+                <div class="field">
+                  <label class="checkbox"> 
+                    <input type="checkbox" name="selected_prestations[]" value="3" id="selected_prestation_3" <%= 'checked' if @selected_prestations.include? "3" %>>
+                    UX
+                  </label>
+                </div>
+                <div class="field">
+                  <label class="checkbox"> 
+                    <input type="checkbox" name="selected_prestations[]" value="4" id="selected_prestation_4" <%= 'checked' if @selected_prestations.include? "4" %>>
+                    Special
+                  </label>
+                </div>
+                <div class="field">
+                  <p class="control">
+                    <button type="submit" class="button">Appliquer</button>
+                  </p>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 </div>
+
+
+
+
 
 <table class="table is-fullwidth is-hoverable">
   <thead>
     <tr>
       <th class="has-text-left">Client</th>
       <th class="has-text-left">Ville</th>
+      <th class="has-text-left">Type</th>
       <th class="has-text-left">Versions</th>
       <th class="has-text-left">Factures</th>
     </tr>
@@ -25,11 +82,19 @@
     <% @clients.each do |client| %>
       <tr class='clickable-row is-clickable' data-href='<%= url_for edit_client_path(client)%>'>
         <td>
-          <p class="tag is-large"><%= client.nom %></p>
-          <p><%= client.telephone %></p>
-          <p><%= client.email %></p>
+          <p class="is-size-5"><%= client.nom %></p>
+          <p class="telephone"><% if !client.telephone.nil? && !client.telephone.empty? %><i class="fa fa-phone"></i> <%= client.telephone %><% else %>-<% end %></p>
+          <p class="email"><% if !client.email.nil? && !client.email.empty? %><i class="fa fa-envelope"></i> <%= client.email %><% else %>-<% end %></p>
         </td>
         <td><%= client.ville %></td>
+        
+        <td>
+          <% if client.prestation_hypnose %><span class="tag is-primary">Hypnose</span><% end %>
+          <% if client.prestation_boutique %><span class="tag is-light">Boutique</span><% end %>
+          <% if client.prestation_ux %><span class="tag is-black">UX</span><% end %>
+          <% if client.special %><span class="tag is-danger">Special</span><% end %>
+        </td>
+        
         <td><%= client.versions.size %></td>
         <td>
           <% if client.factures.size == 0 && client.devis.size == 0 %>

@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_10_151446) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_02_15_162343) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,8 +25,12 @@ ActiveRecord::Schema.define(version: 2021_06_10_151446) do
     t.string "telephone"
     t.bigint "taxe_id", null: false
     t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "prestation_hypnose", default: false, null: false
+    t.boolean "prestation_boutique", default: false, null: false
+    t.boolean "prestation_ux", default: false, null: false
+    t.boolean "special", default: false, null: false
     t.index ["taxe_id"], name: "index_clients_on_taxe_id"
     t.index ["user_id", "nom"], name: "index_clients_on_user_id_and_nom", unique: true
     t.index ["user_id"], name: "index_clients_on_user_id"
@@ -43,8 +46,8 @@ ActiveRecord::Schema.define(version: 2021_06_10_151446) do
     t.binary "justificatif_data"
     t.boolean "rembourse", default: false
     t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_depenses_on_user_id"
   end
 
@@ -69,9 +72,9 @@ ActiveRecord::Schema.define(version: 2021_06_10_151446) do
     t.bigint "devis_statut_id", null: false
     t.bigint "client_id", null: false
     t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "date_version_client"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "date_version_client", precision: nil
     t.index ["client_id"], name: "index_devis_on_client_id"
     t.index ["devis_statut_id"], name: "index_devis_on_devis_statut_id"
     t.index ["taxe_id"], name: "index_devis_on_taxe_id"
@@ -83,8 +86,8 @@ ActiveRecord::Schema.define(version: 2021_06_10_151446) do
     t.bigint "devis_id", null: false
     t.text "designation"
     t.decimal "montant_ht"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["devis_id"], name: "index_devis_lignes_on_devis_id"
   end
 
@@ -92,8 +95,8 @@ ActiveRecord::Schema.define(version: 2021_06_10_151446) do
     t.string "nom", null: false
     t.boolean "defaut", default: false
     t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id", "nom"], name: "index_devis_statuts_on_user_id_and_nom", unique: true
     t.index ["user_id"], name: "index_devis_statuts_on_user_id"
   end
@@ -111,8 +114,8 @@ ActiveRecord::Schema.define(version: 2021_06_10_151446) do
     t.bigint "user_id"
     t.string "date_reglement"
     t.string "date_validite"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id", "nom"], name: "index_document_modeles_on_user_id_and_nom", unique: true
     t.index ["user_id"], name: "index_document_modeles_on_user_id"
   end
@@ -121,8 +124,8 @@ ActiveRecord::Schema.define(version: 2021_06_10_151446) do
     t.bigint "facture_id", null: false
     t.text "designation"
     t.decimal "montant_ht"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["facture_id"], name: "index_facture_lignes_on_facture_id"
   end
 
@@ -130,8 +133,8 @@ ActiveRecord::Schema.define(version: 2021_06_10_151446) do
     t.string "nom", null: false
     t.boolean "defaut", default: false
     t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "exclure_statistiques", default: false
     t.index ["user_id", "nom"], name: "index_facture_statuts_on_user_id_and_nom", unique: true
     t.index ["user_id"], name: "index_facture_statuts_on_user_id"
@@ -159,9 +162,9 @@ ActiveRecord::Schema.define(version: 2021_06_10_151446) do
     t.bigint "facture_statut_id", null: false
     t.bigint "client_id", null: false
     t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "date_version_client"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "date_version_client", precision: nil
     t.index ["client_id"], name: "index_factures_on_client_id"
     t.index ["facture_statut_id"], name: "index_factures_on_facture_statut_id"
     t.index ["taxe_id"], name: "index_factures_on_taxe_id"
@@ -174,8 +177,8 @@ ActiveRecord::Schema.define(version: 2021_06_10_151446) do
     t.decimal "taux", default: "0.0"
     t.boolean "defaut", default: false
     t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id", "nom"], name: "index_taxes_on_user_id_and_nom", unique: true
     t.index ["user_id"], name: "index_taxes_on_user_id"
   end
@@ -184,10 +187,10 @@ ActiveRecord::Schema.define(version: 2021_06_10_151446) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "dernier_numero_facture", default: 1, null: false
     t.integer "dernier_numero_devis", default: 1, null: false
     t.string "code_naf_ape"
@@ -203,9 +206,9 @@ ActiveRecord::Schema.define(version: 2021_06_10_151446) do
     t.bigint "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
-    t.text "object"
-    t.text "object_changes"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
+    t.jsonb "object"
+    t.jsonb "object_changes"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 

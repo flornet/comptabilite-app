@@ -67,6 +67,35 @@
     </div>
   </div>
 
+ <label class="label">Type de client</label>
+ <div class="field is-grouped">
+   
+   <div class="control">
+      <label class="checkbox">
+        <%= form.check_box :special, class: "checkbox" %>
+        Special
+      </label>
+   </div>
+   <div class="control">
+       <label class="checkbox">
+         <%= form.check_box :prestation_hypnose, class: "checkbox" %>
+         Hypnose
+       </label>
+    </div>
+    <div class="control">
+        <label class="checkbox">
+          <%= form.check_box :prestation_boutique, class: "checkbox" %>
+          Boutique
+        </label>
+     </div>
+     <div class="control">
+         <label class="checkbox">
+           <%= form.check_box :prestation_ux, class: "checkbox" %>
+           UX
+         </label>
+      </div>
+ </div>
+
   <div class="field">
     <%= form.label :taxe_id, class: "label" %>
     <div class="select">
@@ -77,7 +106,7 @@
   <div class="field is-grouped is-grouped-right">
     <div class="control">
       <% if client.factures.size == 0 && client.devis.size == 0 %>
-      <%= link_to 'Supprimer', client, method: :delete, data: {:confirm => 'Are you sure?'},class: "button is-danger" %>
+      <%= link_to 'Supprimer', client, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },class: "button is-danger" %>
       <% end %>
       <%= form.submit "Enregistrer", class: "button is-primary" %>
     </div>

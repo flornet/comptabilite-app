@@ -114,7 +114,7 @@ class FacturesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def facture_params
       params[:facture][:client_attributes][:nom] = params[:facture][:client_attributes].delete :client unless params[:facture][:client_attributes].nil?
-      params.require(:facture).permit(:type_document, :contrast_color, :date, :designation, :montant_ht, :montant_tva, :montant_ttc, :est_brouillon, :pdf, :taxe_id, :facture_statut_id, :client_id, :coordonnees_societe, :coordonnees_societe, :logo, :date_reglement, :mention1_texte, :mention2_texte, :mention3_texte, :mention_legale, facture_lignes_attributes: [:id, :designation, :montant_ht, :_destroy], client_attributes: [:id, :nom, :adresse, :code_postal, :ville, :pays, :numero_tva_intracommunautaire, :email, :telephone])
+      params.require(:facture).permit(:type_document, :contrast_color, :date, :designation, :montant_ht, :montant_tva, :montant_ttc, :est_brouillon, :pdf, :taxe_id, :facture_statut_id, :client_id, :coordonnees_societe, :coordonnees_societe, :logo, :date_reglement, :mention1_texte, :mention2_texte, :mention3_texte, :mention_legale, facture_lignes_attributes: [:id, :designation, :montant_ht, :_destroy], client_attributes: [:id, :nom, :adresse, :code_postal, :ville, :pays, :numero_tva_intracommunautaire, :email, :telephone, :special, :prestation_hypnose, :prestation_boutique, :prestation_ux])
     end
 
     def est_brouillon?

@@ -5,7 +5,9 @@
 
 <div class="columns">
   <div class="column is-4">
-    <%= render 'form', client: @client %>
+    <div class="box">
+      <%= render 'form', client: @client %>
+    </div>
   </div>
   <div class="column is-8">
     <%= render 'versions', client: @client %>

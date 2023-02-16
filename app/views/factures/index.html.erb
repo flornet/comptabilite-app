@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<table class="table is-fullwidth is-hoverable " >
+<table class="table is-fullwidth is-hoverable">
   <thead>
     <tr>
       <th class="has-text-left">Date</th>
@@ -38,9 +38,7 @@
         <td class="is-vcentered has-text-right"><%= montant_humanise(facture.montant_tva) %></td>
         <td class="is-vcentered has-text-right"><%= montant_humanise(facture.montant_ttc) %></td>
         <td class="is-vcentered">
-          <% if facture.est_brouillon %>
-            <%= link_to 'Supprimer', facture_path(facture), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "button is-small is-danger" %>
-          <% else %>
+          <% if !facture.est_brouillon %>
             <a href="<%= facture_path(facture, format: :pdf) %>" class="button is-small">PDF</a>
           <% end %>
         </td>

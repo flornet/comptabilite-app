@@ -3,7 +3,8 @@
 // $size-6: 0.8rem;
 $body-size: 13px;
 
-@import "bulma/bulma";
+@import "bulma";
+
 
 $factureFieldBorderStyle: dashed;
 
@@ -147,6 +148,11 @@ div.has-navbar-fixed-top .navbar.is-fixed-top {
 .card.devis-feuille .contenu-principal .devis-lignes .table th:not(:last-child) {
   border-right: 2px solid #fff;
 }
+.card.facture-feuille .client .client-types,
+.card.devis-feuille .client .client-types {
+  border-top: 1px $factureFieldBorderStyle #dbdbdb;
+  padding-top: calc(0.75em - 1px);
+}
 .card.facture-feuille .client .field:not(:last-child),
 .card.devis-feuille .client .field:not(:last-child) {
   margin-bottom: 0;
@@ -163,9 +169,9 @@ div.has-navbar-fixed-top .navbar.is-fixed-top {
 .card.devis-feuille .client .code-postal .input {
   border-right: 0;
 }
-.card.facture-feuille .client .field:not(:last-of-type) .input,
+.card.facture-feuille .client .field .input,
 .card.facture-feuille .client .field .textarea,
-.card.devis-feuille .client .field:not(:last-of-type) .input,
+.card.devis-feuille .client .field .input,
 .card.devis-feuille .client .field .textarea {
   border-bottom: 0;
 }
