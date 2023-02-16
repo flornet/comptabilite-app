@@ -1,5 +1,7 @@
 class Client < ApplicationRecord
-  has_paper_trail
+  has_paper_trail ignore: [:special, :prestation_hypnose, :prestation_boutique, :prestation_ux]
+  
+  attribute :prestation_hypnose, :boolean, default: true
 
   belongs_to :taxe
   belongs_to :user
@@ -8,8 +10,8 @@ class Client < ApplicationRecord
 
   validates :nom,  :presence => true
   validates :nom, uniqueness: { case_sensitive: false }
-
-  after_save :test
+  
+  # after_save :test
 
   scope :filtered, ->(query_params) { Client::Filter.new.filter(self, query_params) }
 

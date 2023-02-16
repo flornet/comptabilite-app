@@ -2,63 +2,60 @@
   <%= page_title("Accueil") %>
 </nav>
 
-<div class="tile is-ancestor">
-  <div class="tile is-vertical is-8">
-    <div class="tile ">
-      <div class="tile is-parent is-vertical">
-
-      </div>
-      <div class="tile is-parent is-vertical">
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-<div class="tile is-ancestor">
-  <div class="tile is-vertical is-parent">
-    <div class="tile is-child notification is-primary">
-      <p class="title"><%= montant_humanise(@ca_ht_annuel) %></p>
-      <p class="subtitle">Chiffre d'affaires facturé <%= Date.today.year %></p>
-    </div>
-    <div class="tile is-child notification is-primary">
-      <p class="title"><%= montant_humanise(@ca_ht_mensuel) %></p>
-      <p class="subtitle">Facturé en <%= I18n.t("date.month_names")[Date.today.month] %></p>
-    </div>
-    <div class="tile is-child notification">
-      <div class="content">
-        <p>Les calculs tiennent compte des factures avec les statuts :
-        <% @facture_statuts.each do |facture_statut| %>
-        <span class="tag <%= css_class_for_status(facture_statut) %>">
-          <%= facture_statut.nom %>
-        </span>
-        <% end %>
-        </p>
+<div id="home_page">
+  <div class="block">
+    <%= form_with(method: 'get', local: true) do |search_form|%>
+    <div class="form-line">
+      <div class="label">Afficher :</div>
+      <div class="field">
+        <div class="select is-fullwidth">
+          <%= select_year(@selected_date.year, {start_year: 2019, end_year: Date.today.year}, id: "selected_year", name: "selected_year", class: "auto-submit") %>
+        </div>
       </div>
     </div>
+    <% end %>
   </div>
-  <div class="tile is-6 is-parent">
-    <div class="tile is-child box">
-      <p class="title">Chiffre d'affaires facturé mensuel (<%= Date.today.year %>)</p>
-      <%= column_chart @graph_ca_ht_mensuel, label: "Total HT", suffix: " €", thousands: " ", decimal: ",", round: 2, zeros: true %>
+  
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical is-parent">
+      <div class="tile is-child notification is-primary">
+        <p class="title"><%= montant_humanise(@ca_ht_annuel) %></p>
+        <p class="subtitle">Chiffre d'affaires facturé <%= @selected_date.year %></p>
+      </div>
+      <div class="tile is-child notification is-primary">
+        <p class="title"><%= montant_humanise(@ca_ht_mensuel) %></p>
+        <p class="subtitle">Facturé en <%= I18n.t("date.month_names")[@selected_date.month] %></p>
+      </div>
+      <div class="tile is-child notification">
+        <div class="content">
+          <p>Les calculs tiennent compte des factures avec les statuts :
+          <% @facture_statuts.each do |facture_statut| %>
+          <span class="tag <%= css_class_for_status(facture_statut) %>">
+            <%= facture_statut.nom %>
+          </span>
+          <% end %>
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="tile is-3 is-parent">
-    <div class="tile is-child box">
-      <div class="content">
-        <table class="table is-hoverable " >
-            <% @graph_ca_ht_mensuel.each do |mois| %>
-              <tr>
-                <th class="has-text-left"><%= mois[0] %></th>
-                <td class="has-text-right"><%= montant_humanise(mois[1]) %></td>
-              </tr>
-            <% end %>
-        </table>
+    <div class="tile is-6 is-parent">
+      <div class="tile is-child box">
+        <p class="title">Chiffre d'affaires facturé mensuel (<%= @selected_date.year %>)</p>
+        <%= column_chart @graph_ca_ht_mensuel, label: "Total HT", suffix: " €", thousands: " ", decimal: ",", round: 2, zeros: true %>
+      </div>
+    </div>
+    <div class="tile is-3 is-parent">
+      <div class="tile is-child box">
+        <div class="content">
+          <table class="table is-hoverable " >
+              <% @graph_ca_ht_mensuel.each do |mois| %>
+                <tr>
+                  <th class="has-text-left"><%= mois[0] %></th>
+                  <td class="has-text-right"><%= montant_humanise(mois[1]) %></td>
+                </tr>
+              <% end %>
+          </table>
+        </div>
       </div>
     </div>
   </div>

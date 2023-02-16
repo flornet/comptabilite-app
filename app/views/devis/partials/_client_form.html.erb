@@ -59,6 +59,34 @@
     <%= form.text_field :telephone, class: "input", placeholder: :telephone %>
   </div>
 </div>
+
+<div class="field is-grouped client-types">
+   
+   <div class="control">
+      <label class="checkbox">
+        <%= form.check_box :special, class: "checkbox" %>
+        Special
+      </label>
+   </div>
+   <div class="control">
+       <label class="checkbox">
+         <%= form.check_box :prestation_hypnose, class: "checkbox" %>
+         Hypnose
+       </label>
+    </div>
+    <div class="control">
+        <label class="checkbox">
+          <%= form.check_box :prestation_boutique, class: "checkbox" %>
+          Boutique
+        </label>
+     </div>
+     <div class="control">
+         <label class="checkbox">
+           <%= form.check_box :prestation_ux, class: "checkbox" %>
+           UX
+         </label>
+      </div>
+ </div>
 <% if @creating_new %>
   <%= form.hidden_field :id %>
 <% end %>

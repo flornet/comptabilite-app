@@ -114,7 +114,7 @@ class DevisController < ApplicationController
     # Only allow a list of trusted parameters through.
     def devi_params
       params[:devi][:client_attributes][:nom] = params[:devi][:client_attributes].delete :client unless params[:devi][:client_attributes].nil?
-      params.require(:devi).permit(:type_document, :contrast_color, :date, :designation, :montant_ht, :montant_tva, :montant_ttc, :est_brouillon, :pdf, :taxe_id, :devis_statut_id, :client_id, :coordonnees_societe, :coordonnees_societe, :logo, :date_validite, :mention1_texte, :mention2_texte, :mention3_texte, :mention_legale, devis_lignes_attributes: [:id, :designation, :montant_ht, :_destroy], client_attributes: [:id, :nom, :adresse, :code_postal, :ville, :pays, :numero_tva_intracommunautaire, :email, :telephone])
+      params.require(:devi).permit(:type_document, :contrast_color, :date, :designation, :montant_ht, :montant_tva, :montant_ttc, :est_brouillon, :pdf, :taxe_id, :devis_statut_id, :client_id, :coordonnees_societe, :coordonnees_societe, :logo, :date_validite, :mention1_texte, :mention2_texte, :mention3_texte, :mention_legale, devis_lignes_attributes: [:id, :designation, :montant_ht, :_destroy], client_attributes: [:id, :nom, :adresse, :code_postal, :ville, :pays, :numero_tva_intracommunautaire, :email, :telephone, :special, :prestation_hypnose, :prestation_boutique, :prestation_ux])
     end
 
     def montant_pour_pdf(nombre)

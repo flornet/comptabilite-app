@@ -38,7 +38,6 @@
         <td class="is-vcentered has-text-right"><%= montant_humanise(devi.montant_tva) %></td>
         <td class="is-vcentered has-text-right"><%= montant_humanise(devi.montant_ttc) %></td>
         <td class="is-vcentered">
-            <%= link_to 'Supprimer', devi_path(devi), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "button is-small is-danger" %>
             <a href="<%= devi_path(devi, format: :pdf) %>" class="button is-small">PDF</a>
         </td>
       </tr>

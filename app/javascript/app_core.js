@@ -1,6 +1,61 @@
 import flatpickr from "flatpickr";
-import { French } from "flatpickr/dist/l10n/fr.js"
 import currency from "currency.js";
+
+var French = {
+  firstDayOfWeek: 1,
+  weekdays: {
+    shorthand: ["dim", "lun", "mar", "mer", "jeu", "ven", "sam"],
+    longhand: [
+      "dimanche",
+      "lundi",
+      "mardi",
+      "mercredi",
+      "jeudi",
+      "vendredi",
+      "samedi",
+    ],
+  },
+  months: {
+    shorthand: [
+      "janv",
+      "févr",
+      "mars",
+      "avr",
+      "mai",
+      "juin",
+      "juil",
+      "août",
+      "sept",
+      "oct",
+      "nov",
+      "déc",
+    ],
+    longhand: [
+      "janvier",
+      "février",
+      "mars",
+      "avril",
+      "mai",
+      "juin",
+      "juillet",
+      "août",
+      "septembre",
+      "octobre",
+      "novembre",
+      "décembre",
+    ],
+  },
+  ordinal: function (nth) {
+    if (nth > 1)
+      return "";
+    return "er";
+  },
+  rangeSeparator: " au ",
+  weekAbbreviation: "Sem",
+  scrollTitle: "Défiler pour augmenter la valeur",
+  toggleTitle: "Cliquer pour basculer",
+  time_24hr: true,
+};
 
 class comptaApp {
   // This executes when the function is instantiated.
@@ -9,6 +64,7 @@ class comptaApp {
     this.setupFacture();
     this.setupSelecteursStatut();
     this.setupFrais();
+    this.setupHomePage();
   }
 
   setupBulma() {
@@ -76,7 +132,7 @@ class comptaApp {
           } else {
             // Open in current window
             if (typeof Turbolinks !== 'undefined') {
-              Turbolinks.visit($row.dataset.href);
+              Turbolinks.visit($row.dataset.href); //////// @ Rectifier
             } else {
               window.location.assign($row.dataset.href);
             }
@@ -84,6 +140,13 @@ class comptaApp {
         }
       });
     });
+  }
+  
+  setupHomePage() {
+    var homePage = document.getElementById('home_page');
+    if (homePage !== null) {
+      this._setupYearFilterForm();
+    }
   }
 
   setupFrais() {
@@ -135,6 +198,10 @@ class comptaApp {
       this.facture.client.numero_tva_intracommunautaire = document.getElementById('facture_client_attributes_numero_tva_intracommunautaire');
       this.facture.client.email       = document.getElementById('facture_client_attributes_email');
       this.facture.client.telephone   = document.getElementById('facture_client_attributes_telephone');
+      this.facture.client.special     = document.getElementById('facture_client_attributes_special');
+      this.facture.client.prestation_hypnose   = document.getElementById('facture_client_attributes_prestation_hypnose');
+      this.facture.client.prestation_boutique   = document.getElementById('facture_client_attributes_prestation_boutique');
+      this.facture.client.prestation_ux   = document.getElementById('facture_client_attributes_prestation_ux');
       this.facture.client.seleteur    = this.facture.client.nom.closest('.dropdown');
       this.facture.client.liste       = this.facture.client.seleteur.querySelectorAll('.dropdown-content')[0];
       this.facture.client.indicateur  = document.getElementById('creating-client-indicator');
@@ -163,6 +230,10 @@ class comptaApp {
         this.facture.client.numero_tva_intracommunautaire = document.getElementById('devi_client_attributes_numero_tva_intracommunautaire');
         this.facture.client.email       = document.getElementById('devi_client_attributes_email');
         this.facture.client.telephone   = document.getElementById('devi_client_attributes_telephone');
+        this.facture.client.special     = document.getElementById('devi_client_attributes_special');
+        this.facture.client.prestation_hypnose   = document.getElementById('devi_client_attributes_prestation_hypnose');
+        this.facture.client.prestation_boutique   = document.getElementById('devi_client_attributes_prestation_boutique');
+        this.facture.client.prestation_ux   = document.getElementById('devi_client_attributes_prestation_ux');
         this.facture.client.seleteur    = this.facture.client.nom.closest('.dropdown');
         this.facture.client.liste       = this.facture.client.seleteur.querySelectorAll('.dropdown-content')[0];
         this.facture.client.indicateur  = document.getElementById('creating-client-indicator');
@@ -312,6 +383,8 @@ class comptaApp {
         link.className = "dropdown-item";
         link.appendChild(linkName);
         link.addEventListener('click', event => {
+          console.log(client.prestation_hypnose);
+          console.log(that.facture.client.prestation_hypnose);
           that.facture.client.id.value          = client.id;
           that.facture.client.nom.value         = client.nom;
           that.facture.client.adresse.value     = client.adresse;
@@ -321,6 +394,10 @@ class comptaApp {
           that.facture.client.numero_tva_intracommunautaire.value = client.numero_tva_intracommunautaire;
           that.facture.client.email.value       = client.email;
           that.facture.client.telephone.value   = client.telephone;
+          that.facture.client.special.checked             = client.special;
+          that.facture.client.prestation_hypnose.checked  = client.prestation_hypnose;
+          that.facture.client.prestation_boutique.checked = client.prestation_boutique;
+          that.facture.client.prestation_ux.checked       = client.prestation_ux;
           that.facture.client.seleteur.value    = client.seleteur;
           that.facture.client.indicateur.classList.add('is-hidden');
           that.facture.client.seleteur.classList.remove('is-active');
@@ -553,6 +630,6 @@ class comptaApp {
   }
 }
 
-window.addEventListener('turbolinks:load', function () {
+$(document).on('turbo:load', function() {
  new comptaApp();
 });
