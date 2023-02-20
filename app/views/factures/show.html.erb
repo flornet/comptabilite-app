@@ -13,7 +13,7 @@
   <div class="tile is-ancestor">
     <div class="tile is-parent is-5">
         <div class="logo has-text-centered">
-            <%= wicked_pdf_image_tag(@facture.logo, srcset: { "2x-#{@facture.logo}" => "2x" }) %>
+            <%= image_tag wicked_pdf_asset_base64(@facture.logo) %>
         </div>
     </div>
     <div class="tile is-parent is-2"></div>

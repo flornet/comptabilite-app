@@ -25,13 +25,13 @@
       </td>
       <td></td>
       <td>
-        <div class="client"><%= render "factures/partials/client_show.html" %></div>
+        <div class="client"><%= render partial: "factures/partials/client_show", formats: :html %></div>
       </td>
     </tr>
   </table>
 
   <div class="contenu-principal">
-    <%= render "factures/partials/entete_show.html" %>
+    <%= render partial: "factures/partials/entete_show", formats: :html %>
     <div class="facture-lignes">
       <table class="table is-fullwidth is-narrow" id="table_lignes_facture">
         <thead>
@@ -42,17 +42,17 @@
         </thead>
         <tbody>
         <% @facture.facture_lignes.each do |facture_ligne| %>
-            <%= render "factures/partials/facture_ligne_show.html", facture_ligne: facture_ligne %>
+            <%= render partial: "factures/partials/facture_ligne_show", formats: :html, object: facture_ligne, as: 'facture_ligne'  %>
         <% end %>
         </tbody>
         <tfoot>
-          <%= render "factures/partials/pied_show.html" %>
+          <%= render partial: "factures/partials/pied_show", formats: :html %>
         </tfoot>
       </table>
     </div>
 
     <div class="facture-mentions">
-      <%= render "factures/partials/mentions_show.html" %>
+      <%= render partial: "factures/partials/mentions_show", formats: :html %>
     </div>
 
   </div>

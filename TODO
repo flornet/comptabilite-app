@@ -1,3 +1,14 @@
+Ajouter données client :
+- NB Consultation
+- Date Dernière Consultation
+- Date naissance
+- 
+
+Affichage :
+- Séparer avec des tabs et des styles d'affichages différents selon les clients (date de naissance pour MAIF :/ ...)
+
+
+
 current_user PARTOUT !!!
 interdire les modifications / suppression des Taxes dès qu'ils ont des enfants
 validateur de nom unique sur client : KO
