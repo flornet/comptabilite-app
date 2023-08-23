@@ -315,6 +315,11 @@ div.has-navbar-fixed-top .navbar.is-fixed-top {
   background-color: #fff;
   color: #0a0a0a;
 }
+.tag:not(body).is-cb-a-pointer,
+.dropdown a.is-cb-a-pointer {
+  background-color: #ff6b00;
+  color: #fff;
+}
 .file.has-text-right {
   flex-direction: row-reverse;
 }

@@ -263,7 +263,7 @@ class comptaApp {
 
               button.classList.add('is-loading');
               button.classList.add('is-white');
-              button.classList.remove('is-' + nom.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(" ","-").toLowerCase());
+              button.classList.remove('is-' + nom.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g,"-").toLowerCase());
 
               const token = document.getElementsByName("csrf-token")[0].content;
               const headers = new Headers();
@@ -287,13 +287,13 @@ class comptaApp {
                 .then(data => {
                   button.classList.remove('is-loading');
                   button.classList.remove('is-white');
-                  button.classList.add('is-' + link.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(" ","-").toLowerCase());
+                  button.classList.add('is-' + link.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g,"-").toLowerCase());
                   nom.innerText = link.innerText;
                 })
                 .catch((error) => {
                   button.classList.remove('is-loading');
                   button.classList.remove('is-white');
-                  button.classList.add('is-' + nom.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(" ","-").toLowerCase());
+                  button.classList.add('is-' + nom.innerText.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g,"-").toLowerCase());
                   console.error('Error:', error);
                 });
             })
