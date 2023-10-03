@@ -18,8 +18,8 @@ class DevisController < ApplicationController
                 # save_to_file: Rails.root.join('sauvegardes/factures', "#{filename}.pdf"),
                 pdf: filename,
                 disposition: 'attachment',
-                template: "devis/show.pdf.erb",
-                layout: "pdf.html.erb",
+                template: "devis/show",
+                layout: "pdf",
                 footer:  {
                   font_size: 8,
                   spacing: 20,
