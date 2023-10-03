@@ -42,7 +42,7 @@
         </thead>
         <tbody>
         <% @devi.devis_lignes.each do |devis_ligne| %>
-            <%= render partial: "devis/partials/devis_ligne_show", formats: :html, devis_ligne: devis_ligne %>
+            <%= render partial: "devis/partials/devis_ligne_show", formats: :html, object: devis_ligne, as: 'devis_ligne' %>
         <% end %>
         </tbody>
         <tfoot>
