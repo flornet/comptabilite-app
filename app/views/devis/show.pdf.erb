@@ -25,13 +25,13 @@
       </td>
       <td></td>
       <td>
-        <div class="client"><%= render "devis/partials/client_show.html" %></div>
+        <div class="client"><%= render partial: "devis/partials/client_show" %></div>
       </td>
     </tr>
   </table>
 
   <div class="contenu-principal">
-    <%= render "devis/partials/entete_show.html" %>
+    <%= render partial: "devis/partials/entete_show" %>
     <div class="devi-lignes">
       <table class="table is-fullwidth is-narrow" id="table_lignes_devi">
         <thead>
@@ -42,17 +42,17 @@
         </thead>
         <tbody>
         <% @devi.devis_lignes.each do |devis_ligne| %>
-            <%= render "devis/partials/devis_ligne_show.html", devis_ligne: devis_ligne %>
+            <%= render partial: "devis/partials/devis_ligne_show", formats: :html, devis_ligne: devis_ligne %>
         <% end %>
         </tbody>
         <tfoot>
-          <%= render "devis/partials/pied_show.html" %>
+          <%= render partial: "devis/partials/pied_show", formats: :html %>
         </tfoot>
       </table>
     </div>
 
     <div class="devi-mentions">
-      <%= render "devis/partials/mentions_show.html" %>
+      <%= render partial: "devis/partials/mentions_show", formats: :html %>
     </div>
 
   </div>
