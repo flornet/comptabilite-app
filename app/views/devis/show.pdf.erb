@@ -25,13 +25,13 @@
       </td>
       <td></td>
       <td>
-        <div class="client"><%= render partial: "devis/partials/client_show" %></div>
+        <div class="client"><%= render partial: "devis/partials/client_show", formats: :html %></div>
       </td>
     </tr>
   </table>
 
   <div class="contenu-principal">
-    <%= render partial: "devis/partials/entete_show" %>
+    <%= render partial: "devis/partials/entete_show", formats: :html %>
     <div class="devi-lignes">
       <table class="table is-fullwidth is-narrow" id="table_lignes_devi">
         <thead>
