@@ -18,7 +18,8 @@ class DepensesController < ApplicationController
     if ((params[:form_action]) && params[:form_action] == "exporter_table")
       response.headers['Content-Type'] = 'text/csv'
       response.headers['Content-Disposition'] = "attachment; filename=#{@selected_year} - Dépenses.csv"
-      render template: "depenses/export.csv.erb"
+      render template: "depenses/export",
+             formats: :csv
     elsif ((params[:form_action]) && params[:form_action] == "exporter_justificatifs")
       file_name = "#{@selected_year} - Justificatifs.zip"
       zip_file = Tempfile.new(file_name)
