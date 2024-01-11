@@ -36,10 +36,10 @@
 
   <div class="field has-addons">
     <p class="control">
-      <button type="submit" name="form_action" class="button" value="exporter_table">Tableau (CSV)</button>
+      <a href="<%= depenses_url(format: :csv, selected_year: @selected_year) %>" class="button">Tableau (CSV)</a>
     </p>
     <p class="control">
-      <button type="submit" name="form_action" class="button" value="exporter_justificatifs">Justificatifs (Zip)</button>
+      <a href="<%= depenses_url(format: :zip, selected_year: @selected_year) %>" class="button">Justificatifs (Zip)</a>
     </p>
   </div>
 </div>
