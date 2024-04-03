@@ -15,31 +15,45 @@ class DepensesController < ApplicationController
 
     @depenses = current_user.depenses.where('extract(year from date) = ?', @selected_year).order(date: "DESC", id: "DESC")
 
-    if ((params[:form_action]) && params[:form_action] == "exporter_table")
-      response.headers['Content-Type'] = 'text/csv'
-      response.headers['Content-Disposition'] = "attachment; filename=#{@selected_year} - Dépenses.csv"
-      render template: "depenses/export.csv.erb"
-    elsif ((params[:form_action]) && params[:form_action] == "exporter_justificatifs")
-      file_name = "#{@selected_year} - Justificatifs.zip"
-      zip_file = Tempfile.new(file_name)
-      Zip::OutputStream.open(zip_file.path) do |zos|
-        @depenses.each do |depense|
-          if depense.has_justificatif
-            zos.put_next_entry(depense.justificatif_nom)
-            zos.puts depense.justificatif_data
+    respond_to do |format|
+      format.html do 
+        @depense = Depense.new
+        @depense.date = Date.today
+        @depense.montant_ttc = nil
+      end
+      
+      format.csv do
+        response.headers['Content-Type'] = 'text/csv'
+        response.headers['Content-Disposition'] = "attachment; filename=#{@selected_year} - Dépenses.csv"
+        render template: "depenses/export"
+      end
+      
+      format.zip do
+        file_name = "#{@selected_year} - Justificatifs.zip"
+        zip_file = Tempfile.new(file_name)
+        Zip::OutputStream.open(zip_file.path) do |zos|
+          @depenses.each do |depense|
+            if depense.has_justificatif
+              zos.put_next_entry(depense.justificatif_nom)
+              zos.puts depense.justificatif_data
+            end
           end
         end
-      end
 
-     zip_data = File.read(zip_file.path)
-     zip_file.close
-     zip_file.unlink
-     send_data zip_data, :filename => file_name
-    else
-      @depense = Depense.new
-      @depense.date = Date.today
-      @depense.montant_ttc = nil
+       zip_data = File.read(zip_file.path)
+       zip_file.close
+       zip_file.unlink
+       send_data zip_data, :filename => file_name
+      end
     end
+    #
+    # if ((params[:form_action]) && params[:form_action] == "exporter_table")
+    #
+    # elsif ((params[:form_action]) && params[:form_action] == "exporter_justificatifs")
+    #
+    # else
+    #
+    # end
   end
 
   # GET /depenses/1 or /depenses/1.json

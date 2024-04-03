@@ -36,10 +36,10 @@
 
   <div class="field has-addons">
     <p class="control">
-      <button type="submit" name="form_action" class="button" value="exporter_table">Tableau (CSV)</button>
+      <a href="<%= depenses_url(format: :csv, selected_year: @selected_year) %>" class="button">Tableau (CSV)</a>
     </p>
     <p class="control">
-      <button type="submit" name="form_action" class="button" value="exporter_justificatifs">Justificatifs (Zip)</button>
+      <a href="<%= depenses_url(format: :zip, selected_year: @selected_year) %>" class="button">Justificatifs (Zip)</a>
     </p>
   </div>
 </div>
@@ -82,7 +82,7 @@
           <%= render 'rembourse_form', depense: depense %>
         </td>
         <td>
-          <%= link_to 'Supprimer', depense, method: :delete, data: {:confirm => 'Are you sure?'},class: "button is-small is-danger" %>
+            <%= link_to 'Supprimer', depense_path(depense), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, :method => :delete, class: "button is-danger is-small" %>
         </td>
       </tr>
     <% end %>
