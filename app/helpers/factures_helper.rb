@@ -55,10 +55,12 @@ module FacturesHelper
   def date_pour_facture(facture)
 
     output = ""
-    output += "<div class='is-size-5'>" + facture.date.strftime("%d") + '</div>'
-    output += "<div class='is-size-7'>" + facture.date.strftime("%^b.")
-    output += facture.date.strftime(" %y") unless facture.date.year == Date.today.year
-    output += '</div>'
+    if !facture.date.nil?
+      output += "<div class='is-size-5'>" + facture.date.strftime("%d") + '</div>'
+      output += "<div class='is-size-7'>" + facture.date.strftime("%^b.")
+      output += facture.date.strftime(" %y") unless facture.date.year == Date.today.year
+      output += '</div>'
+    end
     # facture.date.strftime("%d")
     output.html_safe
   end
