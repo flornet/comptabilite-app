@@ -5,7 +5,13 @@ class FacturesController < ApplicationController
 
   # GET /factures or /factures.json
   def index
-    @factures = current_user.factures.order(date: "DESC", numero: "DESC")
+    @params = params
+    @selected_date = Date.today
+    if (params[:selected_year] != nil)
+      @selected_date = Date.new(params[:selected_year].to_i, Date.today.month, Date.today.day)
+    end
+
+    @factures = current_user.factures.where({ date: @selected_date.beginning_of_year..@selected_date.end_of_year}).order(date: "DESC", numero: "DESC")
   end
 
   # GET /factures/1 or /factures/1.json

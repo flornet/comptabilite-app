@@ -64,7 +64,7 @@ class comptaApp {
     this.setupFacture();
     this.setupSelecteursStatut();
     this.setupFrais();
-    this.setupHomePage();
+    this.setupSelecteurFiltreDate();
   }
 
   setupBulma() {
@@ -142,11 +142,8 @@ class comptaApp {
     });
   }
   
-  setupHomePage() {
-    var homePage = document.getElementById('home_page');
-    if (homePage !== null) {
-      this._setupYearFilterForm();
-    }
+  setupSelecteurFiltreDate() {
+    this._setupYearFilterForm();
   }
 
   setupFrais() {
@@ -159,7 +156,7 @@ class comptaApp {
       this._setupCustomFileUploadOutside();
       this._setupFileUploads();
       this._setupRembourseCheckboxes();
-      this._setupYearFilterForm();
+      // this._setupYearFilterForm();
     }
   }
 

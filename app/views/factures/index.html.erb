@@ -5,9 +5,22 @@
 
 <div class="action-buttons">
     <div class="field is-grouped">
+    
       <p class="control">
         <%= link_to 'Nouvelle facture', new_facture_path, class: "button is-primary" %>
       </p>
+      <div class="block">
+        <%= form_with(method: 'get', local: true) do |search_form|%>
+        <div class="form-line">
+          <div class="label">Afficher :</div>
+          <div class="field">
+            <div class="select is-fullwidth">
+              <%= select_year(@selected_date.year, {start_year: 2019, end_year: Date.today.year}, id: "selected_year", name: "selected_year", class: "auto-submit") %>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
     </div>
 </div>
 
